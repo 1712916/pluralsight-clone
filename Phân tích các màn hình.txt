@@ -1,0 +1,17 @@
+Home
+	- 	Chưa đăng nhập
+		- Chuyển đến Browse || Search		
+	-	Đã đăng nhập
+
+Downloads
+
+Browse
+	- 	Chưa đăng nhập: Yêu cầu đăng nhập + Y chang phần đã đăng nhập
+	
+	-	Đã đăng nhập:
+		
+
+Search
+	- Có thanh search
+	- Lịch sử search
+	- Khi search
