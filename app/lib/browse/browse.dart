@@ -17,16 +17,24 @@ class Browse extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(10, 10, 10,0),
-        child: Column(
-          children: [
-            MyButton(title: 'NEW\nRELEASES',route: 'hello',),
-            SizedBox(height: 10,),
-            MyButton(title: 'RECOMMENDED\nFOR YOU',route: 'hello',),
-            PopularSkills(),
-             PathList(),
-             AuthorList()
-          ],
-        ),
+        child: SingleChildScrollView(
+          child: Container(
+            child:  Column(
+              children: [
+                MyButton(title: 'NEW\nRELEASES',route: 'hello',),
+                SizedBox(height: 10,),
+                MyButton(title: 'RECOMMENDED\nFOR YOU',route: 'hello',),
+                PopularSkills(),
+                PathList(),
+                AuthorList(),
+                AuthorList(),
+                AuthorList(),
+                AuthorList(),
+              ],
+            ),
+          ),
+        )
+
       ),
     );
   }

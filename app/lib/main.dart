@@ -1,5 +1,7 @@
 
 import 'package:app/browse/browse.dart';
+import 'package:app/sign-in.dart';
+import 'package:app/sign-up.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,8 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My app',
-      home: Browse(),
-
+      home: SignUp(),
 
     );
   }

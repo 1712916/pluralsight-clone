@@ -1,6 +1,10 @@
+import 'package:app/browse/item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class PathItem extends StatelessWidget {
+class PathItem extends Item {
+  PathItem(double height) : super(height);
+
+
   @override
   Widget build(BuildContext context) {
     return Container(

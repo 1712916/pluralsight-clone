@@ -1,2 +1,7 @@
+Giai đọa 1: mockup-ui
 - Làm profile (xong)
 - Browse (Loading)
+- Sign In (xong)
+- Sign Up (xong) -> Tìm cách khi điền xong 
+				nhấn phím 'next' chuyển sang field mới
+				tìm hiểu form.
