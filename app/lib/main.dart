@@ -5,6 +5,8 @@ import 'package:app/sign-in.dart';
 import 'package:app/sign-up.dart';
 import 'package:flutter/material.dart';
 
+import 'browse/coursedetail/detail.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -16,7 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My app',
-      home: Browse(),
+      home: CourseDetail(),
+      debugShowCheckedModeBanner: false,
 
     );
   }
