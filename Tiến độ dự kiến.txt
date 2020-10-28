@@ -6,3 +6,6 @@ Giai đọa 1: mockup-ui
 				nhấn phím 'next' chuyển sang field mới
 				tìm hiểu form.
 - Course Detail (loading)
+- Custom Appbar (done)
+- Add theme mode (loading)
+- Add bottom navigation (done)
