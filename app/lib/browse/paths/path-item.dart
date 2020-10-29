@@ -17,7 +17,6 @@ class PathItem extends Item {
             width: double.infinity,
             child: Image(
               image: AssetImage('assets/avt.jpg'),
-
             ),
             color: Colors.blueGrey ,
           )

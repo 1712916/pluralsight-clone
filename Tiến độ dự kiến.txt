@@ -7,5 +7,6 @@ Giai đọa 1: mockup-ui
 				tìm hiểu form.
 - Course Detail (loading)
 - Custom Appbar (done)
-- Add theme mode (loading)
+- Add theme mode (loading) + backgroud/ primary color for darkmode
 - Add bottom navigation (done)
+- Home (Loading)
