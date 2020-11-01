@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -252,7 +254,9 @@ class _DetailState extends State<CourseDetail> {
                           ),
                         ),
                       ],
-                    ),
+                    )
+                  ,
+
                     FlatButton(
                         height: 40,
                         color: Colors.grey,
@@ -292,28 +296,7 @@ class _DetailState extends State<CourseDetail> {
                       ),
                     )),
                     _tabSection(context),
-                    // DefaultTabController(
-                    //   length: 3,
-                    //   child: Scaffold(
-                    //     appBar: AppBar(
-                    //       bottom: TabBar(
-                    //         tabs: [
-                    //           Tab(icon: Icon(Icons.directions_car)),
-                    //           Tab(icon: Icon(Icons.directions_transit)),
-                    //           Tab(icon: Icon(Icons.directions_bike)),
-                    //         ],
-                    //       ),
-                    //       title: Text('Tabs Demo'),
-                    //     ),
-                    //     body: TabBarView(
-                    //       children: [
-                    //         Icon(Icons.directions_car),
-                    //         Icon(Icons.directions_transit),
-                    //         Icon(Icons.directions_bike),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+
                   ],
                 ),
               ),

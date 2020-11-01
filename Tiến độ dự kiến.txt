@@ -5,8 +5,10 @@ Giai đọa 1: mockup-ui
 - Sign Up (xong) -> Tìm cách khi điền xong 
 				nhấn phím 'next' chuyển sang field mới
 				tìm hiểu form.
+- Add bottom navigation (xong)
 - Course Detail (loading)
-- Custom Appbar (done)
 - Add theme mode (loading) + backgroud/ primary color for darkmode
-- Add bottom navigation (done)
 - Home (Loading)
+- Custom Appbar (Loading)+ cần thêm navigate nữa
+- Connect internet (Done)
+- Search(Loading) + Cần điều khiển quá trình search và layout search

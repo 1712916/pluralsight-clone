@@ -8,8 +8,12 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar('Home'),
-      body: SingleChildScrollView(
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          print('Hello');
+          return;
+        },
+        child: ListView(
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -70,10 +74,6 @@ class CourseItem extends StatefulWidget {
 }
 
 class _CourseItemState extends State<CourseItem> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -112,25 +112,25 @@ class _CourseItemState extends State<CourseItem> {
                         icon: Icon(Icons.more_vert),
                       ),
                     ),
-
                     Container(
                         height: 100,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            widget.course.isBookmarked ? Container(
-                              padding: EdgeInsets.all(16),
-                              alignment: Alignment.bottomRight,
-                              child: Icon(Icons.bookmark_border),
-                            ):  Container()
-                            ,
+                            widget.course.isBookmarked
+                                ? Container(
+                                    padding: EdgeInsets.all(16),
+                                    alignment: Alignment.bottomRight,
+                                    child: Icon(Icons.bookmark_border),
+                                  )
+                                : Container(),
                             Container(
                                 alignment: Alignment.bottomCenter,
                                 child: LinearProgressIndicator(
                                   value: 0.1,
-                                )),],
-                        )
-                    )
+                                )),
+                          ],
+                        ))
                   ],
                 ),
                 SizedBox(
@@ -142,7 +142,11 @@ class _CourseItemState extends State<CourseItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.course.title),
-                      widget.course.authors.length ==1 ? Text(widget.course.authors[0]) : Text(widget.course.authors[0]+', +'+ (widget.course.authors.length-1).toString()),
+                      widget.course.authors.length == 1
+                          ? Text(widget.course.authors[0])
+                          : Text(widget.course.authors[0] +
+                              ', +' +
+                              (widget.course.authors.length - 1).toString()),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
