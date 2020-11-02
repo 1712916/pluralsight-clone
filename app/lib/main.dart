@@ -1,5 +1,6 @@
 import 'package:app/browse/browse.dart';
 import 'package:app/browse/gridbutton/grid-button.dart';
+import 'package:app/search/search-result.dart';
 import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/authenticate/sign-in.dart';
 import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/authenticate/sign-up.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       themeMode: ThemeMode.dark, //Change theme here
-      home: MainNavigate(),
+
+       home: MainNavigate(),
       debugShowCheckedModeBanner: false,
     );
   }

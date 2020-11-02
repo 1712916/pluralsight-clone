@@ -31,23 +31,113 @@ class Home extends StatelessWidget {
             SizedBox(
               height: 16,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('TITLE HERRE'),
-                  TextButton(onPressed: () {}, child: Text('View All >'))
-                ],
-              ),
+            Column(
+              children: Categories.map((category) => Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(category.title),
+                              TextButton(
+                                  onPressed: () {}, child: Text('View All >')),
+                            ],
+                          ),
+                        ),
+                        Center(
+                            child: Container(
+                          height: 200,
+
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: findCourseByCategoryId(category.id)
+                                    .map((course) => Padding(
+                                      padding: const EdgeInsets.only(left: 16),
+                                      child: CourseItem(course),
+                                    ))
+                                    .toList(),
+                              ),
+                        )),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
+                  )).toList()
+              + [
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("My paths"),
+                            TextButton(
+                                onPressed: () {}, child: Text('View All >')),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child:  Center(
+                          child: Container(
+                            height: 200,
+
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: findCourseByCategoryId("01")
+                                  .map((course) => Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: CourseItem(course),
+                              ))
+                                  .toList(),
+                            ),
+                          )),
+                    ),
+                    Container(
+                      child: SizedBox(
+                        height: 20,
+                      ),
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Bookmarks"),
+                            TextButton(
+                                onPressed: () {}, child: Text('View All >')),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child:  Center(
+                          child: Container(
+                            height: 200,
+
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: findCourseByCategoryId("01")
+                                  .map((course) => Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: CourseItem(course),
+                              ))
+                                  .toList(),
+                            ),
+                          )),
+                    ),
+                    Container(
+                      child: SizedBox(
+                        height: 20,
+                      ),
+                    ),
+
+                  ],
             ),
-            Container(
-              height: 250,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: buildCourses(),
-              ),
-            )
           ],
         ),
       ),
@@ -55,19 +145,10 @@ class Home extends StatelessWidget {
   }
 }
 
-List<Widget> buildCourses() {
-  List<Widget> list = [];
-  for (var i = 0; i < getCourses().length; i++) {
-    list.add(CourseItem(getCourses()[i], i));
-  }
-  return list;
-}
-
 class CourseItem extends StatefulWidget {
   Course course;
-  int index;
 
-  CourseItem(this.course, this.index);
+  CourseItem(this.course);
 
   @override
   _CourseItemState createState() => _CourseItemState();
@@ -82,8 +163,8 @@ class _CourseItemState extends State<CourseItem> {
           decoration: BoxDecoration(
             color: Colors.green,
           ),
-          margin: EdgeInsets.only(
-              right: 16, left: widget.index == 0 ? 16 : 0, bottom: 16, top: 8),
+          // margin: EdgeInsets.only(
+          //     right: 16, left: widget.index == 0 ? 16 : 0, bottom: 16, top: 8),
           width: 210,
           child: Center(
             child: Column(
@@ -188,9 +269,7 @@ class _CourseItemState extends State<CourseItem> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                )
+
               ],
             ),
           ),

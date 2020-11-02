@@ -20,7 +20,7 @@ class DownloadsPage extends StatefulWidget {
 }
 
 class _DownloadsPageState extends State<DownloadsPage> {
-  List<Course> _downloads = getCourses();
+  List<Course> _downloads = Courses;
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(

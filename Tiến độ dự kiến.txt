@@ -8,7 +8,8 @@ Giai đọa 1: mockup-ui
 - Add bottom navigation (xong)
 - Course Detail (loading)
 - Add theme mode (loading) + backgroud/ primary color for darkmode
-- Home (Loading)
+- Home (Loading) + Đang lỗi nếu sử dụng bản release
 - Custom Appbar (Loading)+ cần thêm navigate nữa
 - Connect internet (Done)
-- Search(Loading) + Cần điều khiển quá trình search và layout search
+- Search(Loading) + Cần mock data vào kết quả 
+				  + Sử lý sự kiện khi nhấn nút "Done" trên bàn phím
