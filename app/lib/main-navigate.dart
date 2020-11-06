@@ -5,7 +5,6 @@ import 'browse/browse.dart';
 import 'downloads/downloads.dart';
 import 'home/home.dart';
 
-
 /// This is the stateful widget that the main application instantiates.
 class MainNavigate extends StatefulWidget {
   MainNavigate({Key key}) : super(key: key);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 class Profile extends StatelessWidget {
+  static const routeName = '/course-detail';
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -21,13 +23,20 @@ class Profile extends StatelessWidget {
                   backgroundImage: AssetImage('assets/avt.jpg'),
                   radius: 40.0,
                 ),
-                SizedBox(width: 20.0,),
-                Text('Kieu Phong', style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),),
-                SizedBox(width: 20.0,),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Text(
+                  'Kieu Phong',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
               ],
             ),
             SizedBox(
@@ -47,10 +56,11 @@ class Profile extends StatelessWidget {
               'TOTAL ACTIVE DAYS',
               style: TextStyle(
                 color: Colors.grey[500],
-
               ),
             ),
-            SizedBox(height: 5.0,),
+            SizedBox(
+              height: 5.0,
+            ),
             Container(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -63,7 +73,9 @@ class Profile extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(width: 30.0,),
+                  SizedBox(
+                    width: 30.0,
+                  ),
                   Text(
                     '0 day streak',
                     style: TextStyle(
@@ -73,8 +85,6 @@ class Profile extends StatelessWidget {
                 ],
               ),
             ),
-
-
             SizedBox(
               height: 20.0,
             ),
@@ -84,7 +94,9 @@ class Profile extends StatelessWidget {
                 color: Colors.grey[500],
               ),
             ),
-            SizedBox(height: 5.0,),
+            SizedBox(
+              height: 5.0,
+            ),
             Text(
               '10:00 PM',
               style: TextStyle(
@@ -102,7 +114,9 @@ class Profile extends StatelessWidget {
                 color: Colors.grey[500],
               ),
             ),
-            SizedBox(height: 5.0,),
+            SizedBox(
+              height: 5.0,
+            ),
             Text(
               'Python',
               style: TextStyle(
@@ -117,4 +131,3 @@ class Profile extends StatelessWidget {
     );
   }
 }
-

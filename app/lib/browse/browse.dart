@@ -5,7 +5,7 @@ import 'package:app/browse/topauthors//author-list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../custom-appbar.dart';
+import '../widget/custom-appbar.dart';
 import 'button.dart';
 
 class Browse extends StatelessWidget {

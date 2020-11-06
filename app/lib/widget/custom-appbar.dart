@@ -1,3 +1,4 @@
+import 'package:app/profile.dart';
 import 'package:flutter/material.dart';
 
 const List<String> choices = <String>[
@@ -7,7 +8,7 @@ const List<String> choices = <String>[
 ];
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String _title;
+  final String _title;
   CustomAppBar(this._title);
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.account_circle),
           tooltip: 'Profile',
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              Profile.routeName,
+            );
+          },
         ),
         PopupMenuButton(
             tooltip: 'Setting More',

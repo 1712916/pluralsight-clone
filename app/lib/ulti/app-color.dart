@@ -5,6 +5,7 @@ class AppColors {
   static const primaryDark = const Color.fromARGB(255, 24, 28, 32);
   static const accent = Color.fromARGB(255, 58, 134, 146);
   static const backgroundDark = const Color.fromARGB(255, 13, 15, 18);
+  static const backgroundItemTypeA = const Color.fromARGB(255, 30, 36, 41);
   // static const white = Colors.white;
   // static const textGrey = Colors.grey;
   // static const textBlack = Colors.black;

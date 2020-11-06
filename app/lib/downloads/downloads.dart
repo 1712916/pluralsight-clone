@@ -1,7 +1,7 @@
 import 'package:app/ulti/data.dart';
 import 'package:flutter/material.dart';
 
-import '../custom-appbar.dart';
+import '../widget/custom-appbar.dart';
 import 'item.dart';
 
 class Downloads extends StatelessWidget {
@@ -30,21 +30,34 @@ class _DownloadsPageState extends State<DownloadsPage> {
         },
         child: ListView(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${_downloads.length} courses',
-                  style: TextStyle(color: Colors.white),
-                ),
-                TextButton(onPressed: () {}, child: Text('REMOVE ALL'))
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  Text(
+                    '${_downloads.length} courses',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  TextButton(onPressed: () {}, child: Text('REMOVE ALL'))
+                ],
+              ),
             ),
             Column(
               children: _downloads
                   .map((course) => Padding(
-                        padding: EdgeInsets.all(8),
-                        child: ItemTypeII(course: course),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            CourseItemTypeB(course: course),
+                            Divider(
+                              color: Colors.grey,
+
+
+                            )
+                          ],
+                        ) ,
                       ))
                   .toList(),
             )

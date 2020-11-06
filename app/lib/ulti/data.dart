@@ -1,5 +1,11 @@
 import 'dart:core';
+class Author{
+  String name;
 
+}
+class Path{
+
+}
 class Course {
   String title;
   String categoryId;
@@ -470,6 +476,27 @@ List<Category> Categories = [
   Category(title: "Security Professional", id: "04"),
 ];
 
-List<Course> findCourseByCategoryId(String id) {
-  return Courses.where((course) => course.categoryId == id).toList();
+List<Course> findCourseByCategoryId(String id,int size) {
+  //thuat toan hoi cui
+  var data=Courses.where((course) => course.categoryId == id).toList();
+  if(size==-1 || data.length <size){
+    return data;
+  }
+  return data.sublist(0,size);
+
+
 }
+
+List<Course> findCourseByBookmark(int size) {
+  //thuat toan hoi cui
+  var data=Courses.where((course) => course.isBookmarked).toList();
+  if(size==-1 || data.length <size){
+    return data;
+  }
+  return data.sublist(0,size);
+
+
+}
+
+
+

@@ -5,7 +5,7 @@ import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone
 import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/authenticate/sign-up.dart';
 import 'package:flutter/material.dart';
 
-import 'browse/coursedetail/detail.dart';
+
 import 'main-navigate.dart';
 import 'ulti/app_theme.dart';
 
@@ -22,8 +22,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       themeMode: ThemeMode.dark, //Change theme here
-
-       home: MainNavigate(),
+      home: MainNavigate(),
       debugShowCheckedModeBanner: false,
     );
   }
