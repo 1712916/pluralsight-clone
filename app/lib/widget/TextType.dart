@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-
+TextStyle headerStyle1() {
+  return TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.w400,
+  );
+}
 TextStyle headerStyle() {
   return TextStyle(
     fontSize: 16,
@@ -39,6 +44,12 @@ Widget buildTextHeader(String text){
   return Text(
     text,
     style: headerStyle(),
+  );
+}
+Widget buildTextHeader1(String text){
+  return Text(
+    text,
+    style: headerStyle1(),
   );
 }
 

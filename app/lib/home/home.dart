@@ -19,10 +19,10 @@ class Home extends StatelessWidget {
               switch (settings.name) {
                 case '/':
                   return MyHome();
-                case Profile.routeName:
-                  return Profile();
                 case CourseDetail.routeName:
                   return CourseDetail();
+                case Profile.routeName:
+                  return Profile();
               }
             });
       },

@@ -32,7 +32,7 @@ class _CourseItemTypeAState extends State<CourseItemTypeA> {
         },
         child: Container(
           decoration: BoxDecoration(
-          color: AppColors.backgroundItemTypeA
+          color: AppColors. backgroundItemTypeA
           ),
           // margin: EdgeInsets.only(
           //     right: 16, left: widget.index == 0 ? 16 : 0, bottom: 16, top: 8),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class TextExpandable extends StatefulWidget {
   final String strText;
-  static const int defaultLength = 15;
+  static const int defaultLength = 130;
 
   TextExpandable(this.strText);
 
@@ -18,8 +18,8 @@ class _TextExpandableState extends State<TextExpandable> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _content = widget.strText;
-    print(_content);
+
+    _content = widget.strText.substring(0,TextExpandable.defaultLength)+'...';
     _isExpanded = false;
     _height = 150;
   }
@@ -40,9 +40,6 @@ class _TextExpandableState extends State<TextExpandable> {
                 child: Text(
                   _content,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
                 ),
               ),
             ),
@@ -54,29 +51,22 @@ class _TextExpandableState extends State<TextExpandable> {
                     _isExpanded = !_isExpanded;
                     if (_isExpanded) {
                       _content = widget.strText;
-                    } else {
-                      int index=TextExpandable.defaultLength;
-                      while(true){
-                        if(widget.strText[index]!=' '){
-                          index--;
 
-                        }else{
-                          break;
-                        }
-                      }
-                      _content =
-                          widget.strText.substring(0,index );
+                    } else {
+                      _content =  widget.strText.substring(0,TextExpandable.defaultLength ) +'...';
+
                     }
+
                   });
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.blueGrey,
+                      color: Colors.white24,
                       borderRadius: BorderRadius.all(Radius.circular(4.0))),
                   child: Center(
-                    child: !_isExpanded
-                        ? Icon(Icons.keyboard_arrow_down)
-                        : Icon(Icons.keyboard_arrow_up),
+                    child: _isExpanded
+                        ? Icon(Icons.keyboard_arrow_up)
+                        : Icon(Icons.keyboard_arrow_down),
                   ),
                 ),
               ),
