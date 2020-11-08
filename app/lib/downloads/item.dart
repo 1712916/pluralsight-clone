@@ -1,3 +1,4 @@
+import 'package:app/coursedetail/detail.dart';
 import 'package:app/ulti/data.dart';
 import 'package:app/widget/TextType.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,13 @@ class CourseItemTypeB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CourseDetail(course)),
+          );
+
+        },
         child: Container(
           padding: EdgeInsets.only(top: 8),
           decoration: BoxDecoration(

@@ -1,54 +1,68 @@
 import 'package:app/browse/paths/path-item.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/widget/TextType.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ulti/data.dart';
 
 class PathList extends StatelessWidget {
-  List<String> products = [
-    "Test1",
-    "Test2",
-    "Test3",
-    "Test1",
-    "Test2",
-    "Test3",
-    "Test1",
-    "Test2",
-    "Test3",
-    "Test1",
-    "Test2",
-    "Test3"
-  ];
+  List<Path> _paths;
+
+  PathList(this._paths);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Padding(
-      padding: EdgeInsets.all(0.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: Text(
-              'Paths',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
-            padding: EdgeInsets.only(left: 5),
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildTextHeader('Paths'),
+              TextButton(
+                  onPressed: () {
+                    // List<Course> data = this.searchAll();
+                    // //truyen data vao navigte
+                    // //goi navigate here
+                    // // Navigator.pushNamed(context, CourseDetail.routeName,
+                    // //     arguments: widget.course.title);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => ListCourse(
+                    //           categoryName: this.category.title,
+                    //           courses: data,
+                    //         )));
+                  },
+                  child: Text(
+                    'See all >',
+                    style: TextStyle(color: Colors.white38),
+                  )),
+            ],
           ),
-          SizedBox(
-            height: 210,
-            child: Container(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: products.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return PathItem(100);
-                  }),
-            ),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          height: 210,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: paths
+                .map((path) => Padding(
+                      padding: EdgeInsets.only(left: 16),
+                      child: PathItem(
+                        path: path,
+                      ),
+                    ))
+                .toList(),
           ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 32,
+        ),
+      ],
     ));
   }
 }

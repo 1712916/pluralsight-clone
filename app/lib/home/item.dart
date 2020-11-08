@@ -1,4 +1,5 @@
 import 'package:app/coursedetail/detail.dart';
+import 'package:app/profile.dart';
 import 'package:app/ulti/app-color.dart';
 import 'package:app/ulti/data.dart';
 import 'package:app/widget/TextType.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 
 
 class CourseItemTypeA extends StatefulWidget {
-  Course course;
+  final Course course;
 
   CourseItemTypeA({this.course});
 
@@ -27,8 +28,13 @@ class _CourseItemTypeAState extends State<CourseItemTypeA> {
     return GestureDetector(
         onTap: () {
           //Navigator.pushReplacementNamed(context, '/profile');
-          Navigator.pushNamed(context, CourseDetail.routeName,
-              arguments: widget.course.title);
+          // Navigator.pushNamed(context, CourseDetail.routeName,
+          //     arguments: widget.course.title);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CourseDetail(this.widget.course)),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -43,15 +49,12 @@ class _CourseItemTypeAState extends State<CourseItemTypeA> {
               children: [
                 Stack(
                   children: [
-                    Hero(
-                      tag: widget.course.imgPlaceholder,
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(widget.course.imgPlaceholder),
-                            fit: BoxFit.cover,
-                          ),
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(widget.course.imgPlaceholder),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),

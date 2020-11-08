@@ -8,7 +8,6 @@ import 'home/home.dart';
 /// This is the stateful widget that the main application instantiates.
 class MainNavigate extends StatefulWidget {
   MainNavigate({Key key}) : super(key: key);
-
   @override
   _MainNavigateState createState() => _MainNavigateState();
 }
@@ -16,9 +15,8 @@ class MainNavigate extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _MainNavigateState extends State<MainNavigate> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
+
     Home(),
     Downloads(),
     Browse(),

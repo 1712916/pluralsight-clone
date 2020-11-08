@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     switch (choiceIndex) {
       case 0:
         {
-          print('Ban da chon: {$choiceIndex}');
+
         }
         break;
       case 1:

@@ -1,49 +1,41 @@
-import 'package:app/browse/item.dart';
-import 'package:flutter/cupertino.dart';
+ 
+import 'package:app/ulti/app-color.dart';
+import 'package:app/widget/TextType.dart';
 import 'package:flutter/material.dart';
-class PathItem extends Item {
-  PathItem(double height) : super(height);
+import 'package:app/ulti/data.dart';
+class PathItem extends StatelessWidget {
+  final Path path;
 
+
+  PathItem({this.path});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      child:Padding(
-        padding: EdgeInsets.all(5),
-        child: Column(children: [
-          Container(
-            height: 100,
-            width: double.infinity,
-            child: Image(
-              image: AssetImage('assets/avt.jpg'),
+        width: 200,
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              width: double.infinity,
+              child: Image(
+                image: NetworkImage(this.path.imgPlaceholder),
+              ),
+            color: Colors.white24,
             ),
-            color: Colors.blueGrey ,
-          )
-          ,
-          Container(
-            height: 100,
-            color: Colors.blue,
-            padding: EdgeInsets.all(10),
-            child: Column(
-
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Titleaaaa aaaha haahahajaj ajaja'
-                  ,style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20
-                  ),),
-                Text('total courses' ,style: TextStyle(
-                  color: Colors.grey[500],
-                  fontSize: 15,
-                ),),
-              ],
-            ),
-          )
-        ],),
-      )
-      
-    );
+            Container(
+              height: 100,
+              color: Theme.of(context).primaryColor,
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildTextTitle(this.path.title),
+                  buildSubTextTitle('${this.path.numberCourses} courses')
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }

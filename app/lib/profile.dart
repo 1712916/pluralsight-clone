@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
-  static const routeName = '/course-detail';
+  static const routeName = '/profile';
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

@@ -9,12 +9,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CourseDetail extends StatefulWidget {
+  Course course;
+
+  CourseDetail(this.course);
+
   static const routeName = '/course-detail';
   @override
   _DetailState createState() => _DetailState();
 }
 
 class _DetailState extends State<CourseDetail> {
+
   //Data here
   @override
   Widget build(BuildContext context) {

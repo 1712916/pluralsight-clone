@@ -1,10 +1,36 @@
+import 'package:app/coursedetail/detail.dart';
 import 'package:app/ulti/data.dart';
 import 'package:flutter/material.dart';
 
+import '../profile.dart';
 import '../widget/custom-appbar.dart';
 import 'item.dart';
 
 class Downloads extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+            settings: settings,
+            builder: (context) {
+              switch (settings.name) {
+                case '/':
+                  return MyDownloads();
+                case CourseDetail.routeName:
+                  return CourseDetail(null);
+                case Profile.routeName:
+                  return Profile();
+                default:
+                  return MyDownloads();
+              }
+            });
+      },
+    );
+  }
+}
+
+class MyDownloads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +61,6 @@ class _DownloadsPageState extends State<DownloadsPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Text(
                     '${_downloads.length} courses',
                     style: TextStyle(color: Colors.white),
@@ -53,11 +78,9 @@ class _DownloadsPageState extends State<DownloadsPage> {
                             CourseItemTypeB(course: course),
                             Divider(
                               color: Colors.grey,
-
-
                             )
                           ],
-                        ) ,
+                        ),
                       ))
                   .toList(),
             )

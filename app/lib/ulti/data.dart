@@ -1,15 +1,26 @@
 import 'dart:core';
+
+import 'package:flutter/cupertino.dart';
 class Author{
   String id;
   String name;
   String avt;
 
-  Author({this.id, this.name, this.avt});
+  String description;
+  String website;
+
+  Author({this.id, this.name, this.avt, this.description, this.website});
 }
 
 List<Author> Authors=[
-  Author(id: '01',name: 'Hackkoc', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",),
-  Author(id: '02',name: 'Vinhnke', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",),
+  Author(id: '01',name: 'Hackkoc', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '02',name: 'Vinh nek', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '011',name: 'Kieu Phong', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '012',name: 'Vinh Ngo', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '013',name: 'Ha Ha', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '014',name: 'Hackkoc', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '015',name: 'Hackkoc', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
+  Author(id: '014',name: 'Hackkoc', avt:       "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac",description: "HELooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",website: "https://www.facebook.com/bossxomlut/"),
 
 ];
 
@@ -20,8 +31,30 @@ Author findAuthorById(String id){
   return Authors[0];
 }
 class Path{
+  String imgPlaceholder;
+  String title;
+  int numberCourses;
+
+  Path({this.imgPlaceholder, this.title, this.numberCourses});
+//
 
 }
+
+List<Path> paths=[
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+  Path(title: 'Styling the Web with Boostrap',numberCourses: 4,imgPlaceholder:  "https://firebasestorage.googleapis.com/v0/b/vcafe-5ad8e.appspot.com/o/images%2F01.png?alt=media&token=540ed0fd-7321-4e9e-acaf-ffdf5e7486ac" ),
+
+];
 class Course {
   String title;
   String categoryId;

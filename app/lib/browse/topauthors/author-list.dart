@@ -1,3 +1,4 @@
+import 'package:app/ulti/data.dart';
 import 'package:flutter/material.dart';
 
 import 'author-item.dart';
@@ -9,72 +10,28 @@ class AuthorList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: Text(
-              'Top authors',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              child: Text(
+                'Top authors',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
+              padding: EdgeInsets.only(left: 5),
             ),
-            padding: EdgeInsets.only(left: 5),
           ),
+          SizedBox(height: 8,),
           Container(
             height: 120,
-            child: ListView(scrollDirection: Axis.horizontal, children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(
-                  authorName: 'My coal',
-                  imageUrl: 'assets/avt.jpg',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(
-                  authorName: 'My coal',
-                  imageUrl: 'assets/avt.jpg',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(
-                  authorName: 'My coal',
-                  imageUrl: 'assets/avt.jpg',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(
-                  authorName: 'My coal',
-                  imageUrl: 'assets/avt.jpg',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(
-                  authorName: 'My coal',
-                  imageUrl: 'assets/avt.jpg',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(
-                  authorName: 'My coal',
-                  imageUrl: 'assets/avt.jpg',
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(authorName: 'My coal',imageUrl: 'assets/avt.jpg',),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: AuthorItem(authorName: 'My coal',imageUrl: 'assets/avt.jpg',),
-              ),
-            ]),
+            child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: Authors.map((author) => Padding(
+                      padding: EdgeInsets.only(left: 16),
+                      child: AuthorItem(author),
+                    )).toList()),
           )
         ],
       ),
