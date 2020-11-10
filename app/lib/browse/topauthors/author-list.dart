@@ -1,3 +1,4 @@
+import 'package:app/ulti/constain.dart';
 import 'package:app/ulti/data.dart';
 import 'package:flutter/material.dart';
 
@@ -20,12 +21,12 @@ class AuthorList extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              padding: EdgeInsets.only(left: 5),
+
             ),
           ),
           SizedBox(height: 8,),
           Container(
-            height: 120,
+            height: authorRowHeight,
             child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: Authors.map((author) => Padding(
@@ -37,4 +38,16 @@ class AuthorList extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildRowAuthors(List<Author> authors){
+  return      Container(
+      height: authorRowHeight,
+      child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: authors.map((author) => Padding(
+            padding: EdgeInsets.only(left: 16),
+            child: AuthorItem(author),
+          )).toList()),
+    );
 }

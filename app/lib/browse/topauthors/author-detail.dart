@@ -5,8 +5,9 @@ import 'package:app/widget/TextType.dart';
 import 'package:flutter/material.dart';
 
 class AuthorDetail extends StatelessWidget {
+  static const String routeName='/author';
   final Author _author;
-  List<Course> _courses = Courses;
+  final List<Course> _courses = Courses;
 
   AuthorDetail(this._author);
 

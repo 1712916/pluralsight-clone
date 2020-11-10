@@ -1,3 +1,5 @@
+import 'package:app/browse/popularskills/about-skill.dart';
+import 'package:app/ulti/data.dart';
 import 'package:flutter/material.dart';
 
 class PopularSkills extends StatelessWidget {
@@ -42,7 +44,11 @@ class PopularSkills extends StatelessWidget {
                   (skill) => Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: InputChip(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (
+                            context)=> AboutSkill(skill:   Skill(name: skill),)));
+
+                      },
                       label: Semantics(
                         button: true,
                         child: Text(skill),

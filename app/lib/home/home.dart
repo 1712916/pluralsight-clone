@@ -23,9 +23,9 @@ class Home extends StatelessWidget {
                   return Profile();
                 case ListCourse.routeName:
                   return ListCourse();
-                // setting
-                //  send feedback
-                // contact support
+              // setting
+              //  send feedback
+              // contact support
                 default:
                   return MyHome();
               }
