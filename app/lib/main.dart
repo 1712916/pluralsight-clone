@@ -1,14 +1,6 @@
-import 'package:app/browse/browse.dart';
-import 'package:app/browse/gridbutton/grid-button.dart';
-import 'package:app/coursedetail/detail.dart';
-import 'package:app/search/search-result.dart';
-import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/authenticate/sign-in.dart';
-import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/authenticate/sign-up.dart';
+ import 'package:app/utils/app-theme.dart';
 import 'package:flutter/material.dart';
-
-
-import 'main-navigate.dart';
-import 'ulti/app_theme.dart';
+import 'widgets/customs/main-navigate.dart';
 
 void main() {
   runApp(MyApp());
