@@ -9,14 +9,18 @@ import 'package:flutter/material.dart';
 
 
 class SearchResult extends StatefulWidget {
+  List<Course> courses = Courses;
+  List<Path> paths = Paths;
+  List<Author> authors = Authors;
+
+  SearchResult({this.courses, this.paths, this.authors});
+
   _SearchResultState createState() => _SearchResultState();
 }
 
 class _SearchResultState extends State<SearchResult>
     with TickerProviderStateMixin {
-  List<Course> _courses = Courses;
-  List<Path> _paths = Paths;
-  List<Author> _authors = Authors;
+
 
   TabController _tabController;
 
@@ -73,10 +77,10 @@ class _SearchResultState extends State<SearchResult>
                                         _tabController.animateTo(1);
                                       },
                                       child:
-                                          Text('${_courses.length} Results')),
+                                          Text('${this.widget.courses.length} Results')),
                                 ],
                               ),
-                              buildCourseItem(_courses, 4),
+                              buildCourseItem(this.widget.courses, 4),
                             ])),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -91,10 +95,10 @@ class _SearchResultState extends State<SearchResult>
                                       onPressed: () {
                                         _tabController.animateTo(2);
                                       },
-                                      child: Text('${_paths.length} Results')),
+                                      child: Text('${this.widget.paths.length} Results')),
                                 ],
                               ),
-                              buildPathItem(_paths, 4),
+                              buildPathItem(this.widget.paths, 4),
                             ],
                           ),
                         ),
@@ -112,10 +116,10 @@ class _SearchResultState extends State<SearchResult>
                                         _tabController.animateTo(3);
                                       },
                                       child:
-                                          Text('${_authors.length} Results')),
+                                          Text('${this.widget.authors.length} Results')),
                                 ],
                               ),
-                              buildAuthorItem(_authors, 4),
+                              buildAuthorItem(this.widget.authors, 4),
                             ],
                           ),
                         ),
@@ -186,7 +190,7 @@ class _SearchResultState extends State<SearchResult>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('${_courses.length} Results'),
+                            Text('${this.widget.courses.length} Results'),
                             DropdownButton(
                               value: dropdownValue,
                               items: <String>[
@@ -211,7 +215,7 @@ class _SearchResultState extends State<SearchResult>
                             children: [
                               SingleChildScrollView(
                                   child: buildCourseItem(
-                                      _courses, _courses.length))
+                                      this.widget.courses, this.widget.courses.length))
                             ],
                           ),
                         )
@@ -228,14 +232,14 @@ class _SearchResultState extends State<SearchResult>
                         SizedBox(
                           height: 16,
                         ),
-                        Text('${_paths.length} Results'),
+                        Text('${this.widget.paths.length} Results'),
                         SizedBox(
                           height: 16,
                         ),
                         Expanded(
                             child: ListView(
                           children: [
-                            buildPathItem(_paths, _paths.length),
+                            buildPathItem(this.widget.paths, this.widget.paths.length),
                           ],
                         ))
                       ],
@@ -251,14 +255,14 @@ class _SearchResultState extends State<SearchResult>
                         SizedBox(
                           height: 16,
                         ),
-                        Text('${_authors.length} Results'),
+                        Text('${this.widget.authors.length} Results'),
                         SizedBox(
                           height: 16,
                         ),
                         Expanded(
                             child: ListView(
                           children: [
-                            buildAuthorItem(_authors, _authors.length),
+                            buildAuthorItem(this.widget.authors, this.widget.authors.length),
                           ],
                         ))
                       ],

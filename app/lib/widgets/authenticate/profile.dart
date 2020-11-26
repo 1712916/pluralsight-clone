@@ -1,9 +1,15 @@
+import 'package:app/models/login-provider.dart';
+import 'package:app/strings/string-us.dart';
+import 'package:app/widgets/authenticate/sign-in.dart';
+import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
   static const routeName = '/profile';
   @override
   Widget build(BuildContext context) {
+    var loginState=Provider.of<LoginProvider>(context);
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -12,7 +18,7 @@ class Profile extends StatelessWidget {
         backgroundColor: Colors.grey[850],
         elevation: 0.0,
       ),
-      body: Padding(
+      body: loginState.isLogin?Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +133,25 @@ class Profile extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ):ProfileSignOut(context),
     );
   }
+}
+
+
+Widget ProfileSignOut(BuildContext context){
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        buildTextTitle(profile_signout_intro),
+        SizedBox(height: 16,),
+        RaisedButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
+        },
+          child: Text(profile_signout_button),)
+      ],
+    ),
+  );
 }

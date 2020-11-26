@@ -1,3 +1,4 @@
+import 'package:app/models/author.dart';
 import 'package:app/models/data.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/strings/string-us.dart';

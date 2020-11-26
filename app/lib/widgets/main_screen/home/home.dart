@@ -1,3 +1,4 @@
+import 'package:app/models/course-provider.dart';
 import 'package:app/models/course.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/widgets/course_detail/detail.dart';
@@ -43,6 +44,8 @@ class Home extends StatelessWidget {
 class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var courseProvider=Provider.of<CourseProvider>(context);
+    var bookmarkProvider=Provider.of<BookmarkProvider>(context);
     return Scaffold(
       appBar: CustomAppBar('Home'),
       body: RefreshIndicator(
@@ -70,13 +73,13 @@ class MyHome extends StatelessWidget {
             ),
             //add here
             Column(
-              children: Categories.map((c) => BuilderList(
+              children: courseProvider.categories.map((c) => BuilderList(
                     category: c,
-                    data: findCourseByCategoryId(c.id, -1),
+                    courses: courseProvider.findCourseByCategoryId(c.id, -1),
                   )).toList(),
             ),
-            BuilderListMyPath(findCourseByBookmark(-1)),
-            BuilderListBookmark(findCourseByBookmark(-1)),
+        //    BuilderListMyPath(bookmarkProvider.courses),
+            BuilderListBookmark(bookmarkProvider.courses),
           ],
         ),
       ),

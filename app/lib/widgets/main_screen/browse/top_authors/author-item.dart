@@ -1,20 +1,23 @@
+import 'package:app/models/author-provider.dart';
 import 'package:app/models/author.dart';
+import 'package:provider/provider.dart';
 import '../../../customs/text-type.dart';
 import 'author-detail.dart';
 import 'package:flutter/material.dart';
 
 class AuthorItem extends StatelessWidget {
-  Author _author;
-  AuthorItem(this._author);
+  Author author;
+  AuthorItem(this.author);
 
   @override
   Widget build(BuildContext context) {
 
     return GestureDetector(
       onTap: (){
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AuthorDetail(this._author)),
+          MaterialPageRoute(builder: (context) => AuthorDetail( author)),
         );
       },
       child: Container(
@@ -24,10 +27,10 @@ class AuthorItem extends StatelessWidget {
           child:  Column(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(this._author.avt),
+                backgroundImage: NetworkImage(author.avt),
                 radius: 40.0,
               ),
-              Text(this._author.name
+              Text(author.name
                 ,style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,

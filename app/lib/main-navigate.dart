@@ -1,3 +1,5 @@
+import 'package:app/models/author-provider.dart';
+import 'package:app/models/course-provider.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/widgets/main_screen/browse/browse.dart';
@@ -16,7 +18,7 @@ class MainNavigate extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _MainNavigateState extends State<MainNavigate> {
-  int _selectedIndex=0;
+
 
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
@@ -25,18 +27,24 @@ class _MainNavigateState extends State<MainNavigate> {
     Search()
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
-
+    var  currentBottomNavigatorProvider= Provider.of<CurrentBottomNavigatorProvider>(context);
+    int _selectedIndex=currentBottomNavigatorProvider.currentIndex;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context)=>LoginProvider()),
+        Provider(create: (context)=>CourseProvider(),),
+        ChangeNotifierProxyProvider<CourseProvider, BookmarkProvider>(
+          create: (context) => BookmarkProvider(),
+          update: (context, courseProvider, bookmark) {
+            bookmark.courseProvider = courseProvider;
+            return bookmark;
+          },
+        ),
+        Provider(create: (context)=>AuthorProvider()),
       ],
       child: Scaffold(
         body: Center(
@@ -64,7 +72,10 @@ class _MainNavigateState extends State<MainNavigate> {
             ),
           ],
           currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+
+          onTap: (index){
+            currentBottomNavigatorProvider.update(index);
+          },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Theme.of(context).primaryColor,
           selectedItemColor: Colors.white,

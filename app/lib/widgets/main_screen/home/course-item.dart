@@ -1,13 +1,16 @@
+import 'package:app/models/course-provider.dart';
 import 'package:app/models/course.dart';
 import 'package:app/utils/app-color.dart';
 import 'package:app/utils/constain.dart';
 import 'package:app/widgets/course_detail/detail.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../customs/text-type.dart';
 
 
 class VerticalCourseItem extends StatefulWidget {
   final Course course;
+
 
   VerticalCourseItem({this.course});
 
@@ -16,15 +19,56 @@ class VerticalCourseItem extends StatefulWidget {
 }
 
 class _VerticalCourseItemState extends State<VerticalCourseItem> {
-  static List<String> _choices = <String>[
+
+  List<String> _choices = <String>[
     "Bookmark",
     "Add to channel",
     "Download",
     "Share"
   ];
 
+  void _select(int choiceIndex, BuildContext context, Course course) {
+    switch (choiceIndex) {
+      case 0:
+        {
+
+          var bookmarkProvider=Provider.of<BookmarkProvider>(context);
+          bookmarkProvider.add(course);
+
+          // setState(() {
+          //
+          // });
+          _choices[0]=Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+
+        }
+        break;
+      case 1:
+        {
+
+
+        }
+        break;
+      case 2:
+        {}
+        break;
+      default:
+        {}
+        break;
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+     super.initState();
+     setState(() {
+       _choices[0]=Provider.of<BookmarkProvider>(context,listen:false ).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+     });
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    var bookmarkProvider=Provider.of<BookmarkProvider>(context);
     return GestureDetector(
         onTap: () {
           //Navigator.pushReplacementNamed(context, '/profile');
@@ -63,7 +107,9 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                       child: PopupMenuButton(
                           offset: Offset(200,100),
                           tooltip: 'Setting More',
-                          onSelected: _select,
+                          onSelected: (index)=>{
+                            _select(index, context, widget.course)
+                          },
                           itemBuilder: (BuildContext context) {
                             return _choices.map((String choice) {
                               return PopupMenuItem<int>(
@@ -78,7 +124,7 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            widget.course.isBookmarked
+                            bookmarkProvider.isInBookmark(widget.course.id)
                                 ? Container(
                                     padding: EdgeInsets.all(16),
                                     alignment: Alignment.bottomRight,
@@ -157,15 +203,47 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
         ));
   }
 
-  void _select(int choiceIndex) {
+
+}
+
+
+class HorizontalCourseItem extends StatefulWidget {
+  final Course course;
+
+  HorizontalCourseItem({this.course});
+
+  @override
+  _HorizontalCourseItemState createState() => _HorizontalCourseItemState();
+}
+
+class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
+
+  List<String> _choices = <String>[
+    "Bookmark",
+    "Add to channel",
+    "Download",
+    "Share"
+  ];
+  void _select(int choiceIndex, BuildContext context, Course course) {
     switch (choiceIndex) {
       case 0:
         {
-          print('Ban da chon: {$choiceIndex}');
+
+          var bookmarkProvider=Provider.of<BookmarkProvider>(context);
+          bookmarkProvider.add(course);
+
+          // setState(() {
+          //
+          // });
+          _choices[0]=Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+
         }
         break;
       case 1:
-        {}
+        {
+
+
+        }
         break;
       case 2:
         {}
@@ -175,27 +253,22 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
         break;
     }
   }
-}
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _choices[0]=Provider.of<BookmarkProvider>(context,listen:false ).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+    });
 
-
-
-class HorizontalCourseItem extends StatelessWidget {
-    static final List<String> _choices = <String>[
-    "Unbookmark",
-    "Add to channel",
-    "Remove Download"
-  ];
-
-  final Course course;
-  HorizontalCourseItem({this.course});
-
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CourseDetail(course)),
+            MaterialPageRoute(builder: (context) => CourseDetail(this.widget.course)),
           );
 
         },
@@ -216,7 +289,7 @@ class HorizontalCourseItem extends StatelessWidget {
                       width: 100,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(course.imgPlaceholder),
+                            image: NetworkImage(this.widget.course.imgPlaceholder),
                             fit: BoxFit.fitWidth),
                       ),
                     )
@@ -233,18 +306,18 @@ class HorizontalCourseItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildTextTitle(course.title),
-                      course.authors.length == 1
-                          ? buildSubTextTitle(course.authors[0])
-                          : buildSubTextTitle(course.authors[0] +
+                      buildTextTitle(this.widget.course.title),
+                      this.widget.course.authors.length == 1
+                          ? buildSubTextTitle(this.widget.course.authors[0])
+                          : buildSubTextTitle(this.widget.course.authors[0] +
                           ', +' +
-                          (course.authors.length - 1).toString()),
+                          (this.widget.course.authors.length - 1).toString()),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildSubTextTitle(course.level),
-                          buildSubTextTitle(course.dateRelease),
-                          buildSubTextTitle(course.hourLearning),
+                          buildSubTextTitle(this.widget.course.level),
+                          buildSubTextTitle(this.widget.course.dateRelease),
+                          buildSubTextTitle(this.widget.course.hourLearning),
                         ],
                       ),
                       Row(
@@ -278,7 +351,7 @@ class HorizontalCourseItem extends StatelessWidget {
                           SizedBox(
                             width: 20,
                           ),
-                          buildSubTextTitle('(${course.numsVote})')
+                          buildSubTextTitle('(${this.widget.course.numsVote})')
                         ],
                       ),
                     ],
@@ -289,7 +362,9 @@ class HorizontalCourseItem extends StatelessWidget {
                   color: Colors.green,
                   offset: Offset(200, 100),
                   tooltip: 'Setting More',
-                  onSelected: _select,
+                  onSelected: (index)=>{
+                    _select(index, context, widget.course)
+                  },
                   itemBuilder: (BuildContext context) {
                     return _choices.map((String choice) {
                       return PopupMenuItem<int>(
@@ -302,23 +377,5 @@ class HorizontalCourseItem extends StatelessWidget {
           ),
         ));
   }
-
-  void _select(int choiceIndex) {
-    switch (choiceIndex) {
-      case 0:
-        {
-          print('Ban da chon: {$choiceIndex}');
-        }
-        break;
-      case 1:
-        {}
-        break;
-      case 2:
-        {}
-        break;
-      default:
-        {}
-        break;
-    }
-  }
 }
+

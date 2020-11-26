@@ -54,7 +54,7 @@ class _DetailState extends State<CourseDetail> {
                       padding: EdgeInsets.all(16),
                       sliver: SliverList(
                           delegate: SliverChildListDelegate(
-                              [Information(course: Courses[0])])),
+                              [Information(course: this.widget.course)])),
                     ),
                     SliverPadding(
                       padding: EdgeInsets.all(16),
@@ -131,13 +131,16 @@ class _InformationState extends State<Information> {
           SizedBox(
             height: 8,
           ),
-          Row(
-            //suawr lai thanh buidler
-            children: widget.course.authors
-                .map((e) => Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: authorChip(findAuthorById(e), context)))
-                .toList(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              //suawr lai thanh buidler
+              children: widget.course.authors
+                  .map((e) => Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: authorChip(findAuthorById(e), context)))
+                  .toList(),
+            ),
           ),
           SizedBox(
             height: 8,

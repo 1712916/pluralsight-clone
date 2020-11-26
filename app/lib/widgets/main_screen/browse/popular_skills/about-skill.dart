@@ -39,10 +39,10 @@ class AboutSkill extends StatelessWidget {
             buildRowPaths(paths),
 
 
-           BuilderList(category: Category(title:'New in ${this.skill.name}' ),
-           data: newCourses,),
-            BuilderList(category: Category(title:'Trending in ${this.skill.name}' ),
-              data: trendingCourses,),
+           BuilderList(category: CourseCategory(title:'New in ${this.skill.name}' ),
+           courses: newCourses,),
+            BuilderList(category: CourseCategory(title:'Trending in ${this.skill.name}' ),
+              courses: trendingCourses,),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -10,14 +10,14 @@ class _LoginState extends State<SignUp> {
   String password;
   // Initially password is obscure
   bool _obscureText = true;
-  var _controller = TextEditingController();
-
+  var _controllerEmail = TextEditingController();
+  var _controllerName = TextEditingController();
+  var _controllerPhone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign Up'),
-        backgroundColor: Colors.deepPurple[700],
       ),
       body: SafeArea(
         child: Padding(
@@ -29,123 +29,113 @@ class _LoginState extends State<SignUp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Theme(
-                        data: ThemeData(primaryColor: Colors.deepPurple[700]),
-                        child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                _controller.clear();
-                                this.email = '';
-                              },
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.deepPurple[700])),
-                            labelText: 'Email',
-                          ),
-                          onChanged: (text) {
-                            setState(() {
-                              this.email = text;
-                              print('Email la: $email');
-                            });
+                    TextField(
+                      controller: _controllerEmail,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _controllerEmail.clear();
+                            this.email = '';
                           },
-                          onSubmitted: (v){
-                            FocusScope.of(context).unfocus();
-                          },
-                        )),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Theme(
-                        data: ThemeData(primaryColor: Colors.deepPurple[700]),
-                        child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                _controller.clear();
-                                this.email = '';
-                              },
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.deepPurple[700])),
-                            labelText: 'Name',
-                          ),
-                          onChanged: (text) {
-                            setState(() {});
-                          },
-                        )),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Theme(
-                        data: ThemeData(primaryColor: Colors.deepPurple[700]),
-                        child: TextField(
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                _controller.clear();
-                                this.email = '';
-                              },
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
+                        ),
+                        border: OutlineInputBorder(
+                            borderSide:
                                 BorderSide(color: Colors.deepPurple[700])),
-                            labelText: 'Phone number',
-                          ),
-                          onChanged: (text) {
-                            setState(() {});
+                        labelText: 'Email',
+                      ),
+                      onChanged: (text) {
+                        setState(() {
+                          this.email = text;
+                          print('Email la: $email');
+                        });
+                      },
+                      onSubmitted: (v){
+                        FocusScope.of(context).unfocus();
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: _controllerName,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _controllerName.clear();
+                            this.email = '';
                           },
-                        )),
+                        ),
+                        border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.deepPurple[700])),
+                        labelText: 'Name',
+                      ),
+                      onChanged: (text) {
+                        setState(() {});
+                      },
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    Theme(
-                        data: ThemeData(primaryColor: Colors.deepPurple[700]),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Password',
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                                icon: Icon(_obscureText
-                                    ? Icons.lock
-                                    : Icons.lock_open),
-                              )),
-                          obscureText: _obscureText,
-                        )),
+                    TextField(
+                      controller: _controllerPhone,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _controllerPhone.clear();
+                            this.email = '';
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                            borderSide:
+                            BorderSide(color: Colors.deepPurple[700])),
+                        labelText: 'Phone number',
+                      ),
+                      onChanged: (text) {
+                        setState(() {});
+                      },
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    Theme(
-                        data: ThemeData(primaryColor: Colors.deepPurple[700]),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Confirm Password',
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                                icon: Icon(_obscureText
-                                    ? Icons.lock
-                                    : Icons.lock_open),
-                              )),
-                          obscureText: _obscureText,
-                        )),
+                    TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            icon: Icon(_obscureText
+                                ? Icons.lock
+                                : Icons.lock_open),
+                          )),
+                      obscureText: _obscureText,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Confirm Password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            icon: Icon(_obscureText
+                                ? Icons.lock
+                                : Icons.lock_open),
+                          )),
+                      obscureText: _obscureText,
+                    ),
                     SizedBox(
                       height: 20,
                     ),

@@ -1,6 +1,8 @@
- import 'package:app/utils/app-theme.dart';
+ import 'package:app/models/current-bottom-navigator.dart';
+import 'package:app/utils/app-theme.dart';
 import 'package:flutter/material.dart';
-import 'widgets/customs/main-navigate.dart';
+import 'package:provider/provider.dart';
+import 'main-navigate.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +17,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       themeMode: ThemeMode.dark, //Change theme here
-      home: MainNavigate(),
+      home: ChangeNotifierProvider(
+          create: (context)=>CurrentBottomNavigatorProvider(),
+          child: MainNavigate()),
       debugShowCheckedModeBanner: false,
 
     );

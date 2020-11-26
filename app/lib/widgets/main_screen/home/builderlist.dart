@@ -1,22 +1,23 @@
+import 'package:app/models/course-provider.dart';
 import 'package:app/models/course.dart';
 import 'package:app/widgets/main_screen/home/seeall.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../customs/text-type.dart';
 import 'course-item.dart';
 
 class BuilderList extends StatelessWidget {
   @required
-  final Category category;
-  List<Course> data;
+  final CourseCategory category;
+  List<Course> courses;
 
-  BuilderList({this.category, this.data});
-  List<Course> searchAll() {
-    return findCourseByCategoryId(category.id, -1);
-  }
+  BuilderList({this.category, this.courses});
+
 
   Widget buildList(BuildContext context) {
-    return Column(children: [
+    var coursesProvider=Provider.of<CourseProvider>(context);
+    return !courses.isEmpty?Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -25,7 +26,7 @@ class BuilderList extends StatelessWidget {
             buildTextHeader(this.category.title),
             TextButton(
                 onPressed: () {
-                  List<Course> data = this.searchAll();
+                  List<Course> data = coursesProvider.findCourseByCategoryId(this.category.id, -1);
                   //truyen data vao navigte
                   //goi navigate here
                   // Navigator.pushNamed(context, CourseDetail.routeName,
@@ -50,7 +51,7 @@ class BuilderList extends StatelessWidget {
         height: 200,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          children: data
+          children: courses
               .map((course) => Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: VerticalCourseItem(course: course),
@@ -61,29 +62,26 @@ class BuilderList extends StatelessWidget {
       SizedBox(
         height: 20,
       )
-    ]);
+    ]):SizedBox(height: 0,);
   }
 
   @override
   Widget build(BuildContext context) {
     return buildList(context);
   }
+
+
 }
 
 class BuilderListBookmark extends BuilderList {
   BuilderListBookmark(List<Course> data)
-      : super(category: Category(title: 'Bookmark'), data: data);
+      : super(category: CourseCategory(title: 'Bookmark'), courses: data);
 
-  @override
-  List<Course> searchAll() {
-    //find by
-    return findCourseByBookmark(-1);
-  }
 }
 
 class BuilderListMyPath extends BuilderList {
   BuilderListMyPath(List<Course> data)
-      : super(category: Category(title: 'My Paths'), data: data);
+      : super(category: CourseCategory(title: 'My Paths'), courses: data);
 
   @override
   List<Course> searchAll() {

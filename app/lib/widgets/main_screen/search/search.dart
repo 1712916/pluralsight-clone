@@ -1,5 +1,10 @@
+import 'package:app/models/author.dart';
+import 'package:app/models/course-provider.dart';
+import 'package:app/models/course.dart';
 import 'package:app/widgets/main_screen/search/search-result.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../models/data.dart';
 
 List<String> dataSuggestions = [
   "Android",
@@ -56,7 +61,7 @@ class _SearchState extends State<Search> {
           //widget.search here
           List<String> searching = [];
           searching = dataSuggestions
-              .where((element) => element.contains(_queryController.text))
+              .where((element) => element.toLowerCase().contains(_queryController.text.toLowerCase()))
               .toList();
           setState(() {
 
@@ -91,6 +96,7 @@ class _SearchState extends State<Search> {
     return AppBar(
       title: TextField(
         controller: _queryController,
+        onSubmitted: submitSearchText,
         decoration: InputDecoration(
           focusedBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
@@ -155,23 +161,54 @@ class _SearchState extends State<Search> {
       ),
     );
   }
+  Function submitSearchText(String text){
+    setState(() {
+      _recentSearches.add(text);
+      _queryController.text = text;
+      _queryController.selection=TextSelection.fromPosition(TextPosition(offset: _queryController.text.length));
 
+      //Tìm kiếm
+      List<Course> courses=Provider.of<CourseProvider>(context).findCoursesByTitle(_queryController.text);
+      List<Path> paths=Paths;
+      List<Author> authors=Authors;
+
+
+      if(courses.length!=0){
+        _body = SearchResult(courses: courses,authors: authors,paths: paths);
+      }else{
+        _body=Center( child: Text("Không tìm thấy khóa học"),);
+      }
+
+      _isTyping=false;
+      //Tat ban phim
+      FocusScope.of(context).unfocus();
+    });
+  }
   Widget _item(strInput, type) {
     return ListTile(
       title: Text(strInput),
       leading: type ? Icon(Icons.search) : Icon(Icons.history),
       onTap: () {
-        _recentSearches.add(strInput);
+
         //thay doi _body
-        setState(() {
-         _queryController.text = strInput;
-         _queryController.selection=TextSelection.fromPosition(TextPosition(offset: _queryController.text.length));
-          _body = SearchResult();
-          _isTyping=false;
-          //Tat ban phim
-          FocusScope.of(context).unfocus();
-        });
+        submitSearchText(strInput);
+
       },
     );
   }
+
+  void submit(String text, BuildContext context){
+    List<Course> courses=Provider.of<CourseProvider>(context).findCoursesByTitle(text);
+    List<Path> paths=Paths;
+    List<Author> authors=Authors;
+    setState(){
+      if(courses.length!=0){
+        _body = SearchResult(courses: courses,authors: authors,paths: paths);
+      }else{
+        _body=Center( child: Text("Không tìm thấy khóa học"),);
+      }
+    }
+
+  }
 }
+

@@ -1,4 +1,5 @@
 import 'package:app/models/login-provider.dart';
+import 'package:app/widgets/authenticate/sign-up.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -106,7 +107,9 @@ class _LoginState extends State<SignIn> {
                     ],
                   ),
                 )),
-                TextButton(onPressed: (){}, child: Text('CREATE NEW ACCOUNT')),
+                TextButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
+                }, child: Text('CREATE NEW ACCOUNT')),
               ],
             ),
           ),

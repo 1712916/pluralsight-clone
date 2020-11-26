@@ -1,11 +1,15 @@
+import 'package:app/models/author-provider.dart';
 import 'package:app/models/author.dart';
 import 'package:app/utils/constain.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'author-item.dart';
 
 class AuthorList extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    List<Author> authors=Provider.of<AuthorProvider>(context).authors;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +32,7 @@ class AuthorList extends StatelessWidget {
             height: authorRowHeight,
             child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: Authors.map((author) => Padding(
+                children: authors.map((author) => Padding(
                       padding: EdgeInsets.only(left: 16),
                       child: AuthorItem(author),
                     )).toList()),
