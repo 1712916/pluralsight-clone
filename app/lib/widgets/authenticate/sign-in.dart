@@ -1,4 +1,7 @@
+import 'package:app/models/account.dart';
+import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
+import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/authenticate/sign-up.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,11 +12,18 @@ class SignIn extends StatefulWidget {
 }
 
 class _LoginState extends State<SignIn> {
-  String email;
-  String password;
+  int isLogging = -1;
   // Initially password is obscure
   bool _obscureText = true;
-  var _controller = TextEditingController();
+  TextEditingController _emailController;
+  TextEditingController _passwordController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,52 +42,61 @@ class _LoginState extends State<SignIn> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: (){
-
-                              _controller.clear();
-                              this.email='';
-                            },
-                          ),
-
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.deepPurple[700])),
-                          labelText: 'Email',
-
-                        ),
-                        onChanged: (text){
-                          setState(() {
-                            this.email=text;
-                            print('Email la: $email');
-                          });
-                        },
-                      ),
+                      myTextField("Email",_emailController),
                       SizedBox(
                         height: 20,
                       ),
                       TextField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.secondaryColor,
+                              ),
+                            ),
                             labelText: 'Password',
-                        suffixIcon: IconButton(
-                          onPressed: (){
-                            setState(() {
-                              _obscureText=!_obscureText;
-                            });
-                          },
-                          icon: Icon(_obscureText ? Icons.lock : Icons.lock_open) ,
-                        )),
+
+                            labelStyle: TextStyle(
+                              color: AppColors.secondaryColor,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              icon: Icon(
+                                _obscureText ? Icons.lock : Icons.lock_open,
+                                color: AppColors.secondaryColor,
+                              ),
+                            )),
                         obscureText: _obscureText,
-
                       ),
-
                       SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+                      isLogging == -1
+                          ? Container()
+                          : (isLogging == 1
+                              ? Container(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation(
+                                        AppColors.accent),
+                                  ),
+                                )
+                              : Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "*Sai mật khẩu hoặc tài khoản",
+                                    style: TextStyle(color: AppColors.error),
+                                  ),
+                                )),
+                      SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: double.infinity,
@@ -86,30 +105,63 @@ class _LoginState extends State<SignIn> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(4.0))),
                         child: FlatButton(
-                          onPressed: (){
-                            //Xu ly dang nhap
+                            onPressed: () async {
+                              //bật indicator
+                              //Xu ly dang nhap
+                              setState(() {
+                                isLogging = 1;
+                              });
+                              await Future.delayed(Duration(seconds: 4));
+                              String email = _emailController.text;
+                              String password = _passwordController.text;
 
-                            //Neu dang nhap thanh con thi
-                            Provider.of<LoginProvider>(context).changeState();
-                            Navigator.pop(context);
-                          },
+                              if (email == MyAccount.email) {
+                                if (password == MyAccount.password) {
+                                  //Neu dang nhap thanh con thi
+
+                                  Provider.of<LoginProvider>(context)
+                                      .changeState();
+                                  Navigator.of(context)
+                                      .popUntil((route) => route.isFirst);
+                                  Provider.of<CurrentBottomNavigatorProvider>(
+                                          context)
+                                      .currentIndex = 0;
+                                } else {
+                                  //Nếu không thành công in ra thông báo
+                                  setState(() {
+                                    isLogging = 0;
+                                  });
+                                }
+                              } else {
+                                //Nếu không thành công in ra thông báo
+                                setState(() {
+                                  isLogging = 0;
+                                });
+                              }
+                            },
                             child: Center(
-                          child: Text(
-                            'SIGN IN',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        )),
+                              child: Text(
+                                'SIGN IN',
+                              ),
+                            )),
                       ),
                       TextButton(
-                          onPressed: (){}, child: Text('FORGOT PASSWORD?')),
+                          onPressed: () {},
+                          child: Text('FORGOT PASSWORD?',
+                              style:
+                                  TextStyle(color: AppColors.secondaryColor))),
                     ],
                   ),
                 )),
-                TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
-                }, child: Text('CREATE NEW ACCOUNT')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
+                    child: Text(
+                      'CREATE NEW ACCOUNT',
+                      style: TextStyle(color: AppColors.secondaryColor),
+                    )),
               ],
             ),
           ),
@@ -118,3 +170,32 @@ class _LoginState extends State<SignIn> {
     );
   }
 }
+
+
+Widget  myTextField(String labelname, TextEditingController controller){
+  return  TextField(
+    controller: controller,
+    decoration: InputDecoration(
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.secondaryColor,
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: AppColors.secondaryColor,
+      ),
+      suffixIcon: IconButton(
+        icon: Icon(
+          Icons.clear,
+          color: AppColors.secondaryColor,
+        ),
+        onPressed: () {
+          controller.clear();
+        },
+      ),
+      labelText: labelname,
+    ),
+  );
+}
+

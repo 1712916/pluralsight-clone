@@ -1,5 +1,6 @@
 import 'package:app/models/login-provider.dart';
 import 'package:app/strings/string-us.dart';
+import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class Profile extends StatelessWidget {
     var loginState=Provider.of<LoginProvider>(context);
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+
       appBar: AppBar(
         title: Text('Profile'),
         backgroundColor: Colors.grey[850],
@@ -26,19 +27,14 @@ class Profile extends StatelessWidget {
             Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: AssetImage('assets/avt.jpg'),
+                  backgroundImage: NetworkImage(loginState.account.avt),
                   radius: 40.0,
                 ),
                 SizedBox(
                   width: 20.0,
                 ),
-                Text(
-                  'Kieu Phong',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                buildTextHeader1(
+                  loginState.account.name,
                 ),
                 SizedBox(
                   width: 20.0,
@@ -140,6 +136,7 @@ class Profile extends StatelessWidget {
 
 
 Widget ProfileSignOut(BuildContext context){
+
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +147,8 @@ Widget ProfileSignOut(BuildContext context){
         RaisedButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
         },
-          child: Text(profile_signout_button),)
+          child: Text(profile_signout_button),
+        color: AppColors.secondaryColor,)
       ],
     ),
   );

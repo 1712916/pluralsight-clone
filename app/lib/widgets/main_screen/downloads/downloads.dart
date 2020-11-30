@@ -1,4 +1,5 @@
 import 'package:app/models/course.dart';
+import 'package:app/widgets/authenticate/settings.dart';
 import 'package:app/widgets/course_detail/detail.dart';
 import 'package:app/widgets/main_screen/home/course-item.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class Downloads extends StatelessWidget {
                   return CourseDetail(null);
                 case Profile.routeName:
                   return Profile();
+                case Settings.routeName:
+                  return Settings();
                 default:
                   return MyDownloads();
               }

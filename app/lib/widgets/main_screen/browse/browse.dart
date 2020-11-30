@@ -2,6 +2,8 @@ import 'package:app/models/author.dart';
 import 'package:app/models/data.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/strings/string-us.dart';
+import 'package:app/utils/app-color.dart';
+import 'package:app/widgets/authenticate/settings.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
 import 'package:app/widgets/course_detail/detail.dart';
 import 'package:app/widgets/customs/text-type.dart';
@@ -37,6 +39,8 @@ class Browse  extends StatelessWidget {
                   return AuthorDetail(null);
                 case AllPath.routeName:
                   return AllPath();
+                case Settings.routeName:
+                  return Settings();
               // setting
               //  send feedback
               // contact support
@@ -114,6 +118,7 @@ Widget SignInIntro(BuildContext context){
           Container(
             width: double.infinity,
             child: RaisedButton(
+              color: AppColors.secondaryColor,
               onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
             },

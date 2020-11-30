@@ -32,7 +32,6 @@ class Course {
 
 }
 
-
 class CourseCategory {
   String title;
   String id;
@@ -46,8 +45,6 @@ List<CourseCategory> Categories = [
   CourseCategory(title: "Security Professional", id: "04"),
 ];
 
-
-
 // List<Course> findCourseByBookmark(int size) {
 //   //thuat toan hoi cui
 //   var data = Courses.where((course) => course.isBookmarked).toList();
@@ -57,18 +54,14 @@ List<CourseCategory> Categories = [
 //   return data.sublist(0, size);
 // }
 
-
-
-
 List<Course> Courses = [
   Course(
     id: "01",
     title: 'Angular',
     categoryId: '02',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-        "https://cdn2.thecatapi.com/images/5fo.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5fo.jpg",
     video: 'video',
     authors: ['05'],
     level: 'Beginner',
@@ -83,11 +76,10 @@ List<Course> Courses = [
     title: 'C++',
     categoryId: '02',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5fl.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5fl.jpg",
     video: 'video',
-    authors: ['01', '02','03','04','05'],
+    authors: ['01', '02', '03', '04', '05'],
     level: 'Beginner',
     dateRelease: 'thg 2 2019',
     hourLearning: '9h 30',
@@ -100,11 +92,10 @@ List<Course> Courses = [
     title: 'Python',
     categoryId: '02',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5e8.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5e8.jpg",
     video: 'video',
-    authors: ['03', '02','06'],
+    authors: ['03', '02', '06'],
     level: 'Beginner',
     dateRelease: 'thg 2 2019',
     hourLearning: '9h 30',
@@ -117,9 +108,8 @@ List<Course> Courses = [
     title: 'React Native',
     categoryId: '02',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5ge.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5ge.jpg",
     video: 'video',
     authors: ['05', '04'],
     level: 'Beginner',
@@ -134,9 +124,8 @@ List<Course> Courses = [
     title: 'Java core',
     categoryId: '02',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5dc.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5dc.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -151,9 +140,8 @@ List<Course> Courses = [
     title: 'Flutter',
     categoryId: '01',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5ht.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5ht.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -168,9 +156,8 @@ List<Course> Courses = [
     title: 'Android',
     categoryId: '01',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5g4.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5g4.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -185,9 +172,8 @@ List<Course> Courses = [
     title: 'C#',
     categoryId: '01',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5fo.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5fo.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -202,9 +188,8 @@ List<Course> Courses = [
     title: 'Docker',
     categoryId: '01',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/78.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/78.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -219,9 +204,8 @@ List<Course> Courses = [
     title: 'Node red',
     categoryId: '01',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5j1.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5j1.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -236,9 +220,8 @@ List<Course> Courses = [
     title: 'Vuejs',
     categoryId: '03',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5gj.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5gj.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -253,9 +236,8 @@ List<Course> Courses = [
     title: 'Water Fall',
     categoryId: '03',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5ia.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5ia.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -270,9 +252,8 @@ List<Course> Courses = [
     title: 'Scrum',
     categoryId: '03',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5hq.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5hq.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -287,9 +268,8 @@ List<Course> Courses = [
     title: 'Computer science',
     categoryId: '04',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/4d.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/4d.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -304,9 +284,8 @@ List<Course> Courses = [
     title: 'Angular',
     categoryId: '04',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5e8.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5e8.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -321,9 +300,8 @@ List<Course> Courses = [
     title: 'Deep learning',
     categoryId: '04',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-      "https://cdn2.thecatapi.com/images/5gu.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5gu.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -338,9 +316,8 @@ List<Course> Courses = [
     title: 'Javascript',
     categoryId: '04',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/4d.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/4d.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -355,9 +332,8 @@ List<Course> Courses = [
     title: 'Html',
     categoryId: '04',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/62.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/62.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',
@@ -372,9 +348,8 @@ List<Course> Courses = [
     title: 'Meow meow',
     categoryId: '04',
     description:
-        "ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ĐỪNG GỌI TÔI KHI CHƯA ĐƯỢC PHÉP. Thanh tra Sở TT&TT Hà Nội vừa ra quyết định xử phạt vi phạm hành chính đối với công ty TNHH Trung tâm Anh ngữ VUS Miền Bắc. Doanh nghiệp này có địa chỉ đăng ký kinh doanh tại tầng 3, tòa nhà Golden Place, số 54 Lê Văn Lương, Thanh Xuân, Hà Nội. ",
-    imgPlaceholder:
-    "https://cdn2.thecatapi.com/images/5i4.jpg",
+        "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ",
+    imgPlaceholder: "https://cdn2.thecatapi.com/images/5i4.jpg",
     video: 'video',
     authors: ['01', '02'],
     level: 'Beginner',

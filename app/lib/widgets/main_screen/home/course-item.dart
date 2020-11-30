@@ -359,7 +359,6 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                 ),
               ),
               PopupMenuButton(
-                  color: Colors.green,
                   offset: Offset(200, 100),
                   tooltip: 'Setting More',
                   onSelected: (index)=>{
