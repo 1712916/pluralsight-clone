@@ -111,7 +111,7 @@ class _LoginState extends State<SignIn> {
                               setState(() {
                                 isLogging = 1;
                               });
-                              await Future.delayed(Duration(seconds: 4));
+                              await Future.delayed(Duration(seconds: 1));
                               String email = _emailController.text;
                               String password = _passwordController.text;
 

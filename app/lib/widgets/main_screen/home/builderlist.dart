@@ -12,11 +12,12 @@ class BuilderList extends StatelessWidget {
   final CourseCategory category;
   List<Course> courses;
 
+
   BuilderList({this.category, this.courses});
 
 
   Widget buildList(BuildContext context) {
-    var coursesProvider=Provider.of<CourseProvider>(context);
+
     return !courses.isEmpty?Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -26,7 +27,7 @@ class BuilderList extends StatelessWidget {
             buildTextHeader(this.category.title),
             TextButton(
                 onPressed: () {
-                  List<Course> data = coursesProvider.findCourseByCategoryId(this.category.id, -1);
+
                   //truyen data vao navigte
                   //goi navigate here
                   // Navigator.pushNamed(context, CourseDetail.routeName,
@@ -35,8 +36,8 @@ class BuilderList extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ListCourse(
+                                categoryId: this.category.id,
                                 categoryName: this.category.title,
-                                  courses: data,
                               )));
                 },
                 child: Text(
@@ -74,8 +75,9 @@ class BuilderList extends StatelessWidget {
 }
 
 class BuilderListBookmark extends BuilderList {
+  @override
   BuilderListBookmark(List<Course> data)
-      : super(category: CourseCategory(title: 'Bookmark'), courses: data);
+      : super(category: CourseCategory(title: 'Bookmarks'), courses: data);
 
 }
 
