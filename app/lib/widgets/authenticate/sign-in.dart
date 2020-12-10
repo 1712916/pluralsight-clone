@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:app/models/account.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/utils/app-color.dart';
+import 'package:app/utils/constain.dart';
 import 'package:app/widgets/authenticate/sign-up.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class SignIn extends StatefulWidget {
   @override
@@ -115,29 +119,27 @@ class _LoginState extends State<SignIn> {
                               String email = _emailController.text;
                               String password = _passwordController.text;
 
-                              if (email == MyAccount.email) {
-                                if (password == MyAccount.password) {
-                                  //Neu dang nhap thanh con thi
+                              var response = await http.post(API+"user/login", body: jsonEncode({
+                                "email": email,
+                                "password": password,
+                              }), headers: {"Content-Type": "application/json" });
 
-                                  Provider.of<LoginProvider>(context)
-                                      .changeState();
-                                  Navigator.of(context)
-                                      .popUntil((route) => route.isFirst);
-                                  Provider.of<CurrentBottomNavigatorProvider>(
-                                          context)
-                                      .currentIndex = 0;
-                                } else {
-                                  //Nếu không thành công in ra thông báo
-                                  setState(() {
-                                    isLogging = 0;
-                                  });
-                                }
-                              } else {
-                                //Nếu không thành công in ra thông báo
-                                setState(() {
-                                  isLogging = 0;
-                                });
+                              if(response.statusCode==200){
+                                print("data về là: ${response.body}");
+
+                                Provider.of<LoginProvider>(context)
+                                    .changeState();
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
+                                Provider.of<CurrentBottomNavigatorProvider>(
+                                    context)
+                                    .currentIndex = 0;
                               }
+
+                              setState(() {
+                                isLogging = 0;
+                              });
+
                             },
                             child: Center(
                               child: Text(
@@ -154,9 +156,19 @@ class _LoginState extends State<SignIn> {
                   ),
                 )),
                 TextButton(
-                    onPressed: () {
-                      Navigator.push(context,
+                    onPressed: () async {
+                      final result = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) => SignUp()));
+
+                      if(result!=null){
+
+                        print(result);
+                        setState(() {
+                          _emailController.text=result['email'];
+                          _passwordController.text=result['password'];
+                        });
+
+                      }
                     },
                     child: Text(
                       'CREATE NEW ACCOUNT',
