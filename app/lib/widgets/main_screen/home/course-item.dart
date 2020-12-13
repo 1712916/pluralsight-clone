@@ -1,7 +1,7 @@
 import 'package:app/models/course-provider.dart';
 import 'package:app/models/course.dart';
 import 'package:app/utils/app-color.dart';
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/course_detail/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

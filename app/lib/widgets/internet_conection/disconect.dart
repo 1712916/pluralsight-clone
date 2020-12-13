@@ -6,8 +6,8 @@ Widget diconnectTypeA() {
     child: Column(
       children: [
         Icon(Icons.warning_rounded),
-        Text(dicconnectTitleA),
-        Text(dicconnectSubTitleA),
+        Text(disconnectTitleA),
+        Text(disconnectSubTitleA),
         SizedBox(height: 30),
         RaisedButton(
           onPressed: () {},
@@ -28,8 +28,8 @@ Widget diconnectTypeB() {
     child: Column(
       children: [
         Icon(Icons.warning_rounded),
-        Text(dicconnectTitleB),
-        Text(dicconnectSubTitleB),
+        Text(disconnectTitleB),
+        Text(disconnectSubTitleB),
         SizedBox(height: 30),
         RaisedButton(
           onPressed: () {},

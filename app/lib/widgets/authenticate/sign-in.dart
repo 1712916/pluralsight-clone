@@ -1,11 +1,16 @@
 import 'dart:convert';
 
-import 'package:app/models/account.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
+import 'package:app/models/user-response-model.dart';
+import 'package:app/services/user-services.dart';
+import 'package:app/strings/string-us.dart';
 import 'package:app/utils/app-color.dart';
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
+import 'package:app/widgets/authenticate/forgot-password.dart';
 import 'package:app/widgets/authenticate/sign-up.dart';
+import 'package:app/widgets/customs/loading-process.dart';
+import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +21,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _LoginState extends State<SignIn> {
-  int isLogging = -1;
+  int loginState = -1;
+  bool isLoading = false;
   // Initially password is obscure
   bool _obscureText = true;
   TextEditingController _emailController;
@@ -46,7 +52,7 @@ class _LoginState extends State<SignIn> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      myTextField("Email",_emailController),
+                      myTextField("Email", _emailController),
                       SizedBox(
                         height: 20,
                       ),
@@ -60,7 +66,6 @@ class _LoginState extends State<SignIn> {
                               ),
                             ),
                             labelText: 'Password',
-
                             labelStyle: TextStyle(
                               color: AppColors.secondaryColor,
                             ),
@@ -80,25 +85,15 @@ class _LoginState extends State<SignIn> {
                       SizedBox(
                         height: 10,
                       ),
-                      isLogging == -1
-                          ? Container()
-                          : (isLogging == 1
-                              ? Container(
-                                  height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation(
-                                        AppColors.accent),
-                                  ),
-                                )
-                              : Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "*Sai mật khẩu hoặc tài khoản",
-                                    style: TextStyle(color: AppColors.error),
-                                  ),
-                                )),
+                      !isLoading ? Container() : circleLoading(),
+                      loginState == 400
+                          ? Container(
+                              alignment: Alignment.topLeft,
+                              child: failureText(
+                                loginFailedStatus,
+                              ),
+                            )
+                          : Container(),
                       SizedBox(
                         height: 10,
                       ),
@@ -113,33 +108,40 @@ class _LoginState extends State<SignIn> {
                               //bật indicator
                               //Xu ly dang nhap
                               setState(() {
-                                isLogging = 1;
+                                isLoading = true;
+                                loginState = -1;
                               });
-                              await Future.delayed(Duration(seconds: 1));
+
                               String email = _emailController.text;
                               String password = _passwordController.text;
 
-                              var response = await http.post(API+"user/login", body: jsonEncode({
-                                "email": email,
-                                "password": password,
-                              }), headers: {"Content-Type": "application/json" });
+                              var response = await loginService(
+                                  email: email, password: password);
 
-                              if(response.statusCode==200){
+                              if (response.statusCode == 200) {
                                 print("data về là: ${response.body}");
 
+                                var userResponse =
+                                    userResponseModelFromJson(response.body);
+                                Provider.of<LoginProvider>(context)
+                                    .setUserResponse(userResponse);
                                 Provider.of<LoginProvider>(context)
                                     .changeState();
                                 Navigator.of(context)
                                     .popUntil((route) => route.isFirst);
                                 Provider.of<CurrentBottomNavigatorProvider>(
-                                    context)
+                                        context)
                                     .currentIndex = 0;
+                                setState(() {
+                                  isLoading = false;
+                                  loginState = 200;
+                                });
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                  loginState = 400;
+                                });
                               }
-
-                              setState(() {
-                                isLogging = 0;
-                              });
-
                             },
                             child: Center(
                               child: Text(
@@ -148,7 +150,12 @@ class _LoginState extends State<SignIn> {
                             )),
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ForgotPassword()));
+                          },
                           child: Text('FORGOT PASSWORD?',
                               style:
                                   TextStyle(color: AppColors.secondaryColor))),
@@ -160,14 +167,12 @@ class _LoginState extends State<SignIn> {
                       final result = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) => SignUp()));
 
-                      if(result!=null){
-
+                      if (result != null) {
                         print(result);
                         setState(() {
-                          _emailController.text=result['email'];
-                          _passwordController.text=result['password'];
+                          _emailController.text = result['email'];
+                          _passwordController.text = result['password'];
                         });
-
                       }
                     },
                     child: Text(
@@ -183,9 +188,8 @@ class _LoginState extends State<SignIn> {
   }
 }
 
-
-Widget  myTextField(String labelname, TextEditingController controller){
-  return  TextField(
+Widget myTextField(String labelname, TextEditingController controller) {
+  return TextField(
     controller: controller,
     decoration: InputDecoration(
       border: OutlineInputBorder(),
@@ -210,4 +214,3 @@ Widget  myTextField(String labelname, TextEditingController controller){
     ),
   );
 }
-

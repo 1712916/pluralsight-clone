@@ -1,5 +1,5 @@
 import 'package:app/models/data.dart';
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/main_screen/browse/paths/path-item.dart';
 import 'package:app/widgets/main_screen/browse/paths/seeall.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 
 import 'package:app/models/course.dart';
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/customs/expandable.dart';
 import 'package:app/widgets/main_screen/home/course-item.dart';
 import 'package:flutter/material.dart';

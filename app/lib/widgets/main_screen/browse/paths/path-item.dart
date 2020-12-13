@@ -1,4 +1,4 @@
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:app/widgets/main_screen/browse/paths/path-detail.dart';
 import 'package:flutter/material.dart';

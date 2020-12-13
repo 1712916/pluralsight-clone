@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:app/services/user-services.dart';
 import 'package:app/strings/string-us.dart';
 import 'package:app/utils/app-color.dart';
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
+import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +20,7 @@ class _LoginState extends State<SignUp> {
   bool _obscureText2;
   bool _validateConfirmPassword = false; //check password
   int _statusRegister;
-  TextEditingController _emailCotroller;
+  TextEditingController _emailController;
   TextEditingController _nameController;
   TextEditingController _phoneController;
   TextEditingController _passwordController;
@@ -34,20 +36,15 @@ class _LoginState extends State<SignUp> {
     }
 
     //
-    print("usename: ${this._nameController.text}");
-    var response = await http.post(API+"user/register", body: jsonEncode({
-      "username": this._nameController.text,
-      "email": this._emailCotroller.text,
-      "phone":this._phoneController.text,
-      "password": this._passwordController.text,
-    }), headers: {"Content-Type": "application/json" });
+
+    var response = await registerService(username: _nameController.text,email: _emailController.text, phone: _phoneController.text, password: _passwordController.text);
 
     setState(() {
       _statusRegister=response.statusCode;
     });
 
     if(_statusRegister==200){
-      Navigator.pop(context, {"email": this._emailCotroller.text, "password": this._passwordController.text});
+      Navigator.pop(context, {"email": this._emailController.text, "password": this._passwordController.text});
     }
 
   }
@@ -58,7 +55,7 @@ class _LoginState extends State<SignUp> {
     super.initState();
     _obscureText2 = true;
     _obscureText = true;
-    _emailCotroller = TextEditingController();
+    _emailController = TextEditingController();
     _nameController = TextEditingController();
     _phoneController = TextEditingController();
     _passwordController = TextEditingController();
@@ -83,7 +80,7 @@ class _LoginState extends State<SignUp> {
                   SizedBox(
                     height: 20,
                   ),
-                  myTextField("Email", _emailCotroller),
+                  myTextField("Email", _emailController),
                   SizedBox(
                     height: 20,
                   ),
@@ -164,7 +161,7 @@ class _LoginState extends State<SignUp> {
                   SizedBox(
                     height: 20,
                   ),
-                  _statusRegister==400?Text(failed_register):(_statusRegister==200?Text(succeed_register):Container()),
+                  _statusRegister==400?failureText(failed_register):(_statusRegister==200?successText(succeed_register):Container()),
                   SizedBox(
                     height: 20,
                   ),

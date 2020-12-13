@@ -11,6 +11,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var loginState=Provider.of<LoginProvider>(context);
+    var userInfo=loginState.userResponseModel.userInfo;
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -25,13 +26,15 @@ class Settings extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/avt.jpg'),
+                    backgroundImage: NetworkImage(userInfo.avatar),
                     radius: 20.0,
                   ),
                   Column(
                     children: [
-                      buildTextHeader(loginState.account.name),
-                      buildSubTextTitle(loginState.account.id)
+                      userInfo.name!=null? buildTextHeader1(
+                        userInfo.name,
+                      ):Text(userInfo.email),
+                      buildSubTextTitle(userInfo.id)
                     ],
                   )
                 ],

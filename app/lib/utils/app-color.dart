@@ -8,6 +8,8 @@ class AppColors {
   static const backgroundDark = const Color.fromARGB(255, 13, 15, 18);
   static const backgroundItemTypeA = const Color.fromARGB(255, 30, 36, 41);
   static const error= Color(0xFFEF5350);
+
+  static const success= Colors.green;
   // static const white = Colors.white;
   // static const textGrey = Colors.grey;
   // static const textBlack = Colors.black;

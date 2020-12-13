@@ -1,6 +1,6 @@
 import 'package:app/models/author-provider.dart';
 import 'package:app/models/author.dart';
-import 'package:app/utils/constain.dart';
+import 'package:app/utils/constraints.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'author-item.dart';
