@@ -21,3 +21,4 @@ String forgotRequestTitle="Please enter your email to change your password.";
 String responseError="SORRY! Had an error in this server.";
 String failedRequestedForgotPassword="Failed to send a request to this email.";
 String succeedRequestedForgotPassword="Please check this email to change your password.";
+String checkEmailActive="Check email to activate your account";

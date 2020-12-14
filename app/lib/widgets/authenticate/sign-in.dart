@@ -86,14 +86,27 @@ class _LoginState extends State<SignIn> {
                         height: 10,
                       ),
                       !isLoading ? Container() : circleLoading(),
-                      loginState == 400
-                          ? Container(
+                      Container(
+                        child: ((){
+                          if(loginState==400){
+                            return Container(
                               alignment: Alignment.topLeft,
                               child: failureText(
                                 loginFailedStatus,
                               ),
-                            )
-                          : Container(),
+                            );
+                          }
+                          if(loginState==1){
+                            return Container(
+                              alignment: Alignment.topLeft,
+                              child: successText(
+                                checkEmailActive,
+                              ),
+                            );
+                          }
+                          return Container();
+                        })(),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -172,6 +185,7 @@ class _LoginState extends State<SignIn> {
                         setState(() {
                           _emailController.text = result['email'];
                           _passwordController.text = result['password'];
+                          loginState=1;
                         });
                       }
                     },
