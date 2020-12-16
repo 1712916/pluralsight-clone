@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextExpandable extends StatefulWidget {
-  final String strText;
+   String strText;
   static const int defaultLength = 130;
 
   TextExpandable(this.strText);
@@ -17,9 +17,17 @@ class _TextExpandableState extends State<TextExpandable> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
 
-    _content = widget.strText.substring(0,TextExpandable.defaultLength)+'...';
+    super.initState();
+    if(widget.strText==null ){
+      widget.strText='unknown';
+    }
+    if(widget.strText.length>=TextExpandable.defaultLength){
+      _content = widget.strText.substring(0,TextExpandable.defaultLength)+'...';
+
+    }else{
+      _content=widget.strText;
+    }
     _isExpanded = false;
     _height = 150;
   }
@@ -47,17 +55,20 @@ class _TextExpandableState extends State<TextExpandable> {
               padding: const EdgeInsets.only(left: 4),
               child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _isExpanded = !_isExpanded;
-                    if (_isExpanded) {
-                      _content = widget.strText;
+                  if(widget.strText.length>=TextExpandable.defaultLength){
+                    setState(() {
+                      _isExpanded = !_isExpanded;
+                      if (_isExpanded) {
+                        _content = widget.strText;
 
-                    } else {
-                      _content =  widget.strText.substring(0,TextExpandable.defaultLength ) +'...';
+                      } else {
+                        _content =  widget.strText.substring(0,TextExpandable.defaultLength ) +'...';
 
-                    }
+                      }
 
-                  });
+                    });
+                  }
+
                 },
                 child: Container(
                   decoration: BoxDecoration(

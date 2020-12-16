@@ -31,21 +31,21 @@ class Browse  extends StatelessWidget {
               switch (settings.name) {
                 case '/':
                   return MyBrowse();
-                case CourseDetail.routeName:
-                  return CourseDetail(null);
-                case Profile.routeName:
-                  return Profile();
+              //   case CourseDetail.routeName:
+              //     return CourseDetail(null);
+              //   case Profile.routeName:
+              //     return Profile();
                 case AuthorDetail.routeName:
                   return AuthorDetail(null);
-                case AllPath.routeName:
-                  return AllPath();
-                case Settings.routeName:
-                  return Settings();
-              // setting
-              //  send feedback
-              // contact support
+              //   case AllPath.routeName:
+              //     return AllPath();
+              //   case Settings.routeName:
+              //     return Settings();
+              // // setting
+              // //  send feedback
+              // // contact support
                 default:
-                  return MyBrowse();
+              return MyBrowse();
               }
             });
       },
@@ -53,11 +53,90 @@ class Browse  extends StatelessWidget {
   }
 }
 
+//
+// class MyBrowse extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     var loginState=Provider.of<LoginProvider>(context).isLogin;
+//     return Scaffold(
+//
+//       appBar: CustomAppBar('Browse'),
+//       body: SingleChildScrollView(
+//         child: Container(
+//           child: Column(
+//             children: [
+//               !loginState?SignInIntro(context):Container(),
+//               SizedBox(height: 16,),
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 16),
+//                 // child: MyButton(
+//                 //   title: 'NEW\nRELEASES',
+//                 //   route: 'hello',
+//                 // ),
+//               ),
+//               SizedBox(
+//                 height: 10,
+//               ),
+//               // Padding(
+//               //   padding: const EdgeInsets.symmetric(horizontal: 16),
+//               //   child: MyButton(
+//               //     title: 'RECOMMENDED\nFOR YOU',
+//               //     route: 'hello',
+//               //   ),
+//               // ),
+//               SizedBox(
+//                 height: 10,
+//               ),
+//               // Padding(
+//               //   padding: const EdgeInsets.symmetric(horizontal: 16),
+//               //   child:GridButton(),
+//               // ),
+//               //
+//               // PopularSkills(),
+//               // PathRow(pathCategory: null,paths: Paths,),
+//               AuthorList(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// Widget SignInIntro(BuildContext context){
+//   return Padding(
+//     padding: EdgeInsets.all(16),
+//     child: Container(
+//       width: double.infinity,
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           buildTextHeader1(signin_intro_in_browse),
+//           buildTextTitle(signin_sub_intro_in_browse),
+//           SizedBox(height: 16,),
+//           Container(
+//             width: double.infinity,
+//             child: RaisedButton(
+//               color: AppColors.secondaryColor,
+//               onPressed: (){
+//               Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
+//             },
+//               child: Text(signin_intro_button_in_browse),
+//             ),
+//           )
+//
+//         ],
+//       ),
+//     ),
+//   );
+// }
+
 
 class MyBrowse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var loginState=Provider.of<LoginProvider>(context).isLogin;
+
     return Scaffold(
 
       appBar: CustomAppBar('Browse'),
@@ -65,35 +144,35 @@ class MyBrowse extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              !loginState?SignInIntro(context):Container(),
+
               SizedBox(height: 16,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: MyButton(
-                  title: 'NEW\nRELEASES',
-                  route: 'hello',
-                ),
+                // child: MyButton(
+                //   title: 'NEW\nRELEASES',
+                //   route: 'hello',
+                // ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: MyButton(
-                  title: 'RECOMMENDED\nFOR YOU',
-                  route: 'hello',
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: MyButton(
+              //     title: 'RECOMMENDED\nFOR YOU',
+              //     route: 'hello',
+              //   ),
+              // ),
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child:GridButton(),
-              ),
-
-              PopularSkills(),
-              PathRow(pathCategory: null,paths: Paths,),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child:GridButton(),
+              // ),
+              //
+              // PopularSkills(),
+              // PathRow(pathCategory: null,paths: Paths,),
               AuthorList(),
             ],
           ),
@@ -120,8 +199,8 @@ Widget SignInIntro(BuildContext context){
             child: RaisedButton(
               color: AppColors.secondaryColor,
               onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
-            },
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
+              },
               child: Text(signin_intro_button_in_browse),
             ),
           )

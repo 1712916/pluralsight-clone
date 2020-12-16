@@ -1,9 +1,13 @@
-import 'package:app/models/author-provider.dart';
-import 'package:app/models/author.dart';
+
 import 'package:app/models/course-provider.dart';
 import 'package:app/models/course.dart';
+import 'package:app/models/instructor-detail-response-model.dart';
+import 'package:app/models/instructors-response-model.dart';
+import 'package:app/services/instructor-services.dart';
 import 'package:app/widgets/customs/expandable.dart';
+import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/main_screen/home/course-item.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import '../../../customs/text-type.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +16,12 @@ class AuthorDetail extends StatelessWidget {
   static const String routeName='/author';
   final Author author;
 
-
   AuthorDetail(this.author);
 
   @override
   Widget build(BuildContext context) {
 
-    List<Course> _courses=Provider.of<CourseProvider>(context).findCourseByAuthorId(author.id) ;
+
     return Scaffold(
       appBar: AppBar(title: Text('Author')),
       body:  Container(
@@ -30,12 +33,14 @@ class AuthorDetail extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 40.0,
-                backgroundImage: NetworkImage(author.avt),
+                backgroundImage: NetworkImage(author.avatar),
               ),
               SizedBox(
                 height: 8,
               ),
-              buildTextHeader(author.name),
+              buildTextHeader(((){
+                return author.name!=null?author.name:'unknown';
+              })()),
               SizedBox(
                 height: 8,
               ),
@@ -62,7 +67,7 @@ class AuthorDetail extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextExpandable(author.description),
+                child: TextExpandable(author.intro),
               ),
               SizedBox(
                 height: 8,
@@ -98,32 +103,35 @@ class AuthorDetail extends StatelessWidget {
               SizedBox(
                 height: 32,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: buildTextHeader('Courses'),
-                  ),
-                  SizedBox(
-                    height: 32,
-                  )
-                ] +
-                    _courses
-                        .map((course) => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          HorizontalCourseItem(course: course),
-                          Divider(
-                            color: Colors.grey,
-                          )
-                        ],
-                      ),
-                    ))
-                        .toList(),
-              ),
+              Container(
+                child: Text("Số khóa học của người này là ${author.courses.length}"),
+              )
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 16),
+              //       child: buildTextHeader('Courses'),
+              //     ),
+              //     SizedBox(
+              //       height: 32,
+              //     )
+              //   ] +
+              //       data.payload.courses
+              //           .map((course) => Padding(
+              //         padding: EdgeInsets.symmetric(horizontal: 16),
+              //         child: Column(
+              //           children: [
+              //             HorizontalCourseItem(course: course),
+              //             Divider(
+              //               color: Colors.grey,
+              //             )
+              //           ],
+              //         ),
+              //       ))
+              //           .toList(),
+              // ),
             ],
           ),
         ),
