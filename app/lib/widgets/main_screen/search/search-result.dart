@@ -1,8 +1,5 @@
-// import 'package:app/models/author.dart';
-// import 'package:app/models/course.dart';
 // import 'package:app/models/data.dart';
 // import 'package:app/utils/app-color.dart';
-// import 'package:app/widgets/main_screen/browse/paths/path-item.dart';
 // import 'package:app/widgets/main_screen/browse/top_authors/author-item.dart';
 // import 'package:app/widgets/main_screen/home/course-item.dart';
 // import 'package:flutter/material.dart';

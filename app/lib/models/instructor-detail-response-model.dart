@@ -10,16 +10,20 @@ String instructorDetailResponseModelToJson(InstructorDetailResponseModel data) =
 
 class InstructorDetailResponseModel {
   InstructorDetailResponseModel({
+    this.message,
     this.author,
   });
 
+  String message;
   Author author;
 
   factory InstructorDetailResponseModel.fromJson(Map<String, dynamic> json) => InstructorDetailResponseModel(
+    message: json["message"],
     author: Author.fromJson(json["payload"]),
   );
 
   Map<String, dynamic> toJson() => {
+    "message": message,
     "payload": author.toJson(),
   };
 }
@@ -57,7 +61,7 @@ class Author {
   DateTime createdAt;
   DateTime updatedAt;
   int totalCourse;
-  int averagePoint;
+  double averagePoint;
   int countRating;
   int ratedNumber;
   int soldNumber;
@@ -76,7 +80,7 @@ class Author {
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
     totalCourse: json["totalCourse"],
-    averagePoint: json["averagePoint"],
+    averagePoint: json["averagePoint"].toDouble(),
     countRating: json["countRating"],
     ratedNumber: json["ratedNumber"],
     soldNumber: json["soldNumber"],
@@ -123,7 +127,6 @@ class Course {
     this.imageUrl,
     this.promoVidUrl,
     this.status,
-    this.isDeleted,
     this.isHidden,
     this.createdAt,
     this.updatedAt,
@@ -141,14 +144,13 @@ class Course {
   int soldNumber;
   int ratedNumber;
   int videoNumber;
-  int totalHours;
-  int formalityPoint;
-  int contentPoint;
+  double totalHours;
+  double formalityPoint;
+  double contentPoint;
   int presentationPoint;
   String imageUrl;
   String promoVidUrl;
   String status;
-  bool isDeleted;
   bool isHidden;
   DateTime createdAt;
   DateTime updatedAt;
@@ -166,14 +168,13 @@ class Course {
     soldNumber: json["soldNumber"],
     ratedNumber: json["ratedNumber"],
     videoNumber: json["videoNumber"],
-    totalHours: json["totalHours"],
-    formalityPoint: json["formalityPoint"],
-    contentPoint: json["contentPoint"],
+    totalHours: json["totalHours"].toDouble(),
+    formalityPoint: json["formalityPoint"].toDouble(),
+    contentPoint: json["contentPoint"].toDouble(),
     presentationPoint: json["presentationPoint"],
     imageUrl: json["imageUrl"],
     promoVidUrl: json["promoVidUrl"],
     status: json["status"],
-    isDeleted: json["isDeleted"],
     isHidden: json["isHidden"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
@@ -199,7 +200,6 @@ class Course {
     "imageUrl": imageUrl,
     "promoVidUrl": promoVidUrl,
     "status": status,
-    "isDeleted": isDeleted,
     "isHidden": isHidden,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),

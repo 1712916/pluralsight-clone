@@ -15,12 +15,10 @@ import 'package:flutter/material.dart';
 class AuthorDetail extends StatelessWidget {
   static const String routeName='/author';
   final Author author;
-
   AuthorDetail(this.author);
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       appBar: AppBar(title: Text('Author')),
@@ -105,7 +103,7 @@ class AuthorDetail extends StatelessWidget {
               ),
               Container(
                 child: Text("Số khóa học của người này là ${author.courses.length}"),
-              )
+              ),
               // Column(
               //   mainAxisAlignment: MainAxisAlignment.start,
               //   crossAxisAlignment: CrossAxisAlignment.start,

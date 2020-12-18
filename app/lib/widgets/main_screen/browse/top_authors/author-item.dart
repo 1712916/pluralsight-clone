@@ -7,13 +7,13 @@ import 'author-detail.dart';
 import 'package:flutter/material.dart';
 
 class AuthorItem extends StatelessWidget {
-  String authorId;
+  final String authorId;
   AuthorItem(this.authorId);
   Widget buildContent(AsyncSnapshot snapshot,BuildContext context){
     Author author=instructorDetailResponseModelFromJson(snapshot.data.body).author;
     return   GestureDetector(
       onTap: (){
-        print("data: ${author}");
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AuthorDetail(author)),
@@ -59,43 +59,46 @@ class AuthorItem extends StatelessWidget {
     );
   }
 }
-//
-// class AuthorItemB extends StatelessWidget {
-//   Author _author;
-//   AuthorItemB(this._author);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     return GestureDetector(
-//       onTap: (){
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(builder: (context) => AuthorDetail(this._author)),
-//         );
-//       },
-//       child: Container(
-//
-//           child:Row(
-//             children: [
-//               SizedBox(width: 32,),
-//               CircleAvatar(
-//                 backgroundImage: NetworkImage(this._author.),
-//                 radius: 30.0,
-//               ),
-//               SizedBox(width: 32,),
-//               Column(
-//                 children: [
-//                   buildTextTitle(this._author.name),
-//                   SizedBox(height: 8,),
-//                   buildSubTextTitle('15 courses')
-//                 ],
-//               )
-//
-//             ],
-//           )
-//
-//       ),
-//     );
-//   }
-// }
+
+class AuthorItemB extends AuthorItem {
+
+  AuthorItemB(String authorId):super(authorId);
+
+
+  @override
+  Widget buildContent(AsyncSnapshot snapshot, BuildContext context) {
+    Author author=instructorDetailResponseModelFromJson(snapshot.data.body).author;
+    return  GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AuthorDetail(author)),
+        );
+      },
+      child: Container(
+
+          child:Row(
+            children: [
+              SizedBox(width: 32,),
+              CircleAvatar(
+                backgroundImage: NetworkImage(author.avatar),
+                radius: 30.0,
+              ),
+              SizedBox(width: 32,),
+              Column(
+                children: [
+                  buildTextTitle(author.name),
+                  SizedBox(height: 8,),
+                  buildSubTextTitle('15 courses')
+                ],
+              )
+
+            ],
+          )
+
+      ),
+    );
+  }
+
+
+}
