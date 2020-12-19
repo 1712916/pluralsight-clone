@@ -5,6 +5,7 @@ import 'package:app/widgets/authenticate/sign-in.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatelessWidget {
   static const String routeName = '/settings';
@@ -44,7 +45,15 @@ class Settings extends StatelessWidget {
                 minWidth: double.infinity,
                 onPressed: () {
                   Provider.of<LoginProvider>(context).changeState();
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                //  Navigator.of(context).popUntil((route) => route.isFirst);
+
+                  ( ()async{
+                    final prefs = await SharedPreferences.getInstance();
+                    final isLoginKey = 'isLogin';
+                    prefs.setBool(isLoginKey, false);
+                  })();
+                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>SignIn(requiredSavePassword: false)));
+
 
                 },
                 child: Text('SIGN OUT', style: TextStyle(
@@ -95,7 +104,7 @@ Widget SettingsSignOut(BuildContext context){
           FlatButton(
             minWidth: double.infinity,
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) =>SignIn()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) =>SignIn(requiredSavePassword: false,)));
             },
             child: Text('SIGN IN', style: TextStyle(
                 color: AppColors.secondaryColor

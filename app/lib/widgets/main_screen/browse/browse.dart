@@ -33,14 +33,14 @@ class Browse  extends StatelessWidget {
                   return MyBrowse();
               //   case CourseDetail.routeName:
               //     return CourseDetail(null);
-              //   case Profile.routeName:
-              //     return Profile();
+                case Profile.routeName:
+                  return Profile();
                 case AuthorDetail.routeName:
                   return AuthorDetail(null);
-              //   case AllPath.routeName:
-              //     return AllPath();
-              //   case Settings.routeName:
-              //     return Settings();
+                // case AllPath.routeName:
+                //   return AllPath();
+                case Settings.routeName:
+                  return Settings();
               // // setting
               // //  send feedback
               // // contact support
@@ -136,7 +136,7 @@ class Browse  extends StatelessWidget {
 class MyBrowse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    var loginState=Provider.of<LoginProvider>(context).isLogin;
     return Scaffold(
 
       appBar: CustomAppBar('Browse'),
@@ -144,35 +144,35 @@ class MyBrowse extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-
+              !loginState?SignInIntro(context):Container(),
               SizedBox(height: 16,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                // child: MyButton(
-                //   title: 'NEW\nRELEASES',
-                //   route: 'hello',
-                // ),
+                child: MyButton(
+                  title: 'NEW\nRELEASES',
+                  route: 'hello',
+                ),
               ),
               SizedBox(
                 height: 10,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: MyButton(
-              //     title: 'RECOMMENDED\nFOR YOU',
-              //     route: 'hello',
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: MyButton(
+                  title: 'RECOMMENDED\nFOR YOU',
+                  route: 'hello',
+                ),
+              ),
               SizedBox(
                 height: 10,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child:GridButton(),
-              // ),
-              //
-              // PopularSkills(),
-              // PathRow(pathCategory: null,paths: Paths,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child:GridButton(),
+              ),
+
+              PopularSkills(),
+              PathRow(pathCategory: null,paths: Paths,),
               AuthorList(),
             ],
           ),
@@ -199,7 +199,7 @@ Widget SignInIntro(BuildContext context){
             child: RaisedButton(
               color: AppColors.secondaryColor,
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn(requiredSavePassword: true,)));
               },
               child: Text(signin_intro_button_in_browse),
             ),

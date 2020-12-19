@@ -1,29 +1,23 @@
-
-import 'package:app/models/course-provider.dart';
-import 'package:app/models/course.dart';
 import 'package:app/models/instructor-detail-response-model.dart';
-import 'package:app/models/instructors-response-model.dart';
-import 'package:app/services/instructor-services.dart';
+
 import 'package:app/widgets/customs/expandable.dart';
-import 'package:app/widgets/customs/loading-process.dart';
+
 import 'package:app/widgets/main_screen/home/course-item.dart';
-import 'package:http/http.dart';
-import 'package:provider/provider.dart';
+
 import '../../../customs/text-type.dart';
 import 'package:flutter/material.dart';
 
 class AuthorDetail extends StatelessWidget {
-  static const String routeName='/author';
+  static const String routeName = '/author';
   final Author author;
   AuthorDetail(this.author);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(title: Text('Author')),
-      body:  Container(
-        child:SingleChildScrollView(
+      body: Container(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(
@@ -36,8 +30,8 @@ class AuthorDetail extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              buildTextHeader(((){
-                return author.name!=null?author.name:'unknown';
+              buildTextHeader((() {
+                return author.name != null ? author.name : 'unknown';
               })()),
               SizedBox(
                 height: 8,
@@ -101,35 +95,38 @@ class AuthorDetail extends StatelessWidget {
               SizedBox(
                 height: 32,
               ),
-              Container(
-                child: Text("Số khóa học của người này là ${author.courses.length}"),
+
+              author.courses.length==0?Text("Chưa có khóa học."): Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: buildTextHeader('Courses (${author.courses.length})'),
+                      ),
+                      SizedBox(
+                        height: 32,
+                      )
+                    ] +
+                    author.courses
+                        .map((course) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Column(
+                                children: [
+                                  HorizontalCourseItem(
+                                    course: (() {
+                                      course.instructorUserName = author.name;
+                                      return course;
+                                    })(),
+                                  ),
+                                  Divider(
+                                    color: Colors.grey,
+                                  )
+                                ],
+                              ),
+                            ))
+                        .toList(),
               ),
-              // Column(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: 16),
-              //       child: buildTextHeader('Courses'),
-              //     ),
-              //     SizedBox(
-              //       height: 32,
-              //     )
-              //   ] +
-              //       data.payload.courses
-              //           .map((course) => Padding(
-              //         padding: EdgeInsets.symmetric(horizontal: 16),
-              //         child: Column(
-              //           children: [
-              //             HorizontalCourseItem(course: course),
-              //             Divider(
-              //               color: Colors.grey,
-              //             )
-              //           ],
-              //         ),
-              //       ))
-              //           .toList(),
-              // ),
             ],
           ),
         ),

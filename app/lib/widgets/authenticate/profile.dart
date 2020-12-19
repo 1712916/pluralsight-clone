@@ -206,7 +206,7 @@ Widget ProfileSignOut(BuildContext context) {
         RaisedButton(
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SignIn()));
+                context, MaterialPageRoute(builder: (context) => SignIn(requiredSavePassword: false,)));
           },
           child: Text(profile_signout_button),
           color: AppColors.secondaryColor,

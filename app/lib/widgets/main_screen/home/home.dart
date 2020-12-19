@@ -55,7 +55,7 @@ class MyHome extends StatelessWidget {
     var loginState=Provider.of<LoginProvider>(context, listen: true).isLogin;
     // var courseProvider=Provider.of<CourseProvider>(context);
     // var bookmarkProvider=Provider.of<BookmarkProvider>(context);
-  
+
     return Scaffold(
       appBar: CustomAppBar('Home'),
       body: loginState?RefreshIndicator(
@@ -166,7 +166,7 @@ Widget buildRowOfCourses(String title){
         );
       }
 
-      return circleLoading();
+      return Center(child: circleLoading());
     },
   );
 }

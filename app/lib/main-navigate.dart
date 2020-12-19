@@ -2,12 +2,18 @@ import 'package:app/models/author-provider.dart';
 import 'package:app/models/course-provider.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
+import 'package:app/services/user-services.dart';
+import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/main_screen/browse/browse.dart';
 import 'package:app/widgets/main_screen/downloads/downloads.dart';
 import 'package:app/widgets/main_screen/home/home.dart';
 import 'package:app/widgets/main_screen/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/user-response-model.dart';
+import 'widgets/authenticate/sign-in.dart';
 
 
 class MainNavigate extends StatefulWidget {
@@ -18,6 +24,7 @@ class MainNavigate extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _MainNavigateState extends State<MainNavigate> {
+  bool isLoading=true;
 
 
   static List<Widget> _widgetOptions = <Widget>[
@@ -29,7 +36,39 @@ class _MainNavigateState extends State<MainNavigate> {
     // Search()
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isLoading=true;
+    loadAccount();
 
+
+  }
+  void loadAccount() async {
+    final prefs = await SharedPreferences.getInstance();
+    final emailKey = 'email';
+    final passwordKey = 'password';
+    final isLoginKey = 'isLogin';
+    String email = prefs.getString(emailKey);
+    List<String> password = prefs.getStringList(passwordKey);
+    bool isLogin = prefs.getBool(isLoginKey);
+
+    if(isLogin!=null && isLogin){
+      if(email!=null && password.isNotEmpty){
+        var response = await loginService(email: email, password: decodePassword(password));
+        if (response.statusCode == 200) {
+          var userResponse = userResponseModelFromJson(response.body);
+          Provider.of<LoginProvider>(context).setUserResponse(userResponse);
+          Provider.of<LoginProvider>(context).changeState();
+        }
+      }
+    }
+
+    setState(() {
+      isLoading=false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +76,6 @@ class _MainNavigateState extends State<MainNavigate> {
     int _selectedIndex=currentBottomNavigatorProvider.currentIndex;
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=>LoginProvider()),
         // Provider(create: (context)=>CourseProvider(),),
         // ChangeNotifierProxyProvider<CourseProvider, BookmarkProvider>(
         //   create: (context) => BookmarkProvider(),
@@ -48,7 +86,11 @@ class _MainNavigateState extends State<MainNavigate> {
         // ),
         // Provider(create: (context)=>AuthorProvider()),
       ],
-      child: Scaffold(
+      child: isLoading?Scaffold(
+        body: Center(
+          child: circleLoading(),
+        ),
+      ):Scaffold(
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),

@@ -285,7 +285,7 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                           // buildSubTextTitle(this.widget.course.level),
                           // buildSubTextTitle(this.widget.course.dateRelease),
                           // buildSubTextTitle(this.widget.course.hourLearning),
-                          buildSubTextTitle(DateFormat('yyyy-MM-dd').format(widget.course.createdAt)),
+                          buildSubTextTitle(DateFormat('yyyy-MM-dd').format(widget.course.createdAt)+""),
                           buildSubTextTitle(double.parse((widget.course.totalHours).toStringAsFixed(3)).toString()+" h"),
                         ],
                       ),

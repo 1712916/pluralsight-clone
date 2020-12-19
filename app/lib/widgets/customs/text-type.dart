@@ -51,6 +51,9 @@ TextStyle error() {
 }
 
 Widget buildTextTitle(String text){
+  if(text==null){
+    text="";
+  }
   return Text(
     text,
     style: titleStyle(),
@@ -58,6 +61,9 @@ Widget buildTextTitle(String text){
 }
 
 Widget buildSubTextTitle(String text){
+  if(text==null){
+    text="";
+  }
   return Text(
     text,
     style: subTitleStyle(),
@@ -65,12 +71,18 @@ Widget buildSubTextTitle(String text){
 }
 
 Widget buildTextHeader(String text){
+  if(text==null){
+    text="";
+  }
   return Text(
     text,
     style: headerStyle(),
   );
 }
 Widget buildTextHeader1(String text){
+  if(text==null){
+    text="";
+  }
   return Text(
     text,
     style: headerStyle1(),
