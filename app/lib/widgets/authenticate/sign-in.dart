@@ -100,7 +100,7 @@ class _LoginState extends State<SignIn> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      myTextField("Email", _emailController),
+                      myTextField(labelname:"Email",controller: _emailController),
                       SizedBox(
                         height: 20,
                       ),
@@ -257,7 +257,7 @@ class _LoginState extends State<SignIn> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    var response = await loginService(email: email, password: password);
+    var response = await UserServices.loginService(email: email, password: password);
 
     if (response.statusCode == 200) {
       // if(isSavePassword){
@@ -287,8 +287,10 @@ class _LoginState extends State<SignIn> {
   }
 }
 
-Widget myTextField(String labelname, TextEditingController controller) {
+Widget myTextField({String labelname, TextEditingController controller, int maxLines}) {
   return TextField(
+    minLines:  maxLines??1,
+    maxLines: maxLines??1,
     controller: controller,
     decoration: InputDecoration(
       border: OutlineInputBorder(),

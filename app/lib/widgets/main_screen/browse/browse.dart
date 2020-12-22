@@ -53,85 +53,6 @@ class Browse  extends StatelessWidget {
   }
 }
 
-//
-// class MyBrowse extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     var loginState=Provider.of<LoginProvider>(context).isLogin;
-//     return Scaffold(
-//
-//       appBar: CustomAppBar('Browse'),
-//       body: SingleChildScrollView(
-//         child: Container(
-//           child: Column(
-//             children: [
-//               !loginState?SignInIntro(context):Container(),
-//               SizedBox(height: 16,),
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 16),
-//                 // child: MyButton(
-//                 //   title: 'NEW\nRELEASES',
-//                 //   route: 'hello',
-//                 // ),
-//               ),
-//               SizedBox(
-//                 height: 10,
-//               ),
-//               // Padding(
-//               //   padding: const EdgeInsets.symmetric(horizontal: 16),
-//               //   child: MyButton(
-//               //     title: 'RECOMMENDED\nFOR YOU',
-//               //     route: 'hello',
-//               //   ),
-//               // ),
-//               SizedBox(
-//                 height: 10,
-//               ),
-//               // Padding(
-//               //   padding: const EdgeInsets.symmetric(horizontal: 16),
-//               //   child:GridButton(),
-//               // ),
-//               //
-//               // PopularSkills(),
-//               // PathRow(pathCategory: null,paths: Paths,),
-//               AuthorList(),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// Widget SignInIntro(BuildContext context){
-//   return Padding(
-//     padding: EdgeInsets.all(16),
-//     child: Container(
-//       width: double.infinity,
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           buildTextHeader1(signin_intro_in_browse),
-//           buildTextTitle(signin_sub_intro_in_browse),
-//           SizedBox(height: 16,),
-//           Container(
-//             width: double.infinity,
-//             child: RaisedButton(
-//               color: AppColors.secondaryColor,
-//               onPressed: (){
-//               Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
-//             },
-//               child: Text(signin_intro_button_in_browse),
-//             ),
-//           )
-//
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
 
 class MyBrowse extends StatelessWidget {
   @override
@@ -151,6 +72,7 @@ class MyBrowse extends StatelessWidget {
                 child: MyButton(
                   title: 'NEW\nRELEASES',
                   route: 'hello',
+                  type: "SUGGESTION",
                 ),
               ),
               SizedBox(
@@ -159,8 +81,9 @@ class MyBrowse extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: MyButton(
-                  title: 'RECOMMENDED\nFOR YOU',
+                  title: 'RECOMMEND',
                   route: 'hello',
+                  type: "SUGGESTION",
                 ),
               ),
               SizedBox(
@@ -191,8 +114,8 @@ Widget SignInIntro(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextHeader1(signin_intro_in_browse),
-          buildTextTitle(signin_sub_intro_in_browse),
+          buildTextHeader1(signInIntro),
+          buildTextTitle(signInSubIntro),
           SizedBox(height: 16,),
           Container(
             width: double.infinity,
@@ -201,7 +124,7 @@ Widget SignInIntro(BuildContext context){
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn(requiredSavePassword: true,)));
               },
-              child: Text(signin_intro_button_in_browse),
+              child: Text(signInIntro2),
             ),
           )
 

@@ -1,6 +1,4 @@
-import 'package:app/models/course-provider.dart';
-import 'package:app/models/course.dart';
-import 'package:app/models/courses-response-model.dart';
+ import 'package:app/models/courses-response-model.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/instructor-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
@@ -20,7 +18,7 @@ class ListCourse extends StatefulWidget {
 
   String categoryId;
   String categoryName;
- String title;
+  String title;
   ListCourse({this.categoryId,this.categoryName,this.title});
 
   @override

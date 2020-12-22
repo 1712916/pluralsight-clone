@@ -1,12 +1,19 @@
-import 'package:app/models/course.dart';
 import 'package:app/models/courses-response-model.dart';
+import 'package:app/models/login-provider.dart';
+import 'package:app/services/course-services.dart';
+import 'package:app/widgets/customs/loading-process.dart';
+import 'package:app/widgets/customs/text-type.dart';
+import 'package:app/widgets/main_screen/home/course-item.dart';
+import 'package:app/widgets/main_screen/home/seeall.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 class MyButton extends StatelessWidget {
   final String title;
   final String route;
-
-  const MyButton({Key key, this.title, this.route}) : super(key: key);
+  final String type;
+  const MyButton({Key key, this.title, this.route,this.type}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +30,7 @@ class MyButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SuggesionCourse(getRecommended())));
+                  builder: (context) => SuggestionCourse(title: title,type: type,), ));
         },
         child: Text(
           this.title,
@@ -34,19 +41,47 @@ class MyButton extends StatelessWidget {
       ),
     );
   }
+
 }
 
-List<Course> getRecommended() {
-  return [];
+
+class SuggestionCourse extends StatefulWidget {
+  final String title;
+  final String type;
+
+  SuggestionCourse({this.title, this.type});
+
+  @override
+  _SuggestionCourseState createState() => _SuggestionCourseState();
 }
 
-class SuggesionCourse extends StatelessWidget {
-  List<Course> data;
+class _SuggestionCourseState extends State<SuggestionCourse> {
+  List<Course> data=[];
 
-  SuggesionCourse(this.data);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    Future future;
+    if(widget.type=="CATEGORY"){
+      future=CourseServicesFactory.dictonary[widget.title](limit: 20,page:1);
+    }else if(widget.type=="RECOMMEND"){
+      print("id :${Provider.of<LoginProvider>(context).userResponseModel.userInfo.id}");
+      future=CourseServicesFactory.dictonary2[widget.title](limit:20,offset:1,id:Provider.of<LoginProvider>(context).userResponseModel.userInfo.id);
+    }
+    // future.then((value) =>
+    //     setState(() {
+    //       data=coursesResponseModelFromJson(value.body).courses;
+    //       print("data: $data");
+    //     })
+    // );
+
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -61,9 +96,39 @@ class SuggesionCourse extends StatelessWidget {
                   )
                 ),
               ),
-              SafeArea(child: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){ Navigator.pop(context);}))
+              SafeArea(child: IconButton(icon: Icon(Icons.arrow_back), onPressed: (){ Navigator.pop(context);})),
+              Container(
+                  height: 160,
+                  child: Center(child: buildTextHeader1(widget.title))),
+
             ],
+
             ),
+            data==null?Center(
+              child: circleLoading(),
+            ):FutureBuilder<Response>(
+                future: future,
+                builder: (BuildContext context,AsyncSnapshot<Response> snapshot){
+                  if(snapshot.hasData){
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: coursesResponseModelFromJson(snapshot.data.body).courses.map((e) => Column(
+                          children: [
+                            HorizontalCourseItem(course: e,),
+                            Divider(
+                              color: Colors.grey,
+                            )
+                          ],
+                        ) ).toList(),
+                      ),
+                    );
+
+                  }
+                  return Center(
+                    child: circleLoading(),
+                 );
+                })
              //build list
           ],
         ),

@@ -15,11 +15,11 @@ class CategoriesResponseModel {
   });
 
   String message;
-  List<Payload> payload;
+  List<Category> payload;
 
   factory CategoriesResponseModel.fromJson(Map<String, dynamic> json) => CategoriesResponseModel(
     message: json["message"],
-    payload: List<Payload>.from(json["payload"].map((x) => Payload.fromJson(x))),
+    payload: List<Category>.from(json["payload"].map((x) => Category.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +28,8 @@ class CategoriesResponseModel {
   };
 }
 
-class Payload {
-  Payload({
+class Category {
+  Category({
     this.id,
     this.name,
     this.isDeleted,
@@ -43,7 +43,7 @@ class Payload {
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     name: json["name"],
     isDeleted: json["isDeleted"],

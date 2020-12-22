@@ -13,6 +13,7 @@ class TextExpandable extends StatefulWidget {
 class _TextExpandableState extends State<TextExpandable> {
   String _content = '';
   bool _isExpanded = false;
+  bool _isCanExpand=true;
   double _height;
   @override
   void initState() {
@@ -21,12 +22,14 @@ class _TextExpandableState extends State<TextExpandable> {
     super.initState();
     if(widget.strText==null ){
       widget.strText='unknown';
+      _isCanExpand=false;
     }
     if(widget.strText.length>=TextExpandable.defaultLength){
       _content = widget.strText.substring(0,TextExpandable.defaultLength)+'...';
-
+      _isCanExpand=true;
     }else{
       _content=widget.strText;
+      _isCanExpand=false;
     }
     _isExpanded = false;
     _height = 150;
@@ -70,7 +73,7 @@ class _TextExpandableState extends State<TextExpandable> {
                   }
 
                 },
-                child: Container(
+                child:  _isCanExpand?Container(
                   decoration: BoxDecoration(
                       color: Colors.white24,
                       borderRadius: BorderRadius.all(Radius.circular(4.0))),
@@ -79,7 +82,7 @@ class _TextExpandableState extends State<TextExpandable> {
                         ? Icon(Icons.keyboard_arrow_up)
                         : Icon(Icons.keyboard_arrow_down),
                   ),
-                ),
+                ):Container(),
               ),
             ),
           ],

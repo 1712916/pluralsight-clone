@@ -1,3 +1,4 @@
+import 'package:app/widgets/course_detail/detail.dart';
 import 'package:app/widgets/customs/rating-star.dart';
 import 'package:intl/intl.dart';
 import 'package:app/models/courses-response-model.dart' as myCourse;
@@ -72,10 +73,10 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
           // Navigator.pushNamed(context, CourseDetail.routeName,
           //     arguments: widget.course.title);
 
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => CourseDetail(this.widget.course)),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CourseDetail(this.widget.course)),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -152,6 +153,7 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // buildSubTextTitle(widget.course.level),
+                          buildSubTextTitle(widget.course.status.toString()),
                           buildSubTextTitle(DateFormat('yyyy-MM-dd').format(widget.course.createdAt)),
                           buildSubTextTitle(double.parse((widget.course.totalHours).toStringAsFixed(3)).toString()+" h"),
                         ],
@@ -260,7 +262,7 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                       width: 100,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(this.widget.course.imageUrl),
+                            image: this.widget.course.imageUrl!=null?NetworkImage(this.widget.course.imageUrl):AssetImage('assets/imgPlaceHolder.png'),
                             fit: BoxFit.fitWidth),
                       ),
                     )

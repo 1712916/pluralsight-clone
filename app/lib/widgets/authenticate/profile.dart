@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
   }
   Future<Info> loadProfile() async {
     var response =
-    await profileService(token: this.loginProvider.userResponseModel.token);
+    await UserServices.profileService(token: this.loginProvider.userResponseModel.token);
     return infoFromJson(response.body);
   }
 
@@ -199,7 +199,7 @@ Widget ProfileSignOut(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildTextTitle(profile_signout_intro),
+        buildTextTitle(profileIntroLogout),
         SizedBox(
           height: 16,
         ),
@@ -208,7 +208,7 @@ Widget ProfileSignOut(BuildContext context) {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => SignIn(requiredSavePassword: false,)));
           },
-          child: Text(profile_signout_button),
+          child: Text(signInButton),
           color: AppColors.secondaryColor,
         )
       ],

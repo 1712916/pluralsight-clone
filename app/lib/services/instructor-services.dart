@@ -35,7 +35,7 @@ class InstructorServices{
 }
 
 void main() async {
-  var a = await loginService(email: "smile.vinhnt@gmail.com", password: "2");
+  var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "2");
 
 
   var z = InstructorServices.getInstructors();

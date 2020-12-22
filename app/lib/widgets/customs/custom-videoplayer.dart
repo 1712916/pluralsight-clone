@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable
 class CustomVideoPlayer extends StatefulWidget {
-  String url =
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4';
+  String url;
+
+  CustomVideoPlayer({this.url}); // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4';
+
   @override
   _CustomVideoPlayerState createState() => _CustomVideoPlayerState();
 }
 
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
+  bool isLoading=true;
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
   bool _shownControler;
@@ -25,9 +29,12 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     _controller = VideoPlayerController.network(
       this.widget.url,
     )..addListener(() {
-      setState(() {
-        _currentVideoTime=_controller.value.position.inSeconds.toDouble();
-      });
+      if(_controller.value.position.inSeconds!=null){
+        setState(() {
+          _currentVideoTime=_controller.value.position.inSeconds.toDouble();
+        });
+      }
+
     });
 
     // Initialize the controller and store the Future for later use.
@@ -36,7 +43,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     // Use the controller to loop the video.
     _controller.setLooping(false);
     _shownControler = true;
-
 
     //listenForUpdateView();
 
@@ -83,7 +89,12 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             } else {
               // If the VideoPlayerController is still initializing, show a
               // loading spinner.
-              return Center(child: CircularProgressIndicator());
+              return AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                // Use the VideoPlayer widget to display the video.
+                child: Center(child: CircularProgressIndicator()),
+              );
+
             }
           },
         ),
@@ -115,7 +126,10 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.arrow_back_ios_outlined),
+
+                IconButton(icon:    Icon(Icons.arrow_back_ios_outlined), onPressed: (){
+                  Navigator.pop(context);
+                }),
                 Text('Hello Wold'),
                 Icon(Icons.settings_backup_restore),
                 Icon(Icons.pause),
@@ -146,32 +160,35 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
                 MyIcon(20, Icons.settings_backup_restore,(){}),
               ],
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 16,
-                ),
-                Text('${_controller.value.position.inSeconds.toString()}'),
-                Expanded(
-                  child: Slider(
-                    onChanged: (double value) {
-                      setState(() {
-                        _controller.seekTo(Duration(seconds: value.toInt()));
-                        _currentVideoTime = value;
-                      });
-
-                    },
-                    value: _currentVideoTime,
-                    divisions: _controller.value.duration.inSeconds,
-                    min: 0,
-                    max: _controller.value.duration.inSeconds.toDouble(),
-                    label: _currentVideoTime.round().toString(),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 16,
                   ),
-                ),
-                Text('${_controller.value.duration.inSeconds}'),
-                IconButton(
-                    icon: Icon(Icons.fullscreen), onPressed: () {}),
-              ],
+                  Text('${_controller.value.position.inSeconds.toString()}'),
+                  Expanded(
+                    child: Slider(
+                      onChanged: (double value) {
+                        setState(() {
+                          _controller.seekTo(Duration(seconds: value.toInt()));
+                          _currentVideoTime = value;
+                        });
+
+                      },
+                      value: _currentVideoTime,
+                      divisions: _controller.value.duration.inSeconds,
+                      min: 0,
+                      max: _controller.value.duration.inSeconds.toDouble(),
+                      label: _currentVideoTime.round().toString(),
+                    ),
+                  ),
+                  Text('${_controller.value.duration.inSeconds}'),
+                  IconButton(
+                      icon: Icon(Icons.fullscreen), onPressed: () {}),
+                ],
+              ),
             ),
           ],
         ),

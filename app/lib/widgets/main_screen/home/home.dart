@@ -1,8 +1,8 @@
-import 'package:app/models/course-provider.dart';
-import 'package:app/models/courses-response-model.dart';
+ import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/services/course-services.dart';
+import 'package:app/services/user-services.dart';
 import 'package:app/strings/string-us.dart';
 import 'package:app/widgets/authenticate/settings.dart';
 import 'package:app/widgets/course_detail/detail.dart';
@@ -15,6 +15,8 @@ import '../../customs/custom-appbar.dart';
 import '../../authenticate/profile.dart';
 import 'builderlist.dart';
 import 'package:provider/provider.dart';
+ import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
+
 class Home extends StatelessWidget {
 
   @override
@@ -57,7 +59,7 @@ class MyHome extends StatelessWidget {
     // var bookmarkProvider=Provider.of<BookmarkProvider>(context);
 
     return Scaffold(
-      appBar: CustomAppBar('Home'),
+      appBar: CustomAppBar(AppLocalizations.of(context).helloWorld),
       body: loginState?RefreshIndicator(
         onRefresh: () async {
           print('Hello');
@@ -82,15 +84,19 @@ class MyHome extends StatelessWidget {
               height: 16,
             ),
 
-            buildRowOfCourses("TOP NEW"),
+            buildRowOfCourses("TOP NEW",CourseServicesFactory.dictonary["TOP NEW"](limit: 10,page:1)),
             SizedBox(
               height: 16,
             ),
-            buildRowOfCourses("TOP SELL"),
+            buildRowOfCourses("TOP SELL",CourseServicesFactory.dictonary["TOP SELL"](limit: 10,page:1)),
             SizedBox(
               height: 16,
             ),
-            buildRowOfCourses("TOP RATE"),
+            buildRowOfCourses("TOP RATE",CourseServicesFactory.dictonary["TOP SELL"](limit: 10,page:1)),
+            SizedBox(
+              height: 16,
+            ),
+            buildRowOfFavoriteCourses("LIKED",UserServices.getFavoriteCourses(token:Provider.of<LoginProvider>(context).userResponseModel.token)),
             //add here
 
 
@@ -116,7 +122,7 @@ Widget HomeSignOut(BuildContext context){
 
       children: [
         SizedBox(height: 72,),
-        Center(child: buildTextHeader1(get_started_in_home_logout)),
+        Center(child: buildTextHeader1(getStart)),
         SizedBox(height: 72,),
         GestureDetector(
 
@@ -128,7 +134,7 @@ Widget HomeSignOut(BuildContext context){
           child: Icon(Icons.apps_sharp,size: 30,),
         ),
         SizedBox(height: 36,),
-        Center(child: buildTextTitle(browse_intro_in_home_logout)),
+        Center(child: buildTextTitle(browseIntroLogout)),
         SizedBox(height: 72,),
         GestureDetector(
           onTap: (){
@@ -140,7 +146,7 @@ Widget HomeSignOut(BuildContext context){
             size: 30,),
         ),
         SizedBox(height: 36,),
-        Center(child: buildTextTitle(search_in_home_logout)),
+        Center(child: buildTextTitle(searchIntroLogout)),
 
       ],
     ),
@@ -149,10 +155,10 @@ Widget HomeSignOut(BuildContext context){
 
 
 
-Widget buildRowOfCourses(String title){
+Widget buildRowOfCourses(String title, Future future){
 
   return FutureBuilder<Response>(
-    future: CourseServicesFactory.dictonary[title](limit: 10,page:1),
+    future:future,
     builder: (BuildContext context, AsyncSnapshot<Response> snapshot){
       if(snapshot.hasData){
         List<Course> courses=coursesResponseModelFromJson(snapshot.data.body).courses;
@@ -170,3 +176,25 @@ Widget buildRowOfCourses(String title){
     },
   );
 }
+
+ Widget buildRowOfFavoriteCourses(String title, Future future){
+
+   return FutureBuilder<Response>(
+     future:future,
+     builder: (BuildContext context, AsyncSnapshot<Response> snapshot){
+       if(snapshot.hasData){
+         List<Course> courses=coursesResponseModelFromJson(snapshot.data.body).courses;
+         return  Container(
+             child: BuilderListHorizontal(title: title,courses: courses,));
+       }else if(snapshot.hasError){
+         return Center(
+           child: Container(
+             child: Text("Có lỗi ở server"),
+           ),
+         );
+       }
+
+       return Center(child: circleLoading());
+     },
+   );
+ }

@@ -41,7 +41,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             SizedBox(
               height: 16,
             ),
-            myTextField("email", _emailController),
+            myTextField(labelname: "email",controller: _emailController),
             SizedBox(
               height: 16,
             ),
@@ -85,7 +85,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       responseStatus=-1;
                     });
 
-                    var response = await forgotPasswordService(email:_emailController.text);
+                    var response = await UserServices.forgotPasswordService(email:_emailController.text);
 
                     setState(() {
                       responseStatus = response.statusCode;

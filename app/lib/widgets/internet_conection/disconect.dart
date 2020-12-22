@@ -6,8 +6,8 @@ Widget diconnectTypeA() {
     child: Column(
       children: [
         Icon(Icons.warning_rounded),
-        Text(disconnectTitleA),
-        Text(disconnectSubTitleA),
+        Text(sorry),
+        Text(unexpectedHappened),
         SizedBox(height: 30),
         RaisedButton(
           onPressed: () {},
@@ -15,7 +15,7 @@ Widget diconnectTypeA() {
         ),
         OutlineButton(
             onPressed: () {},
-            child: Text(contact),
+            child: Text(contactUs),
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(4.0)))
       ],
@@ -28,8 +28,8 @@ Widget diconnectTypeB() {
     child: Column(
       children: [
         Icon(Icons.warning_rounded),
-        Text(disconnectTitleB),
-        Text(disconnectSubTitleB),
+        Text(youAreOffline),
+        Text(tryConnectInternet),
         SizedBox(height: 30),
         RaisedButton(
           onPressed: () {},

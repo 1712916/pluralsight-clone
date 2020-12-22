@@ -37,7 +37,7 @@ class _LoginState extends State<SignUp> {
 
     //
 
-    var response = await registerService(username: _nameController.text,email: _emailController.text, phone: _phoneController.text, password: _passwordController.text);
+    var response = await UserServices.registerService(username: _nameController.text,email: _emailController.text, phone: _phoneController.text, password: _passwordController.text);
 
     setState(() {
       _statusRegister=response.statusCode;
@@ -80,15 +80,15 @@ class _LoginState extends State<SignUp> {
                   SizedBox(
                     height: 20,
                   ),
-                  myTextField("Email", _emailController),
+                  myTextField( labelname: "Email", controller: _emailController),
                   SizedBox(
                     height: 20,
                   ),
-                  myTextField("Name", _nameController),
+                  myTextField(labelname: "Name",controller: _nameController),
                   SizedBox(
                     height: 20,
                   ),
-                  myTextField("Phone number", _phoneController),
+                  myTextField(labelname: "Phone number",controller: _phoneController),
                   SizedBox(
                     height: 20,
                   ),
@@ -133,7 +133,7 @@ class _LoginState extends State<SignUp> {
                     },
                     decoration: InputDecoration(
                         errorText: _validateConfirmPassword
-                            ? validate_confirm_password
+                            ? validateConfirmPassword
                             : null,
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
@@ -161,7 +161,7 @@ class _LoginState extends State<SignUp> {
                   SizedBox(
                     height: 20,
                   ),
-                  _statusRegister==400?failureText(failed_register):(_statusRegister==200?successText(succeed_register):Container()),
+                  _statusRegister==400?failureText(failedRegister):(_statusRegister==200?successText(succeedRegister):Container()),
                   SizedBox(
                     height: 20,
                   ),

@@ -1,16 +1,19 @@
 import 'dart:convert';
-
-import 'package:app/models/courses-response-model.dart';
+import 'package:app/models/user-response-model.dart';
+import 'package:app/services/payment-services.dart';
 
 import '../utils/constraints.dart';
 import 'package:http/http.dart';
 import './user-services.dart';
 class CourseServicesFactory{
   static Map dictonary={
-    "TOP NEW":CourseServices.getTopNew ,
-    "TOP SELL":CourseServices.getTopSell ,
-    "TOP RATE":CourseServices.getTopRate ,
+    "TOP NEW":CourseServices.getTopNew,
+    "TOP SELL":CourseServices.getTopSell,
+    "TOP RATE":CourseServices.getTopRate,
+  };
+  static Map dictonary2={
     "FAVORITE":CourseServices.getByFavoriteCategories,
+    "RECOMMEND": UserServices.recommendCourse,
   };
 }
 
@@ -162,9 +165,9 @@ class CourseServices{
   static Future<Response> ratingCourse(
       {String token,
         String courseId,
-        int formalityPoint,
-        int contentPoint,
-        int presentationPoint,
+        double formalityPoint,
+        double contentPoint,
+        double presentationPoint,
         String content}) {
     var response = doPostRequest(
         url_api: URL_API + "course/rating-course",
@@ -286,7 +289,15 @@ class CourseServices{
 
 }
 
-main(){
-  var res=CourseServices.getTotalCourse();
-  res.then((value) => print(value.body));
+void main() async{
+  print("Hello");
+  String courseId="5b69ea4b-ef3c-4ab5-b9fb-2ec50c03f849";
+ // String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
+  var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
+  UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
+  print("body: ${userResponseModel.token}");
+  var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
+  var res= await  CourseServices.getDetailWithLesson(token:userResponseModel.token ,courseId: courseId);
+
+  print("Data: ${jsonDecode(res.body)}");
 }
