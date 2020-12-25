@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:app/models/course-detail-response-model.dart';
+import 'package:app/models/courses-response-model.dart';
+import 'package:app/models/search-response-model.dart';
 import 'package:app/models/user-response-model.dart';
 import 'package:app/services/payment-services.dart';
 
@@ -93,7 +96,7 @@ class CourseServices{
 
   static Future<Response> getCourseInfo({String token, String courseId}) {
     var response = doGetRequest(
-      url_api: URL_API + "course/get-course-info/$courseId",
+      url_api: URL_API + "course/get-course-info?id=$courseId",
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -222,7 +225,7 @@ class CourseServices{
   }
 
 //chuwa xong search
-  static Future<Response> search({String token, String courseId,String content,String subject}) {
+  static Future<Response> search({String token, String keyword,List<String> categories}) {
     var response = doPostRequest(
         url_api: URL_API + "course/search",
         headers: {
@@ -230,11 +233,42 @@ class CourseServices{
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({{
-          "courseId": courseId,
-          "content": content,
-          "subject": subject
-        }})
+        body: jsonEncode({
+          "keyword": keyword,
+          "opt": {
+            "sort": {
+              "attribute": "price",
+              "rule": "ASC"
+            },
+            "category": categories,
+            "time": [
+              {
+                "min": 0,
+                "max": 1
+              },
+              {
+                "min": 3,
+                "max": 6
+              }
+            ],
+            "price": [
+              {
+                "max": 0
+              },
+              {
+                "min": 0,
+                "max": 200000
+              },
+              {
+                "min": 500000,
+                "max": 1000000
+              }
+            ]
+          },
+          "limit": 10,
+          "offset": 1
+        }
+        )
     );
     return response;
     //200
@@ -292,12 +326,26 @@ class CourseServices{
 void main() async{
   print("Hello");
   String courseId="5b69ea4b-ef3c-4ab5-b9fb-2ec50c03f849";
- // String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
+
+  //String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
   var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
   print("body: ${userResponseModel.token}");
   var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
-  var res= await  CourseServices.getDetailWithLesson(token:userResponseModel.token ,courseId: courseId);
+  var res= await  CourseServices.search(categories: [],keyword: "Di động");
+ //  var response = await  CourseServices.getCourseDetail(courseId: courseId ,userId: userResponseModel.userInfo.id);
+ // // print("Data: ${courseDetailResponseModelFromJson(  response.body )}");
+ //   Course course=Course.fromJson(jsonDecode(response.body)["payload"]);
+ //  // print("Data: ${course.id}");
 
-  print("Data: ${jsonDecode(res.body)}");
+  //var response = await CourseServices.search(keyword: "data");
+
+  //List<SearchItem> searchItems=searchResponseModelFromJson(response.body).payload.rows;
+  // print("lengt: ${searchItems.length}");
+  // // Course course=Course.fromJson(searchItems[0].toJson());
+  // print(searchItems[0].toJson());
+
+  var response= await CourseServices.getCourseInfo(courseId: courseId);
+  print("course is : ${courseDetailResponseModelFromJson(response.body).payload.title}");
+
 }

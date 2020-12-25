@@ -70,9 +70,9 @@ class MyBrowse extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: MyButton(
-                  title: 'NEW\nRELEASES',
+                  title: 'LIKED',
                   route: 'hello',
-                  type: "SUGGESTION",
+                  type: "LIKED",
                 ),
               ),
               SizedBox(
@@ -83,7 +83,7 @@ class MyBrowse extends StatelessWidget {
                 child: MyButton(
                   title: 'RECOMMEND',
                   route: 'hello',
-                  type: "SUGGESTION",
+                  type: "RECOMMEND",
                 ),
               ),
               SizedBox(

@@ -57,6 +57,7 @@ Widget buildTextTitle(String text){
   return Text(
     text,
     style: titleStyle(),
+
   );
 }
 

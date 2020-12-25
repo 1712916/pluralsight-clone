@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/info-response-model.dart';
 import 'package:app/models/user-response-model.dart';
@@ -261,5 +262,5 @@ void main() async {
   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
   print("body: ${userResponseModel.token}");
   var z = await UserServices.getFavoriteCourses(token: userResponseModel.token);
-  print(coursesResponseModelFromJson(z.body));
+  print(coursesFavoriteResponseModelFromJson(z.body).payload);
 }

@@ -1,4 +1,5 @@
 
+import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/main_screen/home/seeall.dart';
@@ -90,3 +91,4 @@ class BuilderListHorizontal extends StatelessWidget {
 //     return null;
 //   }
 // }
+

@@ -30,8 +30,7 @@ class _MainNavigateState extends State<MainNavigate> {
     Container(),
     // Downloads(),
     Browse(),
-    Container(),
-    // Search()
+     SupperSearch()
   ];
 
   @override
@@ -76,7 +75,8 @@ class _MainNavigateState extends State<MainNavigate> {
       body: Center(
         child: circleLoading(),
       ),
-    ):Scaffold(
+    ):
+    Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

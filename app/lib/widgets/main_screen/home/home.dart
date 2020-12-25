@@ -1,4 +1,7 @@
- import 'package:app/models/courses-response-model.dart';
+ import 'dart:convert';
+
+import 'package:app/models/courses-favorite-response-model.dart';
+import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/services/course-services.dart';
@@ -96,7 +99,7 @@ class MyHome extends StatelessWidget {
             SizedBox(
               height: 16,
             ),
-            buildRowOfFavoriteCourses("LIKED",UserServices.getFavoriteCourses(token:Provider.of<LoginProvider>(context).userResponseModel.token)),
+        buildRowOfFavoriteCourses("LIKED",UserServices.getFavoriteCourses(token:Provider.of<LoginProvider>(context).userResponseModel.token)),
             //add here
 
 
@@ -181,11 +184,14 @@ Widget buildRowOfCourses(String title, Future future){
 
    return FutureBuilder<Response>(
      future:future,
-     builder: (BuildContext context, AsyncSnapshot<Response> snapshot){
-       if(snapshot.hasData){
-         List<Course> courses=coursesResponseModelFromJson(snapshot.data.body).courses;
+     builder: (BuildContext context, AsyncSnapshot<Response> snapshot) {
+       if(snapshot.hasData)  {
+         List<CourseFavorite> courseFavorites=coursesFavoriteResponseModelFromJson(snapshot.data.body).payload;
+          List<Course> courses=[];
+          getCoursesFromFavorite(courseFavorites,Provider.of<LoginProvider>(context).userResponseModel.userInfo.id).then((value) => null);
+
          return  Container(
-             child: BuilderListHorizontal(title: title,courses: courses,));
+             child: BuilderListHorizontal(title: title,courses:courses));
        }else if(snapshot.hasError){
          return Center(
            child: Container(
@@ -197,4 +203,15 @@ Widget buildRowOfCourses(String title, Future future){
        return Center(child: circleLoading());
      },
    );
+ }
+
+ Future<List<Course>> getCoursesFromFavorite(List<CourseFavorite> courseFavorites,String userId) async{
+   List<Course> courses=[];
+   for(int i=0;i<courseFavorites.length;i++){
+     var response = await  CourseServices.getCourseDetail(courseId: courseFavorites[i].id ,userId: userId);
+     // print("Data: ${courseDetailResponseModelFromJson(  response.body )}");
+     Course course=Course.fromJson(jsonDecode(response.body)["payload"]);
+     courses.add(course);
+   }
+   return courses;
  }

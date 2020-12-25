@@ -15,11 +15,11 @@ class CoursesFavoriteResponseModel {
   });
 
   String message;
-  List<Payload> payload;
+  List<CourseFavorite> payload;
 
   factory CoursesFavoriteResponseModel.fromJson(Map<String, dynamic> json) => CoursesFavoriteResponseModel(
     message: json["message"],
-    payload: List<Payload>.from(json["payload"].map((x) => Payload.fromJson(x))),
+    payload: List<CourseFavorite>.from(json["payload"].map((x) => CourseFavorite.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +28,8 @@ class CoursesFavoriteResponseModel {
   };
 }
 
-class Payload {
-  Payload({
+class CourseFavorite {
+  CourseFavorite({
     this.id,
     this.courseTitle,
     this.coursePrice,
@@ -55,7 +55,7 @@ class Payload {
   double coursePresentationPoint;
   double courseAveragePoint;
 
-  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
+  factory CourseFavorite.fromJson(Map<String, dynamic> json) => CourseFavorite(
     id: json["id"],
     courseTitle: json["courseTitle"],
     coursePrice: json["coursePrice"],
