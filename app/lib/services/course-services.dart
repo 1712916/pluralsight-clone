@@ -18,6 +18,8 @@ class CourseServicesFactory{
     "FAVORITE":CourseServices.getByFavoriteCategories,
     "RECOMMEND": UserServices.recommendCourse,
   };
+
+
 }
 
 class CourseServices{
@@ -344,8 +346,9 @@ void main() async{
   // print("lengt: ${searchItems.length}");
   // // Course course=Course.fromJson(searchItems[0].toJson());
   // print(searchItems[0].toJson());
-
-  var response= await CourseServices.getCourseInfo(courseId: courseId);
-  print("course is : ${courseDetailResponseModelFromJson(response.body).payload.title}");
+  //
+    var response= await UserServices.getFavoriteCourses(token: userResponseModel.token);
+    print("DATA : ${coursesResponseModelFromJson(response.body).courses[0].title}");
+  // print("course is : ${courseDetailResponseModelFromJson(response.body).payload.title}");
 
 }

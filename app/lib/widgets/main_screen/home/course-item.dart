@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/models/BookmarkProvider.dart';
 import 'package:app/models/course-detail-response-model.dart';
 import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
@@ -39,13 +40,13 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
       case 0:
         {
 
-          // var bookmarkProvider=Provider.of<BookmarkProvider>(context);
-          // bookmarkProvider.add(course);
+          var bookmarkProvider=Provider.of<BookmarkProvider>(context);
+          bookmarkProvider.add(course.id);
 
-          // setState(() {
-          //
-          // });
-          // _choices[0]=Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+          setState(() {
+            _choices[0]=bookmarkProvider.isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+
+          });
 
         }
         break;
@@ -68,14 +69,14 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      //   _choices[0]=Provider.of<BookmarkProvider>(context,listen:false ).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+       _choices[0]=Provider.of<BookmarkProvider>(context,listen:false ).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
     });
 
   }
 
   @override
   Widget build(BuildContext context) {
-    //  var bookmarkProvider=Provider.of<BookmarkProvider>(context);
+  var bookmarkProvider=Provider.of<BookmarkProvider>(context);
     return GestureDetector(
         onTap: () {
           //Navigator.pushReplacementNamed(context, '/profile');
@@ -131,13 +132,13 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            // bookmarkProvider.isInBookmark(widget.course.id)
-                            //     ? Container(
-                            //         padding: EdgeInsets.all(16),
-                            //         alignment: Alignment.bottomRight,
-                            //         child: Icon(Icons.bookmark_border),
-                            //       )
-                            //     : Container(),
+                            bookmarkProvider.isInBookmark(widget.course.id)
+                                ? Container(
+                                    padding: EdgeInsets.all(16),
+                                    alignment: Alignment.bottomRight,
+                                    child: Icon(Icons.bookmark_border),
+                                  )
+                                : Container(),
                             Container(
                                 alignment: Alignment.bottomCenter,
                                 child: LinearProgressIndicator(
@@ -240,7 +241,7 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      //_choices[0]=Provider.of<BookmarkProvider>(context,listen:false ).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
+      _choices[0]=Provider.of<BookmarkProvider>(context,listen:false ).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
     });
 
   }

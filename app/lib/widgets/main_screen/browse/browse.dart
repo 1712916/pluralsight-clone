@@ -73,6 +73,7 @@ class MyBrowse extends StatelessWidget {
                   title: 'LIKED',
                   route: 'hello',
                   type: "LIKED",
+                  img: 'assets/like.jpg',
                 ),
               ),
               SizedBox(

@@ -1,5 +1,6 @@
  import 'dart:convert';
 
+import 'package:app/models/BookmarkProvider.dart';
 import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/current-bottom-navigator.dart';
@@ -55,6 +56,7 @@ class Home extends StatelessWidget {
 }
 
 class MyHome extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     var loginState=Provider.of<LoginProvider>(context, listen: true).isLogin;
@@ -99,10 +101,13 @@ class MyHome extends StatelessWidget {
             SizedBox(
               height: 16,
             ),
-        buildRowOfFavoriteCourses("LIKED",UserServices.getFavoriteCourses(token:Provider.of<LoginProvider>(context).userResponseModel.token)),
-            //add here
+        FutureBuilder(
+            future: Provider.of<BookmarkProvider>(context).courses,
+            builder: (BuildContext context, AsyncSnapshot<List<Course>> snapshot){
+              return BuilderListBookmark(snapshot.data);
+            })
 
-
+        //add here
         //     Column(
         //       children: courseProvider.categories.map((c) => BuilderList(
         //             category: c,
@@ -166,7 +171,7 @@ Widget buildRowOfCourses(String title, Future future){
       if(snapshot.hasData){
         List<Course> courses=coursesResponseModelFromJson(snapshot.data.body).courses;
         return  Container(
-            child: BuilderListHorizontal(title: title,courses: courses,));
+            child: BuilderListHorizontal(title: title,courses: courses,canSeAll: true,));
       }else if(snapshot.hasError){
         return Center(
           child: Container(

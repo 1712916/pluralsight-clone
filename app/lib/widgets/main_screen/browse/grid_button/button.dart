@@ -1,6 +1,7 @@
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/services/course-services.dart';
+import 'package:app/services/user-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:app/widgets/main_screen/home/course-item.dart';
@@ -13,7 +14,9 @@ class MyButton extends StatelessWidget {
   final String title;
   final String route;
   final String type;
-  const MyButton({Key key, this.title, this.route,this.type}) : super(key: key);
+  final String img;
+  final String categoryId;
+  const MyButton({Key key, this.title, this.route,this.type, this.img,this.categoryId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +24,7 @@ class MyButton extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/bg.jpg'),
+          image: AssetImage(img==null?'assets/bg.jpg':img),
           fit: BoxFit.cover,
         ),
       ),
@@ -30,7 +33,7 @@ class MyButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SuggestionCourse(title: title,type: type,), ));
+                  builder: (context) => SuggestionCourse(title: title,type: type,categoryId:categoryId), ));
         },
         child: Text(
           this.title,
@@ -48,8 +51,9 @@ class MyButton extends StatelessWidget {
 class SuggestionCourse extends StatefulWidget {
   final String title;
   final String type;
+  final String  categoryId;
 
-  SuggestionCourse({this.title, this.type});
+  SuggestionCourse({this.title, this.type,  this.categoryId });
 
   @override
   _SuggestionCourseState createState() => _SuggestionCourseState();
@@ -69,10 +73,12 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
   Widget build(BuildContext context) {
     Future future;
     if(widget.type=="CATEGORY"){
-      future=CourseServicesFactory.dictonary[widget.title](limit: 20,page:1);
+      future=CourseServices.search(categories: [widget.categoryId],keyword: "");
     }else if(widget.type=="RECOMMEND"){
       print("id :${Provider.of<LoginProvider>(context).userResponseModel.userInfo.id}");
       future=CourseServicesFactory.dictonary2[widget.title](limit:20,offset:1,id:Provider.of<LoginProvider>(context).userResponseModel.userInfo.id);
+    }else if(widget.type=="LIKED"){
+      future=UserServices.getFavoriteCourses(token: Provider.of<LoginProvider>(context).userResponseModel.token);
     }
     // future.then((value) =>
     //     setState(() {
@@ -104,9 +110,7 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
             ],
 
             ),
-            data==null?Center(
-              child: circleLoading(),
-            ):FutureBuilder<Response>(
+            FutureBuilder<Response>(
                 future: future,
                 builder: (BuildContext context,AsyncSnapshot<Response> snapshot){
                   if(snapshot.hasData){

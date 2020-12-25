@@ -13,9 +13,10 @@ class BuilderListHorizontal extends StatelessWidget {
   @required
   final String title;
   final List<Course> courses;
+  final bool canSeAll;
 
 
-  BuilderListHorizontal({this.title,this.courses});
+  BuilderListHorizontal({this.title,this.courses,this.canSeAll});
 
 
   Widget buildList(BuildContext context) {
@@ -27,7 +28,7 @@ class BuilderListHorizontal extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             buildTextHeader(this.title),
-            TextButton(
+            canSeAll?TextButton(
                 onPressed: () {
                   //truyen data vao navigte
                   //goi navigate here
@@ -43,7 +44,7 @@ class BuilderListHorizontal extends StatelessWidget {
                 child: Text(
                   'See all >',
                   style: TextStyle(color: Colors.white38),
-                )),
+                )):TextButton(),
           ],
         ),
       ),
@@ -74,13 +75,13 @@ class BuilderListHorizontal extends StatelessWidget {
 
 }
 
-// class BuilderListBookmark extends BuilderList {
-//   @override
-//   BuilderListBookmark(List<Course> data)
-//       : super(category: CourseCategory(title: 'Bookmarks'), courses: data);
-//
-// }
-//
+class BuilderListBookmark extends BuilderListHorizontal {
+  @override
+  BuilderListBookmark(List<Course> data)
+      : super(title:'BOOKMARKS', courses: data,canSeAll: false);
+
+}
+
 // class BuilderListMyPath extends BuilderList {
 //   BuilderListMyPath(List<Course> data)
 //       : super(category: CourseCategory(title: 'My Paths'), courses: data);

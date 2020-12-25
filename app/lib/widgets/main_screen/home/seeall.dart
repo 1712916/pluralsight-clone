@@ -1,4 +1,5 @@
- import 'package:app/models/courses-response-model.dart';
+ import 'package:app/models/BookmarkProvider.dart';
+import 'package:app/models/courses-response-model.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/instructor-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
@@ -39,6 +40,7 @@ class _ListCourseState extends State<ListCourse> {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -55,10 +57,9 @@ class _ListCourseState extends State<ListCourse> {
             Expanded(
               child: FutureBuilder(
 
-                future: future,
-                builder: (BuildContext context, AsyncSnapshot<Response> snapshot){
+                future: future??Provider.of<BookmarkProvider>(context).courses,
+                builder: (BuildContext context, AsyncSnapshot snapshot){
                   if(snapshot.hasData){
-
                     return courses.isEmpty?Container(): ListView.builder(
                         itemCount: courses.length,
                         itemBuilder: (context, index){

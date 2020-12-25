@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:app/models/categories-response-model.dart';
+
 CategoryResponseModel categoryResponseModelFromJson(String str) => CategoryResponseModel.fromJson(json.decode(str));
 
 String categoryResponseModelToJson(CategoryResponseModel data) => json.encode(data.toJson());
@@ -15,47 +17,15 @@ class CategoryResponseModel {
   });
 
   String message;
-  Payload payload;
+  Category payload;
 
   factory CategoryResponseModel.fromJson(Map<String, dynamic> json) => CategoryResponseModel(
     message: json["message"],
-    payload: Payload.fromJson(json["payload"]),
+    payload: Category.fromJson(json["payload"]),
   );
 
   Map<String, dynamic> toJson() => {
     "message": message,
     "payload": payload.toJson(),
-  };
-}
-
-class Payload {
-  Payload({
-    this.id,
-    this.name,
-    this.isDeleted,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  String id;
-  String name;
-  bool isDeleted;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
-    id: json["id"],
-    name: json["name"],
-    isDeleted: json["isDeleted"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "isDeleted": isDeleted,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
   };
 }

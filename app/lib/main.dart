@@ -1,3 +1,4 @@
+import 'package:app/models/BookmarkProvider.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/utils/app-theme.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (context)=>LoginProvider()),
             ChangeNotifierProvider(create: (context)=>CurrentBottomNavigatorProvider()),
+            ChangeNotifierProvider(create: (context)=>BookmarkProvider())
           ],
           child: MainNavigate(),
         ),

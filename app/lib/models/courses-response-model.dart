@@ -85,20 +85,81 @@ class Course {
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     id: json["id"],
-    title: json["title"],
-    subtitle: json["subtitle"],
-    price: json["price"],
+    title: ((){
+      if(json["title"]!=null){
+        return json["title"];
+      }else if(json["courseTitle"]!=null){
+        return json["courseTitle"];
+      }
+      return null;
+    })(),
+    subtitle: json["subtitle"]??null,
+    price:
+      ((){
+      if(json["price"]!=null){
+        return json["price"];
+      }else if(json["coursePrice"]!=null){
+        return json["coursePrice"];
+      }
+      return null;
+    })(),
     description: json["description"],
     requirement: json["requirement"] == null ? null : List<String>.from(json["requirement"].map((x) => x)),
     learnWhat: json["learnWhat"] == null ? null :List<String>.from(json["learnWhat"].map((x) => x)),
-    soldNumber: json["soldNumber"],
-    ratedNumber: json["ratedNumber"],
+    soldNumber:
+      ((){
+      if(json["soldNumber"]!=null){
+        return json["soldNumber"];
+      }else if(json["courseSoldNumber"]!=null){
+        return json["courseSoldNumber"];
+      }
+      return null;
+    })(),
+    ratedNumber:
+      ((){
+      if(json["ratedNumber"]!=null){
+        return json["ratedNumber"];
+      }else if(json["courseRatedNumber"]!=null){
+        return json["courseRatedNumber"];
+      }
+      return null;
+    })(),
     videoNumber: json["videoNumber"],
     totalHours: json["totalHours"]==null?null:json["totalHours"].toDouble(),
-    formalityPoint: json["formalityPoint"]==null?null:json["formalityPoint"].toDouble(),
-    contentPoint: json["contentPoint"]==null?null:json["contentPoint"].toDouble(),
-    presentationPoint: json["presentationPoint"]==null?null:json["presentationPoint"].toDouble(),
-    imageUrl: json["imageUrl"],
+    formalityPoint:
+    ((){
+      if(json["formalityPoint"]!=null){
+        return json["formalityPoint"].toDouble();
+      }else if(json["courseFormalityPoint"]!=null){
+        return json["courseFormalityPoint"].toDouble();
+      }
+      return null;
+    })(),
+    contentPoint: ((){
+      if(json["contentPoint"]!=null){
+        return json["contentPoint"].toDouble();
+      }else if(json["courseContentPoint"]!=null){
+        return json["courseContentPoint"].toDouble();
+      }
+      return null;
+    })(),
+    presentationPoint:  ((){
+      if(json["presentationPoint"]!=null){
+        return json["presentationPoint"].toDouble();
+      }else if(json["coursePresentationPoint"]!=null){
+        return json["coursePresentationPoint"].toDouble();
+      }
+      return null;
+    })(),
+    imageUrl:
+      ((){
+      if(json["imageUrl"]!=null){
+        return json["imageUrl"];
+      }else if(json["courseImage"]!=null){
+        return json["courseImage"];
+      }
+      return null;
+    })(),
     promoVidUrl: json["promoVidUrl"] == null ? null : json["promoVidUrl"],
     status: statusValues.map[json["status"]],
     isHidden: json["isHidden"],
@@ -108,7 +169,14 @@ class Course {
     instructorId: json["instructorId"],
     typeUploadVideoLesson: json["typeUploadVideoLesson"],
     instructorUserId: json["instructor.user.id"],
-    instructorUserName: json["instructor.user.name"],
+    instructorUserName:  ((){
+      if(json["instructor.user.name"]!=null){
+       return json["instructor.user.name"];
+      }else if(json["instructorName"]!=null){
+        return json["instructorName"];
+      }
+      return null;
+    })(),
   );
 
   Map<String, dynamic> toJson() => {

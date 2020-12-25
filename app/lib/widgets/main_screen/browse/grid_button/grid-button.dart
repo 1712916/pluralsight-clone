@@ -11,37 +11,43 @@ class GridButton extends StatefulWidget {
 }
 
 class _GridButtonState extends State<GridButton> {
-  List<Category> categories=[];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Future<Response> future = CategoryServices.getAllCategory();
-    future.then((value) => categories=categoriesResponseModelFromJson(value.body).payload);
+
   }
 
   @override
   Widget build(BuildContext context) {
     /*24 is for notification bar on Android*/
 
-    return Container(
-        height: 170,
-        child: categories==null?Center(
-          child: circleLoading(),
-        ):GridView.count(
-          crossAxisCount: 2,
-          scrollDirection: Axis.horizontal,
-          childAspectRatio: 0.5,
-          children: categories.map((e) => Padding(
-            padding: const EdgeInsets.only(right: 5, bottom: 5),
-            child: MyButton(
-              title: e.name,
-              route: 'widget.home',
-              type: "CATEGORY",
-            ),
-          ),).toList(),
+    return   FutureBuilder<Response>(
+      future: CategoryServices.getAllCategory(),
+      builder: (BuildContext context, AsyncSnapshot<Response> snapshot){
+        if(snapshot.hasData){
+          return Container(
+              height: 170,
+              child: GridView.count(
+                crossAxisCount: 2,
+                scrollDirection: Axis.horizontal,
+                childAspectRatio: 0.5,
+                children: categoriesResponseModelFromJson(snapshot.data.body).payload.map((e) => Padding(
+                  padding: const EdgeInsets.only(right: 5, bottom: 5),
+                  child: MyButton(
+                    title: e.name,
+                    categoryId:e.id,
+                    route: 'widget.home',
+                    type: "CATEGORY",
+                  ),
+                ),).toList(),
 
-        ));
+              ));
+        }
+        return circleLoading();
+      }
+    );
   }
 }
