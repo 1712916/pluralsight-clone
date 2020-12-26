@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:app/models/BookmarkProvider.dart';
+import 'package:app/models/bookmark-provider.dart';
 import 'package:app/models/course-detail-response-model.dart';
 import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';

@@ -1,3 +1,4 @@
+import 'package:app/models/bookmark-provider.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/models/login-provider.dart';
 import 'package:app/models/user-response-model.dart';
@@ -11,6 +12,8 @@ import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../main-navigate.dart';
 
 class SignIn extends StatefulWidget {
   bool requiredSavePassword;
@@ -31,7 +34,7 @@ class _LoginState extends State<SignIn> {
   @override
   void initState() {
     // TODO: implement initState
-
+    super.initState();
     isSavePassword = false;
     loginState = -1;
     isLoading = false;
@@ -40,9 +43,8 @@ class _LoginState extends State<SignIn> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     loadAccount();
-    super.initState();
-  }
 
+  }
   void loadAccount() async {
     final prefs = await SharedPreferences.getInstance();
     final emailKey = 'email';
@@ -70,6 +72,8 @@ class _LoginState extends State<SignIn> {
     }
 
   }
+
+
 
   void saveAccount() async {
     final prefs = await SharedPreferences.getInstance();
@@ -274,6 +278,21 @@ class _LoginState extends State<SignIn> {
       Provider.of<LoginProvider>(context).changeState();
       Navigator.of(context).popUntil((route) => route.isFirst);
       Provider.of<CurrentBottomNavigatorProvider>(context).currentIndex = 0;
+
+      String userId= userResponse.userInfo.id;
+      Provider.of<BookmarkProvider>(context).userId=userId;
+      BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: database_name);
+      await bookmarkSQL.open();
+
+      List<dynamic> bookmarkFromSqlite=await bookmarkSQL.getData(userId);
+      Provider.of<BookmarkProvider>(context).bookmarkSQL=bookmarkSQL;
+      Provider.of<BookmarkProvider>(context).courseIds=[];
+      for(int i=0;i<bookmarkFromSqlite.length;i++){
+        Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
+      }
+      // ignore: invalid_use_of_visible_for_testing_member
+      Provider.of<BookmarkProvider>(context).notifyListeners();
+
       setState(() {
         isLoading = false;
         loginState = 200;

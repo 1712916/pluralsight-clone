@@ -12,22 +12,27 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var loginState=Provider.of<LoginProvider>(context);
-    var userInfo=loginState.userResponseModel.userInfo;
+    var userInfo;
+    if(loginState.isLogin){
+      userInfo=loginState.userResponseModel.userInfo;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      body: loginState.isLogin?Padding(
+      body: loginState.isLogin ?Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height:16),
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(userInfo.avatar),
+                    backgroundImage:  NetworkImage(userInfo.avatar),
                     radius: 20.0,
                   ),
                   Column(
@@ -40,7 +45,7 @@ class Settings extends StatelessWidget {
                   )
                 ],
               ),
-
+              SizedBox(height:16),
               FlatButton(
                 minWidth: double.infinity,
                 onPressed: () {

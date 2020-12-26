@@ -1,6 +1,6 @@
  import 'dart:convert';
 
-import 'package:app/models/BookmarkProvider.dart';
+import 'package:app/models/bookmark-provider.dart';
 import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/current-bottom-navigator.dart';
@@ -104,7 +104,10 @@ class MyHome extends StatelessWidget {
         FutureBuilder(
             future: Provider.of<BookmarkProvider>(context).courses,
             builder: (BuildContext context, AsyncSnapshot<List<Course>> snapshot){
-              return BuilderListBookmark(snapshot.data);
+              if(snapshot.hasData){
+                return BuilderListBookmark(snapshot.data);
+              }
+              return Container();
             })
 
         //add here

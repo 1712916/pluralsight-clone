@@ -16,7 +16,6 @@ class CustomVideoPlayer extends StatefulWidget {
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   bool isLoading = true;
   VideoPlayerController _controller;
-  Future<void> _initializeVideoPlayerFuture;
   bool _shownControler = false;
   bool _isFullscreen = false;
   double _currentVideoTime = 0;
@@ -29,7 +28,11 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     // or the internet.
     _controller = VideoPlayerController.network(
       this.widget.url,
-    )..initialize()..setVolume(3);
+    )..initialize()..setVolume(3)..addListener(() {
+      setState(() {
+        // _currentVideoTime=_controller.value.position.inSeconds.toDouble();
+      });
+    });
 
     _controller..setLooping(false);
     _shownControler = true;

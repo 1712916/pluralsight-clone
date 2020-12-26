@@ -8,37 +8,36 @@ import 'package:app/models/user-response-model.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-  Future<Response> doPostRequest({var url_api, var body, var headers}) {
-if (headers == null) {
-headers = {"Content-Type": "application/json"};
-}
-return http.post(url_api, body: body, headers: headers);
+
+Future<Response> doPostRequest({var url_api, var body, var headers}) {
+  if (headers == null) {
+    headers = {"Content-Type": "application/json"};
+  }
+  return http.post(url_api, body: body, headers: headers);
 }
 
-  Future<Response> doGetRequest({var url_api, var headers}) {
-if (headers == null) {
-headers = {"Content-Type": "application/json"};
-}
-return http.get(url_api, headers: headers);
+Future<Response> doGetRequest({var url_api, var headers}) {
+  if (headers == null) {
+    headers = {"Content-Type": "application/json"};
+  }
+  return http.get(url_api, headers: headers);
 }
 
-  Future<Response> doPutRequest({var url_api, var headers, var body}) {
-if (headers == null) {
-headers = {"Content-Type": "application/json"};
+Future<Response> doPutRequest({var url_api, var headers, var body}) {
+  if (headers == null) {
+    headers = {"Content-Type": "application/json"};
+  }
+  return http.put(url_api, headers: headers, body: body);
 }
-return http.put(url_api, headers: headers, body: body);
+
+Future<Response> doDeleteRequest({var url_api, var headers}) {
+  if (headers == null) {
+    headers = {"Content-Type": "application/json"};
+  }
+  return http.put(url_api, headers: headers);
 }
-  Future<Response> doDeleteRequest({var url_api, var headers}) {
-if (headers == null) {
-headers = {"Content-Type": "application/json"};
-}
-return http.put(url_api, headers: headers);
-}
-class UserServices{
 
-
-
-
+class UserServices {
   static Future<Response> registerService(
       {String username, String email, String phone, String password}) {
     return doPostRequest(
@@ -134,7 +133,8 @@ class UserServices{
     //400 email đã tồn tại
   }
 
-  static Future<Response> updateFavoriteCategories({String token, String categoryIds}) {
+  static Future<Response> updateFavoriteCategories(
+      {String token, String categoryIds}) {
     var response = doPutRequest(
         url_api: URL_API + "user/update-favorite-categories",
         headers: {
@@ -252,13 +252,12 @@ class UserServices{
     );
 
     return response;
-
   }
 }
 
-
 void main() async {
-  var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
+  var a = await UserServices.loginService(
+      email: "smile.vinhnt@gmail.com", password: "1");
   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
   print("body: ${userResponseModel.token}");
   var z = await UserServices.getFavoriteCourses(token: userResponseModel.token);

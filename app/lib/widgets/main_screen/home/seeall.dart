@@ -1,4 +1,4 @@
- import 'package:app/models/BookmarkProvider.dart';
+ import 'package:app/models/bookmark-provider.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/instructor-services.dart';

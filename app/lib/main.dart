@@ -1,4 +1,4 @@
-import 'package:app/models/BookmarkProvider.dart';
+import 'package:app/models/bookmark-provider.dart';
 import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/utils/app-theme.dart';
 import 'package:flutter/material.dart';
