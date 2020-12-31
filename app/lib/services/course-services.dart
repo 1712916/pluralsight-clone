@@ -215,11 +215,11 @@ class CourseServices{
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({{
+        body: jsonEncode({
           "courseId": courseId,
           "content": content,
           "subject": subject
-        }})
+        })
     );
     return response;
     //200
@@ -276,7 +276,7 @@ class CourseServices{
     //200
     //400 lĩnh vực đã tồn tại
   }
-  static Future<Response> searchV2({String token, String courseId,String content,String subject}) {
+  static Future<Response> searchV2({String token, String courseId,String keyword}) {
     var response = doPostRequest(
         url_api: URL_API + "course/searchV2",
         headers: {
@@ -284,11 +284,12 @@ class CourseServices{
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({{
-          "courseId": courseId,
-          "content": content,
-          "subject": subject
-        }})
+        body: jsonEncode({
+          "token": token,
+          "keyword": keyword,
+          "limit": 10,
+          "offset": 1
+        })
     );
     return response;
     //200
@@ -333,8 +334,11 @@ void main() async{
   var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
   print("body: ${userResponseModel.token}");
-  var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
-  var res= await  CourseServices.search(categories: [],keyword: "Di động");
+
+  var b= await CourseServices.searchV2(token: userResponseModel.token,keyword: "data");
+  print("data: ${b.body}");
+  // var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
+  // var res= await  CourseServices.search(categories: [],keyword: "Di động");
  //  var response = await  CourseServices.getCourseDetail(courseId: courseId ,userId: userResponseModel.userInfo.id);
  // // print("Data: ${courseDetailResponseModelFromJson(  response.body )}");
  //   Course course=Course.fromJson(jsonDecode(response.body)["payload"]);
@@ -347,8 +351,8 @@ void main() async{
   // // Course course=Course.fromJson(searchItems[0].toJson());
   // print(searchItems[0].toJson());
   //
-    var response= await UserServices.getFavoriteCourses(token: userResponseModel.token);
-    print("DATA : ${coursesResponseModelFromJson(response.body).courses[0].title}");
+  //   var response= await UserServices.getFavoriteCourses(token: userResponseModel.token);
+  //   print("DATA : ${coursesResponseModelFromJson(response.body).courses[0].title}");
   // print("course is : ${courseDetailResponseModelFromJson(response.body).payload.title}");
 
 }

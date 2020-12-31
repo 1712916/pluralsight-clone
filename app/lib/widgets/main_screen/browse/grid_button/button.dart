@@ -1,5 +1,8 @@
+import 'package:app/models/course-detail-response-model.dart';
+import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/login-provider.dart';
+import 'package:app/models/search-response-model.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/user-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
@@ -80,13 +83,6 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
     }else if(widget.type=="LIKED"){
       future=UserServices.getFavoriteCourses(token: Provider.of<LoginProvider>(context).userResponseModel.token);
     }
-    // future.then((value) =>
-    //     setState(() {
-    //       data=coursesResponseModelFromJson(value.body).courses;
-    //       print("data: $data");
-    //     })
-    // );
-
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -117,14 +113,37 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
                     return Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
-                        children: coursesResponseModelFromJson(snapshot.data.body).courses.map((e) => Column(
-                          children: [
-                            HorizontalCourseItem(course: e,),
-                            Divider(
-                              color: Colors.grey,
-                            )
-                          ],
-                        ) ).toList(),
+                        children:((){
+                          if(widget.type=="RECOMMEND"){
+                            return coursesResponseModelFromJson(snapshot.data.body).courses.map((e) => Column(
+                              children: [
+                                HorizontalCourseItem(course: e.toShownCourse(),),
+                                Divider(
+                                  color: Colors.grey,
+                                )
+                              ],
+                            ) ).toList();
+                          }else if(widget.type=="LIKED"){
+                            return coursesFavoriteResponseModelFromJson(snapshot.data.body).payload.map((e) => Column(
+                              children: [
+                                HorizontalCourseItem(course: e.toShownCourse(),),
+                                Divider(
+                                  color: Colors.grey,
+                                )
+                              ],
+                            ) ).toList();
+                          } else if(widget.type=="CATEGORY"){
+                            return searchResponseModelFromJson(snapshot.data.body).payload.rows.map((e) => Column(
+                              children: [
+                                HorizontalCourseItem(course: e.toShownCourse(),),
+                                Divider(
+                                  color: Colors.grey,
+                                )
+                              ],
+                            ) ).toList();
+                          }
+
+                        })(),
                       ),
                     );
 
@@ -140,3 +159,4 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
     );
   }
 }
+

@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:app/models/courses-response-model.dart';
+import 'package:app/models/instructors-response-model.dart';
+import 'package:app/models/login-provider.dart';
+import 'package:app/models/search-history-response-model.dart';
 import 'package:app/models/search-response-model.dart';
+import 'package:app/models/search-v2-response-model.dart';
 import 'package:app/services/course-services.dart';
+import 'package:app/services/instructor-services.dart';
 import 'package:app/widgets/course_detail/detail.dart';
+import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/main_screen/search/search-result.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,18 +39,12 @@ class SupperSearch extends StatelessWidget {
     );
   }
 }
-List<String> dataSuggestions = [
-  "data",
-  "Heroku",
-  "Flutter",
-  "Angular",
-  "IOS",
-  "C++",
-  "C#",
-  "Python",
-  "Dart",
-  "Nodejs",
-  "React native",
+List<HistoryContent> dataSuggestions = [
+  HistoryContent(content:"Heroku"),
+  HistoryContent(content:"Flutter"),
+  HistoryContent(content:"Angular"),
+  HistoryContent(content:"IOS"),
+  HistoryContent(content:"C++"),
 ];
 
 class Search extends StatefulWidget {
@@ -54,27 +56,19 @@ class _SearchState extends State<Search> {
   var _queryController = TextEditingController();
   bool _isTyping = false;
   Widget _body;
+  bool _isSearching=false;
+  String _token;
 
   //recent
-  List<String> _recentSearches = ["Android", "Heroku", "Flutter"];
-  List<String> _suggestions = [
-    "data",
-    "Heroku",
-    "Flutter",
-    "Angular",
-    "IOS",
-    "C++",
-    "C#",
-    "Python",
-    "Dart",
-    "Nodejs",
-    "React native",
-  ];
+  List<HistoryContent> _recentSearches =[];
+  List<HistoryContent> _suggestions = [];
 
   @override
   void initState() {
     super.initState();
-    _body = _recentSearches.isEmpty ? null : _buidRecentSearches();
+    _token=Provider.of<LoginProvider>(context,listen: false).userResponseModel.token;
+    loadRecentSearches();
+
     _queryController.addListener(() {
       if (_isTyping) {
         if (_queryController.text == '') {
@@ -83,9 +77,9 @@ class _SearchState extends State<Search> {
           });
         } else {
           //widget.search here
-          List<String> searching = [];
+          List<HistoryContent> searching = [];
           searching = dataSuggestions
-              .where((element) => element
+              .where((element) => element.content
                   .toLowerCase()
                   .contains(_queryController.text.toLowerCase()))
               .toList();
@@ -102,14 +96,20 @@ class _SearchState extends State<Search> {
         });
       }
     });
-  }
 
+  }
+  loadRecentSearches() async {
+   var response=  await CourseServices.getSearchHistory(token: _token);
+   var data=searchHistoryResponseModelFromJson(response.body).payload.data;
+   _recentSearches=data;
+   _body = _recentSearches.isEmpty ? null : _buidRecentSearches();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(),
       //body thay đổi khi nhập và khi bấm widget.search
-      body: _body,
+      body: _isSearching?Center(child: circleLoading(),): _body,
     );
   }
 
@@ -147,21 +147,23 @@ class _SearchState extends State<Search> {
                 Text("Recent searches"),
                 TextButton(
                     onPressed: () {
-                      print("Hello");
+                      for(int i=0;i<_recentSearches.length;i++){
+                        CourseServices.deleteSearchHistory(token: _token,historyId:_recentSearches[i].id );
+                      }
                       setState(() {
                         _recentSearches.clear();
                         _body = null;
                       });
-                      print("SIZE of recent: ${_recentSearches.length}");
+
                     },
-                    child: Text("Clear"))
+                    child: Text("Clear all"))
               ],
             ),
           ),
           Expanded(
             child: ListView(
               children:
-                  _recentSearches.map((str) => _item(str, false)).toList(),
+                  _recentSearches.map((str) => _itemSuggestion(str, false)).toList(),
             ),
           ),
         ],
@@ -175,7 +177,7 @@ class _SearchState extends State<Search> {
         children: [
           Expanded(
             child: ListView(
-              children: _suggestions.map((str) => _item(str, true)).toList(),
+              children: _suggestions.map((str) => _itemSuggestion(str, true)).toList(),
             ),
           ),
         ],
@@ -184,25 +186,29 @@ class _SearchState extends State<Search> {
   }
 
   void submitSearchText(String text) async {
-    var response = await CourseServices.search(keyword: text);
-
-    List<SearchItem> courses=searchResponseModelFromJson(response.body).payload.rows;
-
-
-    print("submit search :$text");
     setState(() {
-      _recentSearches.add(text);
+      _isSearching=true;
+    });
+    await Future.delayed(Duration(seconds: 1));
+
+    var response = await CourseServices.searchV2(keyword: text,token:_token );
+    setState(() {
+      _isSearching=false;
+    });
+
+    var data=searchV2ResponseModelFromJson(response.body).payload;
+    List<CourseSearch> courses=data.courses.data;
+    List<InstructorsDatum> authors=data.instructors.data;
+
+    setState(() {
+      _recentSearches.add(HistoryContent(content: text));
       _queryController.text = text;
       _queryController.selection = TextSelection.fromPosition(
           TextPosition(offset: _queryController.text.length));
 
-      //Tìm kiếm
-      //List<Course> courses=Provider.of<CourseProvider>(context).findCoursesByTitle(_queryController.text);
-      //   List<Path> paths=Paths;
-//      List<Author> authors=Authors;
 
       if (courses.length != 0) {
-        _body = SearchResult(courses: courses);
+        _body = SearchResult(courses: courses,authors: authors,);
       } else {
         _body = Center(
           child: Text("Không tìm thấy khóa học"),
@@ -215,14 +221,24 @@ class _SearchState extends State<Search> {
     });
   }
 
-  Widget _item(strInput, type) {
+  Widget _itemSuggestion(HistoryContent strInput,bool type) {
     return ListTile(
-      title: Text(strInput),
+      title: Text(strInput.content),
       leading: type ? Icon(Icons.search) : Icon(Icons.history),
       onTap: () {
         //thay doi _body
-        submitSearchText(strInput);
+        submitSearchText(strInput.content);
       },
+      trailing: type ?null:IconButton(
+        onPressed: (){
+         CourseServices.deleteSearchHistory(token: _token, historyId: strInput.id);
+         setState(() {
+           _recentSearches.remove(strInput);
+           _body = _recentSearches.isEmpty ? null : _buidRecentSearches();
+         });
+        },
+        icon: Icon(Icons.delete),
+      ),
     );
   }
 

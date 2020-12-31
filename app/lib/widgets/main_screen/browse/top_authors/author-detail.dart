@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class AuthorDetail extends StatelessWidget {
   static const String routeName = '/author';
-  final Author author;
+  final Instructor author;
   AuthorDetail(this.author);
 
   @override
@@ -116,7 +116,7 @@ class AuthorDetail extends StatelessWidget {
                                   HorizontalCourseItem(
                                     course: (() {
                                       course.instructorUserName = author.name;
-                                      return course;
+                                      return course.toShownCourse();
                                     })(),
                                   ),
                                   Divider(

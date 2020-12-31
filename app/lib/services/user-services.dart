@@ -34,7 +34,7 @@ Future<Response> doDeleteRequest({var url_api, var headers}) {
   if (headers == null) {
     headers = {"Content-Type": "application/json"};
   }
-  return http.put(url_api, headers: headers);
+  return http.delete(url_api, headers: headers);
 }
 
 class UserServices {

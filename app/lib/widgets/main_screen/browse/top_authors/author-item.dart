@@ -10,7 +10,7 @@ class AuthorItem extends StatelessWidget {
   final String authorId;
   AuthorItem(this.authorId);
   Widget buildContent(AsyncSnapshot snapshot,BuildContext context){
-    Author author=instructorDetailResponseModelFromJson(snapshot.data.body).author;
+    Instructor author=instructorDetailResponseModelFromJson(snapshot.data.body).author;
     return   GestureDetector(
       onTap: (){
 
@@ -67,7 +67,7 @@ class AuthorItemB extends AuthorItem {
 
   @override
   Widget buildContent(AsyncSnapshot snapshot, BuildContext context) {
-    Author author=instructorDetailResponseModelFromJson(snapshot.data.body).author;
+    Instructor author=instructorDetailResponseModelFromJson(snapshot.data.body).author;
     return  GestureDetector(
       onTap: (){
         Navigator.push(
@@ -76,7 +76,7 @@ class AuthorItemB extends AuthorItem {
         );
       },
       child: Container(
-
+          color: Colors.transparent,
           child:Row(
             children: [
               SizedBox(width: 32,),

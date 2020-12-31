@@ -2,6 +2,8 @@ import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/data.dart';
 import 'package:app/models/instructors-response-model.dart';
 import 'package:app/models/search-response-model.dart';
+import 'package:app/models/search-v2-response-model.dart';
+import 'package:app/models/shown-instructor.dart';
 import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-item.dart';
 import 'package:app/widgets/main_screen/home/course-item.dart';
@@ -9,12 +11,12 @@ import 'package:flutter/material.dart';
 
 
 class SearchResult extends StatefulWidget {
-  List<SearchItem> courses ;
+  List<CourseSearch> courses ;
   // List<Path> paths = Paths;
-  // List<InstructorsResponseModel> authors;
+  List<InstructorsDatum> authors;
 
   // SearchResult({this.courses, this.paths, this.authors});
-  SearchResult({this.courses});
+  SearchResult({this.courses,this.authors});
   _SearchResultState createState() => _SearchResultState();
 }
 
@@ -106,20 +108,20 @@ class _SearchResultState extends State<SearchResult>
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
                             children: [
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Text('Authors'),
-                              //     TextButton(
-                              //         onPressed: () {
-                              //           _tabController.animateTo(3);
-                              //         },
-                              //         child:
-                              //             Text('${this.widget.authors.length} Results')),
-                              //   ],
-                              // ),
-                              // buildAuthorItem(this.widget.authors, 4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Authors'),
+                                  TextButton(
+                                      onPressed: () {
+                                        _tabController.animateTo(3);
+                                      },
+                                      child:
+                                          Text('${this.widget.authors.length} Results')),
+                                ],
+                              ),
+                              buildAuthorItem(this.widget.authors, 4),
                             ],
                           ),
                         ),
@@ -262,7 +264,7 @@ class _SearchResultState extends State<SearchResult>
                         Expanded(
                             child: ListView(
                           children: [
-                            // buildAuthorItem(this.widget.authors, this.widget.authors.length),
+                             buildAuthorItem(this.widget.authors, this.widget.authors.length),
                           ],
                         ))
                       ],
@@ -278,12 +280,12 @@ class _SearchResultState extends State<SearchResult>
   }
 }
 
-Widget buildCourseItem(List<SearchItem> courses, int length) {
+Widget buildCourseItem(List<CourseSearch> courses, int length) {
   List<Widget> list = [];
 
   for (var i = 0; i < courses.length && i < length; i++) {
-    list.add(HorizontalCourseItemSearch(
-      course: courses[i]
+    list.add(HorizontalCourseItem(
+      course: courses[i].toShownCourse()
     ));
     list.add(Divider(
       color: Colors.grey,
@@ -308,22 +310,17 @@ Widget buildCourseItem(List<SearchItem> courses, int length) {
 //   );
 // }
 
-// Widget buildAuthorItem(List<Author> author, int length) {
-//   List<Widget> list = [];
-//
-//   for (var i = 0; i < author.length && i < length; i++) {
-//     list.add(AuthorItemB(author[i]));
-//     list.add(Divider(
-//       color: Colors.grey,
-//     ));
-//   }
-//   return Column(
-//     children: list,
-//   );
-// }
+Widget buildAuthorItem(List<InstructorsDatum> author, int length) {
+  List<Widget> list = [];
 
-class ItemFactory {
-  String type;
-
-  Widget clone() {}
+  for (var i = 0; i < author.length && i < length; i++) {
+    list.add(AuthorItemB(author[i].id));
+    list.add(Divider(
+      color: Colors.grey,
+    ));
+  }
+  return Column(
+    children: list,
+  );
 }
+

@@ -17,11 +17,11 @@ class InstructorDetailResponseModel {
   });
 
   String message;
-  Author author;
+  Instructor author;
 
   factory InstructorDetailResponseModel.fromJson(Map<String, dynamic> json) => InstructorDetailResponseModel(
     message: json["message"],
-    author: Author.fromJson(json["payload"]),
+    author: Instructor.fromJson(json["payload"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -30,8 +30,8 @@ class InstructorDetailResponseModel {
   };
 }
 
-class Author {
-  Author({
+class Instructor {
+  Instructor({
     this.id,
     this.userId,
     this.name,
@@ -69,7 +69,7 @@ class Author {
   int soldNumber;
   List<Course> courses;
 
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
+  factory Instructor.fromJson(Map<String, dynamic> json) => Instructor(
     id: json["id"],
     userId: json["userId"],
     name: json["name"],

@@ -67,7 +67,7 @@ class _ListCourseState extends State<ListCourse> {
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                               children: [
-                                HorizontalCourseItem(course: courses[index]),
+                                HorizontalCourseItem(course: courses[index].toShownCourse()),
                                 Divider(
                                   color: Colors.grey,
                                 )

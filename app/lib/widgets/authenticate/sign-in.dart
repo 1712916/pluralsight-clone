@@ -12,8 +12,8 @@ import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../main-navigate.dart';
 
 class SignIn extends StatefulWidget {
   bool requiredSavePassword;
@@ -199,6 +199,40 @@ class _LoginState extends State<SignIn> {
                             child: Center(
                               child: Text(
                                 'SIGN IN',
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.deepPurple[700],
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(4.0))),
+                        child: FlatButton(
+                            onPressed: () async {
+                              //bật indicator
+                              //Xu ly dang nhap voi GG
+                              GoogleSignIn _googleSignIn = GoogleSignIn(
+                                scopes: <String>[
+                                  'email',
+                                  'https://www.googleapis.com/auth/contacts.readonly',
+                                ],
+                              );
+                              GoogleSignInAccount _currentUser;
+                              try {
+                                await _googleSignIn.signIn();
+                              } catch (error) {
+                                print(error);
+                              }
+
+
+                            },
+                            child: Center(
+                              child: Text(
+                                'LOGIN IN WITH GOOGLE',
                               ),
                             )),
                       ),

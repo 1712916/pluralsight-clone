@@ -1,5 +1,6 @@
 
 import 'package:app/models/instructors-response-model.dart';
+import 'package:app/models/shown-instructor.dart';
 import 'package:app/services/instructor-services.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/customs/loading-process.dart';
@@ -71,7 +72,7 @@ class AuthorList extends StatelessWidget {
   }
 }
 
-Widget buildRowAuthors(List<AuthorApart> authors){
+Widget buildRowAuthors(List<ShownInstructor> authors){
   return      Container(
       height: authorRowHeight,
       child: ListView(

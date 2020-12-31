@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:app/models/shown-course.dart';
+
 SearchResponseModel searchResponseModelFromJson(String str) => SearchResponseModel.fromJson(json.decode(str));
 
 String searchResponseModelToJson(SearchResponseModel data) => json.encode(data.toJson());
@@ -34,11 +36,11 @@ class Payload {
     this.count,
   });
 
-  List<SearchItem> rows;
+  List<CourseSearch> rows;
   int count;
 
   factory Payload.fromJson(Map<String, dynamic> json) => Payload(
-    rows: List<SearchItem>.from(json["rows"].map((x) => SearchItem.fromJson(x))),
+    rows: List<CourseSearch>.from(json["rows"].map((x) => CourseSearch.fromJson(x))),
     count: json["count"],
   );
 
@@ -48,8 +50,8 @@ class Payload {
   };
 }
 
-class SearchItem {
-  SearchItem({
+class CourseSearch implements ToShownCourse {
+  CourseSearch({
     this.title,
     this.id,
     this.price,
@@ -83,7 +85,7 @@ class SearchItem {
   DateTime updatedAt;
   String name;
 
-  factory SearchItem.fromJson(Map<String, dynamic> json) => SearchItem(
+  factory CourseSearch.fromJson(Map<String, dynamic> json) => CourseSearch(
     title: json["title"],
     id: json["id"],
     price: json["price"],
@@ -118,4 +120,11 @@ class SearchItem {
     "updatedAt": updatedAt.toIso8601String(),
     "name": name,
   };
+
+  @override
+  ShownCourse toShownCourse() {
+    // TODO: implement toShownCourse
+  return ShownCourse(id: this.id,title: this.title,ratedNumber: this.ratedNumber,totalHours: this.totalHours,
+  instructorUserName: this.name,imageUrl: this.imageUrl,createdAt: null);
+  }
 }

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:app/models/shown-course.dart';
+
 CoursesFavoriteResponseModel coursesFavoriteResponseModelFromJson(String str) => CoursesFavoriteResponseModel.fromJson(json.decode(str));
 
 String coursesFavoriteResponseModelToJson(CoursesFavoriteResponseModel data) => json.encode(data.toJson());
@@ -28,7 +30,7 @@ class CoursesFavoriteResponseModel {
   };
 }
 
-class CourseFavorite {
+class CourseFavorite implements ToShownCourse{
   CourseFavorite({
     this.id,
     this.courseTitle,
@@ -82,4 +84,10 @@ class CourseFavorite {
     "coursePresentationPoint": coursePresentationPoint,
     "courseAveragePoint": courseAveragePoint,
   };
+
+  @override
+  ShownCourse toShownCourse() {
+    return ShownCourse(id: this.id,title: this.courseTitle,createdAt: null,imageUrl: this.courseImage,
+        instructorUserName: this.instructorName,totalHours: null,ratedNumber: this.courseAveragePoint.toInt());
+  }
 }

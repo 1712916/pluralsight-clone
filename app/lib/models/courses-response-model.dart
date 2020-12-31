@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:app/models/shown-course.dart';
+
 CoursesResponseModel coursesResponseModelFromJson(String str) => CoursesResponseModel.fromJson(json.decode(str));
 
 String coursesResponseModelToJson(CoursesResponseModel data) => json.encode(data.toJson());
@@ -28,7 +30,7 @@ class CoursesResponseModel {
   };
 }
 
-class Course {
+class Course implements ToShownCourse{
   Course({
     this.id,
     this.title,
@@ -206,6 +208,15 @@ class Course {
     "instructor.user.id": instructorUserId,
     "instructor.user.name": instructorUserName,
   };
+
+  @override
+  ShownCourse toShownCourse() {
+    // TODO: implement toShownCourse
+    return ShownCourse(id: this.id,title: this.title,createdAt: this.createdAt,imageUrl: this.imageUrl,
+    instructorUserName: this.instructorUserName,totalHours: this.totalHours,ratedNumber: this.ratedNumber);
+  }
+
+
 }
 
 enum Status { COMPLETED }

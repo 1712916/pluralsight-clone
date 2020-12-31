@@ -89,15 +89,15 @@ class MyHome extends StatelessWidget {
               height: 16,
             ),
 
-            buildRowOfCourses("TOP NEW",CourseServicesFactory.dictonary["TOP NEW"](limit: 10,page:1)),
+          buildRowOfCourses("TOP NEW",CourseServicesFactory.dictonary["TOP NEW"](limit: 10,page:1)),
             SizedBox(
               height: 16,
             ),
-            buildRowOfCourses("TOP SELL",CourseServicesFactory.dictonary["TOP SELL"](limit: 10,page:1)),
+          buildRowOfCourses("TOP SELL",CourseServicesFactory.dictonary["TOP SELL"](limit: 10,page:1)),
             SizedBox(
               height: 16,
             ),
-            buildRowOfCourses("TOP RATE",CourseServicesFactory.dictonary["TOP SELL"](limit: 10,page:1)),
+             buildRowOfCourses("TOP RATE",CourseServicesFactory.dictonary["TOP SELL"](limit: 10,page:1)),
             SizedBox(
               height: 16,
             ),
