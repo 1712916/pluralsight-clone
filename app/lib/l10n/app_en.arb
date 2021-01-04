@@ -1,8 +1,186 @@
 {
-    "helloWorld": "Hello World!",
-      "@helloWorld": {
-        "description": "The conventional newborn programmer greeting"
-      }
-
-
+   "helloWorld":"Hello World!",
+   "@helloWorld":{
+      "description":" "
+   },
+   "sorry":"Sorry!",
+   "@sorry":{
+      "description":" "
+   },
+   "unexpectedHappened":"Something unexpected happened",
+   "@unexpectedHappened":{
+      "description":" "
+   },
+   "tryAgain":"TRY AGAIN",
+   "@tryAgain":{
+      "description":" "
+   },
+   "contactUs":"CONTACT US",
+   "@contactUs":{
+      "description":" "
+   },
+   "youAreOffline":"You're offline.",
+   "@youAreOffline":{
+      "description":" "
+   },
+   "tryConnectInternet":"Connect to the internet and try again",
+   "@tryConnectInternet":{
+      "description":" "
+   },
+   "getStart":"Let's get your started",
+   "@getStart":{
+      "description":" "
+   },
+   "browseIntroLogout":"Browse new & popular courses",
+   "@browseIntroLogout":{
+      "description":" "
+   },
+   "searchIntroLogout":"Search the library",
+   "@searchIntroLogout":{
+      "description":" "
+   },
+   "signInIntro":"Sign in to skill up today",
+   "@signInIntro":{
+      "description":" "
+   },
+   "signInIntro2":"SIGN IN TO START WATCHING",
+   "@signInIntro2":{
+      "description":" "
+   },
+   "signInSubIntro":"Keep your skill up-to-date with access to thousands of courses by industry experts.",
+   "@signInSubIntro":{
+      "description":" "
+   },
+   "profileIntroLogout":"Please sign in to view profile.",
+   "@profileIntroLogout":{
+      "description":" "
+   },
+   "signInButton":"SIGN IN",
+   "@signInButton":{
+      "description":" "
+   },
+   "validateConfirmPassword":"PASSWORD and CONFRIM PASSWORD must be match.",
+   "@validateConfirmPassword":{
+      "description":" "
+   },
+   "failedRegister":"Email Or Phone number has been used.",
+   "@failedRegister":{
+      "description":" "
+   },
+   "succeedRegister":"Create Account Success.",
+   "@succeedRegister":{
+      "description":" "
+   },
+   "loginFailedStatus":"Email or password is wrong.",
+   "@loginFailedStatus":{
+      "description":" "
+   },
+   "buttonForgotRequest":"SEND REQUEST TO EMAIL",
+   "@buttonForgotRequest":{
+      "description":" "
+   },
+   "forgotRequestTitle":"Please enter your email to change your password.",
+   "@forgotRequestTitle":{
+      "description":" "
+   },
+   "responseError":"SORRY! Had an error in this server.",
+   "@responseError":{
+      "description":" "
+   },
+   "failedRequestedForgotPassword":"Failed to send a request to this email.",
+   "@failedRequestedForgotPassword":{
+      "description":" "
+   },
+   "succeedRequestedForgotPassword":"Please check this email to change your password.",
+   "@succeedRequestedForgotPassword":{
+      "description":" "
+   },
+   "checkEmailActive":"Check email to activate your account",
+   "@checkEmailActive":{
+      "description":" "
+   },
+   "password":"Password",
+   "@password":{
+      "description":" "
+   },
+   "savePassword":"Save your account",
+   "@savePassword":{
+      "description":" "
+   },
+   "loginWithGoogle":"login with google",
+   "@loginWithGoogle":{
+      "description":" "
+   },
+   "createNewAccount":"Create new account",
+   "@createNewAccount":{
+      "description":" "
+   },
+   "register":"Register",
+   "@register":{
+      "description":" "
+   },
+   "favoriteCategory":"Favorite Category",
+   "@favoriteCategory":{
+      "description":" "
+   },
+   "topAuthor":"Top Authors",
+   "@topAuthor":{
+      "description":" "
+   },
+   "hintSearch":"Search...",
+   "@hintSearch":{
+      "description":" "
+   },
+   "recentSearch":"Recent searches",
+   "@recentSearch":{
+      "description":" "
+   },
+   "clearAll":"Clear All",
+   "@clearAll":{
+      "description":" "
+   },
+   "searchNotFound":"Key Not Found .",
+   "@searchNotFound":{
+      "description":" "
+   },
+   "changePassword":"Change your password.",
+   "@changePassword":{
+      "description":" "
+   },
+   "signOut":"Sign Out",
+   "@signOut":{
+      "description":" "
+   },
+   "signIn":"Sign In",
+   "@signIn":{
+      "description":" "
+   },
+   "oldPassword":"Old Password",
+   "@oldPassword":{
+      "description":" "
+   },
+   "newPassword":"New Password",
+   "@newPassword":{
+      "description":" "
+   },
+   "requestField":"*Please fill this field",
+   "@requestField":{
+      "description":" "
+   },
+   "validField":"*Fewest 8 words",
+   "@validField":{
+      "description":" "
+   },
+   "successChangePassword":"*Password changed successfully",
+   "@successChangePassword":{
+      "description":" "
+   },
+   "warningChangePassword":"*Old password is incorrect or not the same as new password",
+   "@warningChangePassword":{
+      "description":" "
+   },
+   "errorChangePassword":"*Password change failed",
+   "@errorChangePassword":{
+      "description":" "
+   }
 }

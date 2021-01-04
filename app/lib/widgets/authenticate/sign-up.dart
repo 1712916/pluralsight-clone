@@ -1,13 +1,15 @@
 import 'dart:convert';
 
 import 'package:app/services/user-services.dart';
-import 'package:app/strings/string-us.dart';
+
 import 'package:app/utils/app-color.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
+import 'package:app/widgets/customs/text-field.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -133,7 +135,7 @@ class _LoginState extends State<SignUp> {
                     },
                     decoration: InputDecoration(
                         errorText: _validateConfirmPassword
-                            ? validateConfirmPassword
+                            ? AppLocalizations.of(context).validateConfirmPassword
                             : null,
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
@@ -161,7 +163,7 @@ class _LoginState extends State<SignUp> {
                   SizedBox(
                     height: 20,
                   ),
-                  _statusRegister==400?failureText(failedRegister):(_statusRegister==200?successText(succeedRegister):Container()),
+                  _statusRegister==400?failureText(AppLocalizations.of(context).failedRegister):(_statusRegister==200?successText(AppLocalizations.of(context).succeedRegister):Container()),
                   SizedBox(
                     height: 20,
                   ),

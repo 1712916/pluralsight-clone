@@ -119,9 +119,9 @@ class PathItemB extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildTextTitle(this.path.title),
+              TextTitle(this.path.title),
               SizedBox(height: 8,),
-              buildSubTextTitle('${this.path.numberCourses} courses')
+              SubTitle('${this.path.numberCourses} courses')
             ],
           )
         ],

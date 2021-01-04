@@ -12,4 +12,12 @@ class LoginProvider with ChangeNotifier {
   void setUserResponse(UserResponseModel userResponseModel){
     this.userResponseModel=userResponseModel;
   }
+  void addNewFavoriteCategory(String id){
+    if(this.userResponseModel.userInfo.favoriteCategories.contains(id)){
+      this.userResponseModel.userInfo.favoriteCategories.remove(id);
+    }else{
+      this.userResponseModel.userInfo.favoriteCategories.add(id);
+    }
+
+  }
 }

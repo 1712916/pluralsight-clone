@@ -11,15 +11,6 @@ Widget processFutureBuild({AsyncSnapshot snapshot,Function child,BuildContext co
   }
 
   return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        circleLoading(),
-        SizedBox(
-          height: 16,
-        ),
-        Text("Please wait for loading..")
-      ],
-    ),
+    child: circleLoading(),
   );
 }

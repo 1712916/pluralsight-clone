@@ -1,16 +1,15 @@
 import 'package:app/models/info-response-model.dart';
-import 'package:app/models/login-provider.dart';
+import 'package:app/provider/login-provider.dart';
 import 'package:app/services/user-services.dart';
-import 'package:app/strings/string-us.dart';
 import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
 import 'package:app/widgets/customs/loading-process.dart';
+import 'package:app/widgets/customs/text-field.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Profile extends StatefulWidget {
   static const String routeName = '/profile';
   @override
@@ -41,7 +40,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
-        backgroundColor: Colors.grey[850],
+
         elevation: 0.0,
       ),
       body: this.loginProvider.isLogin
@@ -76,6 +75,19 @@ class _ProfileState extends State<Profile> {
                               width: 20.0,
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 16.0,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            color: AppColors.secondaryColor,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfile()));
+                            },
+                            child: Text("Chỉnh sửa trang cá nhân".toUpperCase()),
+                          ),
                         ),
                         SizedBox(
                           height: 50.0,
@@ -199,7 +211,7 @@ Widget ProfileSignOut(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        buildTextTitle(profileIntroLogout),
+        TextTitle(AppLocalizations.of(context).profileIntroLogout),
         SizedBox(
           height: 16,
         ),
@@ -208,10 +220,87 @@ Widget ProfileSignOut(BuildContext context) {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => SignIn(requiredSavePassword: false,)));
           },
-          child: Text(signInButton),
+          child: Text(AppLocalizations.of(context).signInButton),
           color: AppColors.secondaryColor,
         )
       ],
     ),
   );
 }
+
+class UpdateProfile extends StatefulWidget {
+  String token;
+  String userName;
+  String phone;
+  String imgUrl;
+  String email;
+  @override
+  _UpdateProfileState createState() => _UpdateProfileState();
+}
+
+class _UpdateProfileState extends State<UpdateProfile> {
+  TextEditingController nameController;
+  TextEditingController phoneController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController=TextEditingController();
+    phoneController=TextEditingController();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Edit Profile"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  TextButton(onPressed: (){}, child: CircleAvatar(
+                    backgroundImage:
+                    AssetImage("assets/avt.jpg"),
+                    // backgroundImage: NetworkImage( getProfile(loginState.userResponseModel.token).then((value) => value)),
+                    radius: 40.0,
+                  ),),
+
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Email@gmail.com"),
+                      TextButton(onPressed: (){}, child: Text("Thay ảnh đại diện")),
+                    ],
+                  ),
+
+                ],
+              ),
+              SizedBox(height: 16,),
+              myTextField(labelname: "Name", controller: nameController),
+              SizedBox(height: 16,),
+              myTextField(labelname: "Phone", controller: phoneController),
+              SizedBox(height: 16,),
+              OutlineButton(onPressed: () async {
+                var response=await UserServices.updateProfile(token: widget.token,phone: phoneController.text,name: nameController.text,avatar: "???");
+                if(response.statusCode==200){
+                  //Thông báo đã cập nhật thành công
+                } else{
+                  //Thông báo cn ko thành công
+                }
+
+              }, child: Text("Save")),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+

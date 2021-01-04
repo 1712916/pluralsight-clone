@@ -37,4 +37,17 @@ class PaymentServices{
     //200
     //400 lĩnh vực đã tồn tại
   }
+  static Future<Response> getOwnCourse({String token }) {
+    var response =  doGetRequest(
+      url_api: URL_API + "payment",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    return response;
+    //200
+    //400 lĩnh vực đã tồn tại
+  }
 }

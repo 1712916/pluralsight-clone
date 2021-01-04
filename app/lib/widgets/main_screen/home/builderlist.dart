@@ -28,8 +28,8 @@ class BuilderListHorizontal extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             buildTextHeader(this.title),
-            canSeAll?TextButton(
-                onPressed: () {
+            canSeAll?GestureDetector(
+                onTap: () {
                   //truyen data vao navigte
                   //goi navigate here
                   // Navigator.pushNamed(context, CourseDetail.routeName,
@@ -43,7 +43,7 @@ class BuilderListHorizontal extends StatelessWidget {
                 },
                 child: Text(
                   'See all >',
-                  style: TextStyle(color: Colors.white38),
+
                 )):TextButton(),
           ],
         ),

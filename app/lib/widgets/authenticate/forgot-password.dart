@@ -1,10 +1,9 @@
 import 'package:app/services/user-services.dart';
-import 'package:app/strings/string-us.dart';
 import 'package:app/utils/app-color.dart';
-import 'package:app/widgets/authenticate/sign-in.dart';
+import 'package:app/widgets/customs/text-field.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPassword extends StatefulWidget {
   @override
@@ -37,7 +36,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(forgotRequestTitle),
+            Text(AppLocalizations.of(context).forgotRequestTitle),
             SizedBox(
               height: 16,
             ),
@@ -61,12 +60,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 : Container(
               child: ((){
                 if(responseStatus==200){
-                  return successText(succeedRequestedForgotPassword);
+                  return successText(AppLocalizations.of(context).succeedRequestedForgotPassword);
                 }
                 if(responseStatus==400){
-                  return failureText(failedRequestedForgotPassword);
+                  return failureText(AppLocalizations.of(context).failedRequestedForgotPassword);
                 }
-                return errorText(responseError);
+                return errorText(AppLocalizations.of(context).responseError);
               })(),
             ),
 
@@ -96,7 +95,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   },
                   child: Center(
                     child: Text(
-                      buttonForgotRequest,
+                      AppLocalizations.of(context).buttonForgotRequest,
                     ),
                   )),
             ),

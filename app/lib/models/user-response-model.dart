@@ -52,7 +52,7 @@ class UserInfo {
   String email;
   String avatar;
   String name;
-  List<dynamic> favoriteCategories;
+  List<String> favoriteCategories;
   int point;
   String phone;
   String type;
@@ -66,7 +66,7 @@ class UserInfo {
     email: json["email"],
     avatar: json["avatar"],
     name: json["name"],
-    favoriteCategories: List<dynamic>.from(json["favoriteCategories"].map((x) => x)),
+    favoriteCategories: List<String>.from(json["favoriteCategories"].map((x) => x)),
     point: json["point"],
     phone: json["phone"],
     type: json["type"],

@@ -1,6 +1,9 @@
 import 'package:app/models/categories-response-model.dart';
 import 'package:app/models/data.dart';
-import 'package:app/services/category-services.dart';
+import 'package:app/provider/login-provider.dart';
+ import 'package:app/services/category-services.dart';
+import 'package:app/services/user-services.dart';
+import 'package:provider/provider.dart';
 
 import 'about-skill.dart';
 import 'package:flutter/material.dart';
@@ -21,15 +24,18 @@ class _PopularSkillsState extends State<PopularSkills> {
     (()async{
       var response=await  CategoryServices.getAllCategory();
       List<Category> categories=categoriesResponseModelFromJson(response.body).payload;
-
-
-
+      List<String> favoriteCategories=Provider.of<LoginProvider>(context).userResponseModel.userInfo.favoriteCategories;
       setState(() {
         this.categories= categories;
         for(var i=0;i<categories.length;i++){
-          categoryLikes.add(false);
+          if(favoriteCategories.contains(categories[i].id)){
+            categoryLikes.add(true);
+          }else{
+            categoryLikes.add(false);
+          }
+
         }
-        categoryLikes[0]=true;
+
       });
     })();
   }
@@ -64,12 +70,16 @@ class _PopularSkillsState extends State<PopularSkills> {
               return Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: InputChip(
-                  onPressed: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (
-                    //     context)=> AboutSkill(skill:   Skill(name: skill),)));
-                  setState(() {
-                    categoryLikes[index]=!categoryLikes[index];
-                  });
+                  onPressed: () async {
+                   var loginProvider=Provider.of<LoginProvider>(context,listen: false);
+                   loginProvider.addNewFavoriteCategory(categories[index].id);
+                    var response= await UserServices.updateFavoriteCategories(token: loginProvider.userResponseModel.token,categoryIds: loginProvider.userResponseModel.userInfo.favoriteCategories);
+                    if(response.statusCode==200){
+                      setState(() {
+                        categoryLikes[index]=!categoryLikes[index];
+                      });
+                    }
+
                   },
                   label: Semantics(
                     button: true,

@@ -52,7 +52,7 @@ class AuthorDetail extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              buildSubTextTitle(
+              SubTitle(
                   'Follow t be notified when new courses are published.'),
               SizedBox(
                 height: 8,

@@ -1,21 +1,16 @@
-import 'dart:convert';
-
-import 'package:app/models/courses-response-model.dart';
-import 'package:app/models/instructors-response-model.dart';
-import 'package:app/models/login-provider.dart';
-import 'package:app/models/search-history-response-model.dart';
+ import 'package:app/models/search-history-response-model.dart';
 import 'package:app/models/search-response-model.dart';
 import 'package:app/models/search-v2-response-model.dart';
+import 'package:app/provider/login-provider.dart';
 import 'package:app/services/course-services.dart';
-import 'package:app/services/instructor-services.dart';
 import 'package:app/widgets/course_detail/detail.dart';
 import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/main_screen/search/search-result.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/data.dart';
-class SupperSearch extends StatelessWidget {
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+class SupperSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
@@ -29,7 +24,7 @@ class SupperSearch extends StatelessWidget {
                 case '/':
                   return  Search();
                case CourseDetail.routeName:
-                return CourseDetail(null);
+                return CourseDetail( );
 
                 default:
                   return   Search();
@@ -57,7 +52,7 @@ class _SearchState extends State<Search> {
   bool _isTyping = false;
   Widget _body;
   bool _isSearching=false;
-  String _token;
+  String _token="";
 
   //recent
   List<HistoryContent> _recentSearches =[];
@@ -66,9 +61,12 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
-    _token=Provider.of<LoginProvider>(context,listen: false).userResponseModel.token;
-    loadRecentSearches();
+    var loginStatus= Provider.of<LoginProvider>(context,listen: false);
 
+   if(loginStatus.isLogin){
+     _token=loginStatus.userResponseModel.token;
+     loadRecentSearches();
+   }
     _queryController.addListener(() {
       if (_isTyping) {
         if (_queryController.text == '') {
@@ -108,7 +106,6 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(),
-      //body thay đổi khi nhập và khi bấm widget.search
       body: _isSearching?Center(child: circleLoading(),): _body,
     );
   }
@@ -121,7 +118,7 @@ class _SearchState extends State<Search> {
         decoration: InputDecoration(
           focusedBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-          hintText: 'Search...',
+          hintText:  AppLocalizations.of(context).hintSearch,
           suffixIcon: _queryController.text != ''
               ? IconButton(
                   icon: Icon(Icons.clear),
@@ -144,7 +141,7 @@ class _SearchState extends State<Search> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Recent searches"),
+                Text(AppLocalizations.of(context).recentSearch),
                 TextButton(
                     onPressed: () {
                       for(int i=0;i<_recentSearches.length;i++){
@@ -156,7 +153,7 @@ class _SearchState extends State<Search> {
                       });
 
                     },
-                    child: Text("Clear all"))
+                    child: Text(AppLocalizations.of(context).clearAll))
               ],
             ),
           ),
@@ -211,7 +208,7 @@ class _SearchState extends State<Search> {
         _body = SearchResult(courses: courses,authors: authors,);
       } else {
         _body = Center(
-          child: Text("Không tìm thấy khóa học"),
+          child: Text(AppLocalizations.of(context).searchNotFound),
         );
       }
 

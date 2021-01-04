@@ -1,41 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:app/strings/string-us.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 
-Widget diconnectTypeA() {
-  return Center(
-    child: Column(
-      children: [
-        Icon(Icons.warning_rounded),
-        Text(sorry),
-        Text(unexpectedHappened),
-        SizedBox(height: 30),
-        RaisedButton(
-          onPressed: () {},
-          child: Text(tryAgain),
-        ),
-        OutlineButton(
+class DiconnectTypeA extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Icon(Icons.warning_rounded),
+          Text(AppLocalizations.of(context).sorry),
+          Text(AppLocalizations.of(context).unexpectedHappened),
+          SizedBox(height: 30),
+          RaisedButton(
             onPressed: () {},
-            child: Text(contactUs),
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(4.0)))
-      ],
-    ),
-  );
+            child: Text(AppLocalizations.of(context).tryAgain),
+          ),
+          OutlineButton(
+              onPressed: () {},
+              child: Text(AppLocalizations.of(context).contactUs),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(4.0)))
+        ],
+      ),
+    );
+  }
 }
 
-Widget diconnectTypeB() {
-  return Center(
-    child: Column(
-      children: [
-        Icon(Icons.warning_rounded),
-        Text(youAreOffline),
-        Text(tryConnectInternet),
-        SizedBox(height: 30),
-        RaisedButton(
-          onPressed: () {},
-          child: Text(tryAgain),
-        ),
-      ],
-    ),
-  );
+class DiconnectTypeB extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Icon(Icons.warning_rounded),
+          Text(AppLocalizations.of(context).youAreOffline),
+          Text(AppLocalizations.of(context).tryConnectInternet),
+          SizedBox(height: 30),
+          RaisedButton(
+            onPressed: () {},
+            child: Text(AppLocalizations.of(context).tryAgain),
+          ),
+        ],
+      ),
+    );
+  }
 }

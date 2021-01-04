@@ -1,7 +1,7 @@
- import 'package:app/models/bookmark-provider.dart';
-import 'package:app/models/current-bottom-navigator.dart';
-import 'package:app/models/login-provider.dart';
-import 'package:app/services/user-services.dart';
+ import 'package:app/models/current-bottom-navigator.dart';
+import 'package:app/provider/bookmark-provider.dart';
+import 'package:app/provider/login-provider.dart';
+ import 'package:app/services/user-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/main_screen/browse/browse.dart';
 import 'package:app/widgets/main_screen/downloads/downloads.dart';
@@ -25,7 +25,8 @@ class MainNavigate extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _MainNavigateState extends State<MainNavigate> {
   bool isLoading=true;
-
+  int _selectedIndex;
+  var  currentBottomNavigatorProvider;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     Container(),
@@ -38,18 +39,17 @@ class _MainNavigateState extends State<MainNavigate> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     isLoading=true;
      loadAccount(context);
 
-      isLoading=false;
+
 
   }
-
-
   @override
   Widget build(BuildContext context) {
-    var  currentBottomNavigatorProvider= Provider.of<CurrentBottomNavigatorProvider>(context);
-    int _selectedIndex=currentBottomNavigatorProvider.currentIndex;
+    currentBottomNavigatorProvider= Provider.of<CurrentBottomNavigatorProvider>(context );
+    _selectedIndex=currentBottomNavigatorProvider.currentIndex;
     return isLoading?Scaffold(
       body: Center(
         child: circleLoading(),
@@ -94,40 +94,43 @@ class _MainNavigateState extends State<MainNavigate> {
       ),
     );
   }
+  void loadAccount(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    final emailKey = 'email';
+    final passwordKey = 'password';
+    final isLoginKey = 'isLogin';
+    String email = prefs.getString(emailKey);
+    List<String> password = prefs.getStringList(passwordKey);
+    bool isLogin = prefs.getBool(isLoginKey);
+
+    if(isLogin!=null && isLogin){
+      if(email!=null && password.isNotEmpty){
+        var response = await UserServices.loginService(email: email, password: decodePassword(password));
+        if (response.statusCode == 200) {
+          var userResponse = userResponseModelFromJson(response.body);
+
+          Provider.of<LoginProvider>(context).setUserResponse(userResponse);
+          Provider.of<LoginProvider>(context).changeState();
+          String userId= userResponse.userInfo.id;
+          Provider.of<BookmarkProvider>(context).userId=userId;
+          BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: database_name);
+          await bookmarkSQL.open();
+
+          List<dynamic> bookmarkFromSqlite=await bookmarkSQL.getData(userId);
+          Provider.of<BookmarkProvider>(context).bookmarkSQL=bookmarkSQL;
+          Provider.of<BookmarkProvider>(context).courseIds=[];
+          for(int i=0;i<bookmarkFromSqlite.length;i++){
+            Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
+          }
+          Provider.of<BookmarkProvider>(context).notifyListeners();
+        }
+      }
+    }
+
+  setState(() {
+    isLoading=false;
+  });
+  }
+
 }
 
- void loadAccount(BuildContext context) async {
-   final prefs = await SharedPreferences.getInstance();
-   final emailKey = 'email';
-   final passwordKey = 'password';
-   final isLoginKey = 'isLogin';
-   String email = prefs.getString(emailKey);
-   List<String> password = prefs.getStringList(passwordKey);
-   bool isLogin = prefs.getBool(isLoginKey);
-
-   if(isLogin!=null && isLogin){
-     if(email!=null && password.isNotEmpty){
-       var response = await UserServices.loginService(email: email, password: decodePassword(password));
-       if (response.statusCode == 200) {
-         var userResponse = userResponseModelFromJson(response.body);
-
-         Provider.of<LoginProvider>(context).setUserResponse(userResponse);
-         Provider.of<LoginProvider>(context).changeState();
-         String userId= userResponse.userInfo.id;
-         Provider.of<BookmarkProvider>(context).userId=userId;
-         BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: database_name);
-         await bookmarkSQL.open();
-
-         List<dynamic> bookmarkFromSqlite=await bookmarkSQL.getData(userId);
-         Provider.of<BookmarkProvider>(context).bookmarkSQL=bookmarkSQL;
-         Provider.of<BookmarkProvider>(context).courseIds=[];
-         for(int i=0;i<bookmarkFromSqlite.length;i++){
-           Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
-         }
-         Provider.of<BookmarkProvider>(context).notifyListeners();
-       }
-     }
-   }
-
-
- }

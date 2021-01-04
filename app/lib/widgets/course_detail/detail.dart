@@ -1,28 +1,47 @@
+// class CourseDetail extends StatefulWidget {
+//   static const routeName = '/course-detail';
+//   final Course course;
+//   CourseDetail({this.course});
+//   @override
+//   _CourseDetailState createState() => _CourseDetailState();
+// }
+//
+// class _CourseDetailState extends State<CourseDetail> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(),
+//       body: Container(
+//         child: Text("Hello"),
+//       ),
+//     );
+//   }
+// }
+
 import 'dart:convert';
+
+import 'package:app/models/course-response-all-data.dart';
 import 'package:app/models/course-with-lesson-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
-
-import 'package:app/models/login-provider.dart';
+import 'package:app/provider/login-provider.dart';
+import 'package:app/provider/video-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/payment-services.dart';
-
-
 import 'package:app/utils/app-color.dart';
-
 import 'package:app/widgets/course_detail/infomation.dart';
+import 'package:app/widgets/course_detail/lesson.dart';
 import 'package:app/widgets/customs/custom-videoplayer.dart';
 import 'package:app/widgets/customs/loading-process.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import '../customs/text-type.dart';
 
 class CourseDetail extends StatefulWidget {
   static const routeName = '/course-detail';
   //Data here
   final Course course;
-  CourseDetail(this.course);
+  CourseDetail({this.course});
 
   @override
   _CourseDetailState createState() => _CourseDetailState();
@@ -32,58 +51,58 @@ class _CourseDetailState extends State<CourseDetail> {
   bool isBought = false;
   bool isLoading = false;
   int buyStatus = -1;
-  List<Section> sections;
+  List<Section> sections = [];
+  String token = "";
+  String currentVideo = "";
   @override
-  Widget build(BuildContext context) {
-    String token = Provider.of<LoginProvider>(context).userResponseModel.token;
-    (() async {
-      Response res = await PaymentServices.getCourseInfo(
-          token: token, courseId: this.widget.course.id);
-      if (res.statusCode == 200) {
-        bool isBoughtStatus = jsonDecode(res.body)["didUserBuyCourse"];
-        if (isBoughtStatus) {
-          Response res1 = await CourseServices.getDetailWithLesson(
-              token: token, courseId: this.widget.course.id);
-          if (res1.statusCode == 200) {
-            List<Section> a = courseWithLessonResponseModelFromJson(res1.body)
-                .payload
-                .section;
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    token = Provider.of<LoginProvider>(context, listen: false)
+        .userResponseModel
+        .token;
 
-            setState(() {
-              isBought = true;
-              sections = a;
-            });
-          } else {
-            setState(() {
-              isBought = true;
-            });
-          }
+    Provider.of<VideoProvider>(context, listen: false)
+        .changeUrl(widget.course.promoVidUrl);
+
+    PaymentServices.getCourseInfo(token: token, courseId: this.widget.course.id)
+        .then((value) {
+      if (value.statusCode == 200) {
+        bool isBoughtStatus = jsonDecode(value.body)["didUserBuyCourse"];
+        if (isBoughtStatus) {
+          CourseServices.getDetailWithLesson(
+                  token: token, courseId: this.widget.course.id)
+              .then((value2) {
+            if (value2.statusCode == 200) {
+              List<Section> sectionsResponse =
+                  courseWithLessonResponseModelFromJson(value2.body)
+                      .payload
+                      .section;
+
+                isBought = true;
+                sections = sectionsResponse;
+
+            } else {
+
+                isBought = true;
+
+            }
+          });
         }
       }
-    })();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundItemTypeA,
+      backgroundColor: AppColors.darkBackgroundCardCourse,
       body: Column(
         children: [
-          // Stack(
-          //   children: [
-          //     Container(
-          //       decoration: BoxDecoration(
-          //         color: Colors.blueGrey,
-          //       ),
-          //       // child: Center(child: Text('Video area')),
-          //       child: CustomVideoPlayer(),
-          //     ),
-          //     // SafeArea(
-          //     //     child: IconButton(
-          //     //   onPressed: () {
-          //     //     Navigator.pop(context);
-          //     //   },
-          //     //   icon: Icon(Icons.arrow_back_ios),
-          //     // ))
-          //   ],
-          // ),
-          CustomVideoPlayer(url: widget.course.promoVidUrl,),
+
+          CustomVideoPlayer(
+            url: Provider.of<VideoProvider>(context).videoUrl,
+          ),
           DefaultTabController(
             length: 2,
             child: Flexible(
@@ -101,7 +120,7 @@ class _CourseDetailState extends State<CourseDetail> {
                             padding: EdgeInsets.all(16),
                             sliver: SliverAppBar(
                               elevation: 0,
-                              backgroundColor: AppColors.backgroundItemTypeA,
+                              backgroundColor: AppColors.darkBackgroundCardCourse,
                               pinned: true,
                               toolbarHeight: 0,
                               bottom: TabBar(
@@ -220,93 +239,6 @@ class _CourseDetailState extends State<CourseDetail> {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class SectionHeader extends StatelessWidget {
-  final int number;
-  final String title;
-  final double hours;
-
-  SectionHeader({this.number, this.title, this.hours});
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Container(
-              width: 60,
-              color: Colors.grey,
-              child: Center(
-                child: Text("$number"),
-              ),
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(child: buildTextTitle(this.title)),
-                    buildSubTextTitle(double.parse((hours).toStringAsFixed(3)).toString()+" h")
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LessonItem extends StatefulWidget {
-  Lesson lesson;
-
-  LessonItem({this.lesson});
-  @override
-  _LessonItemState createState() => _LessonItemState();
-}
-
-class _LessonItemState extends State<LessonItem> {
-  bool isPlay = true;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          isPlay = !isPlay;
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                isPlay
-                    ? Icons.pause_circle_outline_outlined
-                    : Icons.play_circle_filled_rounded,
-                size: 10,
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Expanded(child: buildSubTextTitle(this.widget.lesson.name)),
-              SizedBox(
-                width: 8,
-              ),
-              buildSubTextTitle(double.parse((widget.lesson.hours).toStringAsFixed(3)).toString()+" h"),
-            ],
-          ),
-        ),
       ),
     );
   }

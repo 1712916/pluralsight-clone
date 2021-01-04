@@ -143,7 +143,7 @@ class _SearchResultState extends State<SearchResult>
                             builder: (BuildContext context){
                               return AlertDialog(
 
-                                backgroundColor: AppColors.backgroundItemTypeA,
+                                backgroundColor: AppColors.darkBackgroundCardCourse,
                                 title: Text('hello'),
                                 content: Container(
                                   height: 180,

@@ -134,7 +134,7 @@ class UserServices {
   }
 
   static Future<Response> updateFavoriteCategories(
-      {String token, String categoryIds}) {
+      {String token, List<String> categoryIds}) {
     var response = doPutRequest(
         url_api: URL_API + "user/update-favorite-categories",
         headers: {

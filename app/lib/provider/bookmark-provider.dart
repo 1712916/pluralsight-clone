@@ -1,9 +1,8 @@
-
 import 'package:app/models/course-detail-response-model.dart';
+import 'package:app/models/courses-response-model.dart';
 import 'package:app/services/course-services.dart';
 import 'package:flutter/foundation.dart';
 
-import 'courses-response-model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -18,11 +17,9 @@ class BookmarkProvider extends ChangeNotifier{
   Future<List<Course>> get courses   async {
     List<Course> courses=[];
     for(var i=0;i<courseIds.length;i++){
-      Future<Course> course=  (()  async {
-        var response= await CourseServices.getCourseInfo(courseId: courseIds[i]);
-        return courseDetailResponseModelFromJson(response.body).payload;
-      })();
-      await course.then((value) => courses.add(value));
+      CourseServices.getCourseInfo(courseId: courseIds[i]).
+      then((value) =>courses.add(courseDetailResponseModelFromJson(value.body).payload));
+
     }
     return courses;
   }

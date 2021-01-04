@@ -1,14 +1,14 @@
-import 'package:app/models/author.dart';
+
 import 'package:app/models/data.dart';
-import 'package:app/models/login-provider.dart';
-import 'package:app/strings/string-us.dart';
+import 'package:app/provider/login-provider.dart';
+
 import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/authenticate/settings.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
-import 'package:app/widgets/course_detail/detail.dart';
+
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:app/widgets/main_screen/browse/paths/path-row.dart';
-import 'package:app/widgets/main_screen/browse/paths/seeall.dart';
+
 import 'package:app/widgets/main_screen/browse/popular_skills/popular-skills.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-detail.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-list.dart';
@@ -19,6 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'grid_button/button.dart';
 import 'grid_button/grid-button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 
 class Browse  extends StatelessWidget {
   @override
@@ -57,7 +58,7 @@ class Browse  extends StatelessWidget {
 class MyBrowse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var loginState=Provider.of<LoginProvider>(context).isLogin;
+    var loginState=Provider.of<LoginProvider>(context);
     return Scaffold(
 
       appBar: CustomAppBar('Browse'),
@@ -65,7 +66,7 @@ class MyBrowse extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              !loginState?SignInIntro(context):Container(),
+              !loginState.isLogin?SignInIntro(context):Container(),
               SizedBox(height: 16,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -95,8 +96,8 @@ class MyBrowse extends StatelessWidget {
                 child:GridButton(),
               ),
 
-              PopularSkills(),
-              PathRow(pathCategory: null,paths: Paths,),
+              !loginState.isLogin? SizedBox():PopularSkills(),
+              // PathRow(pathCategory: null,paths: Paths,),
               AuthorList(),
             ],
           ),
@@ -115,8 +116,8 @@ Widget SignInIntro(BuildContext context){
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextHeader1(signInIntro),
-          buildTextTitle(signInSubIntro),
+          buildTextHeader1(AppLocalizations.of(context).signInIntro),
+          TextTitle(AppLocalizations.of(context).signInSubIntro),
           SizedBox(height: 16,),
           Container(
             width: double.infinity,
@@ -125,7 +126,7 @@ Widget SignInIntro(BuildContext context){
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn(requiredSavePassword: true,)));
               },
-              child: Text(signInIntro2),
+              child: Text(AppLocalizations.of(context).signInIntro2),
             ),
           )
 

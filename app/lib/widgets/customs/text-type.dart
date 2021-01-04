@@ -1,5 +1,7 @@
+import 'package:app/provider/theme-provider.dart';
 import 'package:app/utils/app-color.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 TextStyle headerStyle1() {
   return TextStyle(
     fontSize: 26,
@@ -13,17 +15,28 @@ TextStyle headerStyle() {
   );
 }
 
-TextStyle titleStyle(){
+TextStyle titleStyle(BuildContext context){
+  final themeNotifier = Provider.of<ThemeProvider>(context);
+
   return TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: ((){
+        return themeNotifier.getThemeMode()==ThemeMode.dark?AppColors.darkTextTitle:AppColors.lightTextTitle;
+      })()
+
   );
 }
-TextStyle subTitleStyle(){
+TextStyle subTitleStyle(BuildContext context){
+  final themeNotifier = Provider.of<ThemeProvider>(context);
+
   return TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
-    color: Colors.grey
+    color: ((){
+      return themeNotifier.getThemeMode()==ThemeMode.dark?AppColors.darkTextSubTitle:AppColors.lightTextSubTitle;
+    })()
+
   );
 }
 
@@ -50,26 +63,40 @@ TextStyle error() {
   );
 }
 
-Widget buildTextTitle(String text){
-  if(text==null){
-    text="";
-  }
-  return Text(
-    text,
-    style: titleStyle(),
 
-  );
+class TextTitle extends StatelessWidget {
+  String text;
+  TextTitle(this.text);
+  @override
+  Widget build(BuildContext context) {
+    if(text==null){
+      text="";
+    }
+    return Text(
+      text,
+      style: titleStyle(context),
+
+    );
+  }
+}
+class SubTitle extends StatelessWidget {
+  String text;
+  SubTitle(this.text);
+  @override
+  Widget build(BuildContext context) {
+    if(text==null){
+      text="";
+    }
+    return Text(
+      text,
+      style: subTitleStyle(context),
+
+    );
+  }
 }
 
-Widget buildSubTextTitle(String text){
-  if(text==null){
-    text="";
-  }
-  return Text(
-    text,
-    style: subTitleStyle(),
-  );
-}
+
+
 
 Widget buildTextHeader(String text){
   if(text==null){

@@ -1,6 +1,7 @@
 import 'package:app/services/course-services.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
 import 'package:app/widgets/customs/rating-star.dart';
+import 'package:app/widgets/customs/text-field.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _UserRatingPageState extends State<UserRatingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildTextTitle("Điểm hình thức"),
+              TextTitle("Điểm hình thức"),
               SizedBox(
                 height: 16,
               ),
@@ -49,7 +50,7 @@ class _UserRatingPageState extends State<UserRatingPage> {
                 height: 16,
               ),
 
-              buildTextTitle("Điểm nội dung"),
+              TextTitle("Điểm nội dung"),
               SizedBox(
                 height: 16,
               ),
@@ -58,7 +59,7 @@ class _UserRatingPageState extends State<UserRatingPage> {
                 height: 16,
               ),
 
-              buildTextTitle("Điểm trình bày"),
+              TextTitle("Điểm trình bày"),
               SizedBox(
                 height: 16,
               ),
@@ -67,7 +68,7 @@ class _UserRatingPageState extends State<UserRatingPage> {
                 height: 16,
               ),
 
-              buildTextTitle("Nhập đánh giá"),
+              TextTitle("Nhập đánh giá"),
               SizedBox(
                 height: 16,
               ),

@@ -1,19 +1,22 @@
-import 'package:app/models/bookmark-provider.dart';
+
 import 'package:app/models/current-bottom-navigator.dart';
-import 'package:app/models/login-provider.dart';
+
 import 'package:app/models/user-response-model.dart';
+import 'package:app/provider/bookmark-provider.dart';
+import 'package:app/provider/login-provider.dart';
 import 'package:app/services/user-services.dart';
-import 'package:app/strings/string-us.dart';
+
 import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/authenticate/forgot-password.dart';
 import 'package:app/widgets/authenticate/sign-up.dart';
 import 'package:app/widgets/customs/loading-process.dart';
+import 'package:app/widgets/customs/text-field.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignIn extends StatefulWidget {
   bool requiredSavePassword;
@@ -144,7 +147,7 @@ class _LoginState extends State<SignIn> {
                             return Container(
                               alignment: Alignment.topLeft,
                               child: failureText(
-                                loginFailedStatus,
+                                AppLocalizations.of(context).loginFailedStatus,
                               ),
                             );
                           }
@@ -152,7 +155,7 @@ class _LoginState extends State<SignIn> {
                             return Container(
                               alignment: Alignment.topLeft,
                               child: successText(
-                                checkEmailActive,
+                                AppLocalizations.of(context).checkEmailActive,
                               ),
                             );
                           }
@@ -340,34 +343,6 @@ class _LoginState extends State<SignIn> {
   }
 }
 
-Widget myTextField({String labelname, TextEditingController controller, int maxLines}) {
-  return TextField(
-    minLines:  maxLines??1,
-    maxLines: maxLines??1,
-    controller: controller,
-    decoration: InputDecoration(
-      border: OutlineInputBorder(),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.secondaryColor,
-        ),
-      ),
-      labelStyle: TextStyle(
-        color: AppColors.secondaryColor,
-      ),
-      suffixIcon: IconButton(
-        icon: Icon(
-          Icons.clear,
-          color: AppColors.secondaryColor,
-        ),
-        onPressed: () {
-          controller.clear();
-        },
-      ),
-      labelText: labelname,
-    ),
-  );
-}
 String decodePassword(List<String> texts) {
   String rs = "";
   for (int i = 0; i < texts.length; i++) {

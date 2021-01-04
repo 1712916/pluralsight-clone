@@ -329,14 +329,21 @@ class CourseServices{
 void main() async{
   print("Hello");
   String courseId="5b69ea4b-ef3c-4ab5-b9fb-2ec50c03f849";
+  List<String> categories=[  "847dce36-f43b-4714-982d-e65812b40b5e","4eb0c150-8212-44ef-a90b-fcd40130ac01"];
+  //
+  //   var c=await CourseServices.getCourseDetail(courseId: courseId);
+  // print("body 0: ${c.body}");
 
-  //String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
+  //    // "4eb0c150-8212-44ef-a90b-fcd40130ac01"
+  // //String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
   var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
   print("body: ${userResponseModel.token}");
-
-  var b= await CourseServices.searchV2(token: userResponseModel.token,keyword: "data");
-  print("data: ${b.body}");
+  PaymentServices.getOwnCourse(token:userResponseModel.token ).then((value) => print(value.body));
+  // print("List 1: ${userResponseModel.userInfo.favoriteCategories}");
+  // var e=await UserServices.updateFavoriteCategories(token: userResponseModel.token,categoryIds: categories);
+  // var b= await CourseServices.searchV2(token: userResponseModel.token,keyword: "data");
+  // print("data: ${b.body}");
   // var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
   // var res= await  CourseServices.search(categories: [],keyword: "Di động");
  //  var response = await  CourseServices.getCourseDetail(courseId: courseId ,userId: userResponseModel.userInfo.id);

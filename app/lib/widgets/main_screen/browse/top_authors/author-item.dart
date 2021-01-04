@@ -29,17 +29,13 @@ class AuthorItem extends StatelessWidget {
                   backgroundImage: NetworkImage(author.avatar),
                   radius: 40.0,
                 ),
-                Text(((){
+                TextTitle(((){
                   if(author.name==null){
                     return "unknown";
                   }
                   return author.name;
                 })()
-                  ,style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-
-                  ),)
+               )
               ],
             ),
           )
@@ -87,9 +83,9 @@ class AuthorItemB extends AuthorItem {
               SizedBox(width: 32,),
               Column(
                 children: [
-                  buildTextTitle(author.name),
+                  TextTitle(author.name),
                   SizedBox(height: 8,),
-                  buildSubTextTitle('15 courses')
+                  SubTitle('15 courses')
                 ],
               )
 

@@ -35,8 +35,8 @@ class PathItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildTextTitle(this.path.title),
-                    buildSubTextTitle('${this.path.numberCourses} courses')
+                    TextTitle(this.path.title),
+                    SubTitle('${this.path.numberCourses} courses')
                   ],
                 ),
               )
@@ -76,9 +76,9 @@ class PathItemB extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    buildTextTitle(this.path.title),
+                    TextTitle(this.path.title),
                     SizedBox(height: 8,),
-                    buildSubTextTitle('${this.path.numberCourses} courses')
+                    SubTitle('${this.path.numberCourses} courses')
                   ],
                 ),
               )

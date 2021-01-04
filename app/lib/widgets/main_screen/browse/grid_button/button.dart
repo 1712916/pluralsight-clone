@@ -1,8 +1,8 @@
 import 'package:app/models/course-detail-response-model.dart';
 import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
-import 'package:app/models/login-provider.dart';
-import 'package:app/models/search-response-model.dart';
+ import 'package:app/models/search-response-model.dart';
+import 'package:app/provider/login-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/user-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';

@@ -89,7 +89,7 @@ class Payload {
     videoNumber: json["videoNumber"],
     totalHours: json["totalHours"].toDouble(),
     formalityPoint: json["formalityPoint"].toDouble(),
-    contentPoint: json["contentPoint"].toDouble(),
+    contentPoint: json["contentPoint"]==null?null:json["contentPoint"].toDouble(),
     presentationPoint: json["presentationPoint"].toDouble(),
     imageUrl: json["imageUrl"],
     promoVidUrl: json["promoVidUrl"],
