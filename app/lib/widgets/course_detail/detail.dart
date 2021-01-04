@@ -31,6 +31,7 @@ import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/course_detail/infomation.dart';
 import 'package:app/widgets/course_detail/lesson.dart';
 import 'package:app/widgets/customs/custom-videoplayer.dart';
+import 'package:app/widgets/customs/custom-youtube-videoplayer.dart';
 import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
@@ -78,14 +79,16 @@ class _CourseDetailState extends State<CourseDetail> {
                   courseWithLessonResponseModelFromJson(value2.body)
                       .payload
                       .section;
-
-                isBought = true;
-                sections = sectionsResponse;
+            setState(() {
+              isBought = true;
+              sections = sectionsResponse;
+            });
 
             } else {
-
+              setState(() {
                 isBought = true;
 
+              });
             }
           });
         }
@@ -99,10 +102,16 @@ class _CourseDetailState extends State<CourseDetail> {
       backgroundColor: AppColors.darkBackgroundCardCourse,
       body: Column(
         children: [
-
-          CustomVideoPlayer(
-            url: Provider.of<VideoProvider>(context).videoUrl,
-          ),
+          checkYoutubeUrl(Provider.of<VideoProvider>(context).videoUrl)
+              ? new CustomYoutubeVideoPlayer(
+                  youtube_url: Provider.of<VideoProvider>(context).videoUrl,
+                )
+              : new CustomVideoPlayer(
+                  url: Provider.of<VideoProvider>(context).videoUrl,
+                ),
+            checkYoutubeUrl(Provider.of<VideoProvider>(context).videoUrl)
+                ? Text("VIDEO YOUTUBE ${Provider.of<VideoProvider>(context).videoUrl}")
+                : Text("VIDEO BINH THƯỜNG ${Provider.of<VideoProvider>(context).videoUrl}") ,
           DefaultTabController(
             length: 2,
             child: Flexible(
@@ -120,7 +129,8 @@ class _CourseDetailState extends State<CourseDetail> {
                             padding: EdgeInsets.all(16),
                             sliver: SliverAppBar(
                               elevation: 0,
-                              backgroundColor: AppColors.darkBackgroundCardCourse,
+                              backgroundColor:
+                                  AppColors.darkBackgroundCardCourse,
                               pinned: true,
                               toolbarHeight: 0,
                               bottom: TabBar(

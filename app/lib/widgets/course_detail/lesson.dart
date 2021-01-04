@@ -55,25 +55,27 @@ class LessonItem extends StatefulWidget {
 }
 
 class _LessonItemState extends State<LessonItem> {
-  bool isPlay = true;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          isPlay = !isPlay;
+
+          print("hello: ${widget.lesson.videoUrl}");
           Provider.of<VideoProvider>(context).changeUrl(widget.lesson.videoUrl);
         });
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Container(
+          color: Colors.transparent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                isPlay
+                widget.lesson.videoUrl !=  Provider.of<VideoProvider>(context).videoUrl
                     ? Icons.pause_circle_outline_outlined
                     : Icons.play_circle_filled_rounded,
                 size: 10,
