@@ -9,6 +9,7 @@ import 'package:app/provider/bookmark-provider.dart';
 import 'package:app/provider/theme-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/widgets/course_detail/detail.dart';
+import 'package:app/widgets/customs/label.dart';
 import 'package:app/widgets/customs/rating-star.dart';
 import 'package:intl/intl.dart';
 import 'package:app/models/courses-response-model.dart' as myCourse;
@@ -109,6 +110,7 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                 children: [
                   Stack(
                     children: [
+
                       Container(
                         height: 100,
                         decoration: BoxDecoration(
@@ -117,6 +119,13 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                             fit: BoxFit.cover,
                           ),
                         ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+
+                            alignment: Alignment.topLeft,
+                            child: PriceLabel(this.widget.course.price )),
                       ),
                       Container(
                         alignment: Alignment.topRight,
@@ -224,14 +233,14 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
     switch (choiceIndex) {
       case 0:
         {
-          // var bookmarkProvider=Provider.of<BookmarkProvider>(context);
-          // bookmarkProvider.add(course);
+          var bookmarkProvider = Provider.of<BookmarkProvider>(context);
+          bookmarkProvider.add(course.id);
 
-          // setState(() {
-          //
-          // });
-          //  _choices[0]=Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?"Unbookmark":"Bookmark";
-
+          setState(() {
+            _choices[0] = bookmarkProvider.isInBookmark(this.widget.course.id)
+                ? "Unbookmark"
+                : "Bookmark";
+          });
         }
         break;
       case 1:
@@ -309,6 +318,7 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextTitle(this.widget.course.title),
+                      SubTitle(widget.course.price.toString()),
                       SubTitle(widget.course.instructorUserName),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

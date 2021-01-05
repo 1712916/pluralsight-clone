@@ -21,8 +21,8 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
     // TODO: implement initState
     super.initState();
     _videoId = YoutubePlayer.convertUrlToId(this.widget.youtube_url);
-    _controller=YoutubePlayerController(initialVideoId: _videoId);
-   // _controller.load(this.widget.youtube_url);
+    _controller = YoutubePlayerController(initialVideoId: _videoId);
+    // _controller.load(this.widget.youtube_url);
     // _controller = YoutubePlayerController(
     //   initialVideoId: _videoId,
     //   flags: YoutubePlayerFlags(
@@ -35,7 +35,6 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
     //     enableCaption: true,
     //   ),
     // )..addListener( (){});
-    print("Hello dô hàm khởi tạo ${this.widget.youtube_url}");
   }
 
   @override
@@ -43,9 +42,8 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
     // TODO: implement dispose
     super.dispose();
     _controller.dispose();
-
-
   }
+
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
@@ -55,29 +53,43 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-
-    _controller.load(YoutubePlayer.convertUrlToId(Provider.of<VideoProvider>(context).videoUrl));
-    return Column(
-      children: [
-        YoutubePlayer(
-          controller: _controller,
-          showVideoProgressIndicator: false,
-          onReady: (){
-            print("on ready");
-          },
-          onEnded: (a){
-            print("on end");
-          },
-        )
-      ],
+    _controller.load(YoutubePlayer.convertUrlToId(
+        Provider.of<VideoProvider>(context).videoUrl));
+    return Stack(
+      children:[ Column(
+        children: [
+          YoutubePlayer(
+            topActions: [
+              IconButton(
+                  icon: Icon(Icons.arrow_back_ios_outlined),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+            controller: _controller,
+            showVideoProgressIndicator: true,
+            onReady: () {
+              print("on ready");
+            },
+            onEnded: (a) {
+              print("on end");
+            },
+          )
+        ],
+      ),
+        IconButton(
+            icon: Icon(Icons.arrow_back_ios_outlined),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+    ]
     );
   }
 }
 
-
-bool checkYoutubeUrl(String url){
-  if(url==null){
-    url="https://www.youtube.com/embed/bum_19loj9A";
+bool checkYoutubeUrl(String url) {
+  if (url == null) {
+    url = "https://www.youtube.com/embed/bum_19loj9A";
   }
   return url.contains("youtube.com");
 }

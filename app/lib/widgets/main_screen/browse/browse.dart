@@ -71,6 +71,18 @@ class MyBrowse extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: MyButton(
+                  title: 'YOUR COURSE',
+                  route: 'hello',
+                  type: "YOUR COURSE",
+                  img: 'assets/like.jpg',
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: MyButton(
                   title: 'LIKED',
                   route: 'hello',
                   type: "LIKED",

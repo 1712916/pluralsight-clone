@@ -1,4 +1,5 @@
  import 'package:app/models/current-bottom-navigator.dart';
+import 'package:app/provider/answer-provider.dart';
 import 'package:app/provider/bookmark-provider.dart';
 import 'package:app/provider/theme-provider.dart';
 import 'package:app/provider/video-provider.dart';
@@ -65,7 +66,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context)=>LoginProvider()),
             ChangeNotifierProvider(create: (context)=>VideoProvider()),
             ChangeNotifierProvider(create: (context)=>CurrentBottomNavigatorProvider()),
-            ChangeNotifierProvider(create: (context)=>BookmarkProvider())
+            ChangeNotifierProvider(create: (context)=>BookmarkProvider()),
+            Provider(create: (context)=>AnswerProvider())
           ],
           child: MainNavigate(),
         ),

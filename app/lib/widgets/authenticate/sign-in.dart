@@ -84,7 +84,6 @@ class _LoginState extends State<SignIn> {
     final passwordKey = 'password';
     final isLoginKey = 'isLogin';
     prefs.setString(emailKey, this._emailController.text);
-    prefs.setString(passwordKey, this._passwordController.text);
     prefs.setBool(isLoginKey,isSavePassword );
     prefs.setStringList(
         passwordKey, hashPassword(this._passwordController.text));
@@ -281,7 +280,7 @@ class _LoginState extends State<SignIn> {
   List<String> hashPassword(String text) {
     List<String> rs = [];
     for (int i = 0; i < text.length; i++) {
-      rs.add(text[i].codeUnitAt(i).toString());
+      rs.add(text.codeUnitAt(i).toString());
     }
 
     return rs;
@@ -351,3 +350,5 @@ String decodePassword(List<String> texts) {
 
   return rs;
 }
+
+ 

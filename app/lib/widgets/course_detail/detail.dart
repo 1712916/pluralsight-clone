@@ -109,9 +109,7 @@ class _CourseDetailState extends State<CourseDetail> {
               : new CustomVideoPlayer(
                   url: Provider.of<VideoProvider>(context).videoUrl,
                 ),
-            checkYoutubeUrl(Provider.of<VideoProvider>(context).videoUrl)
-                ? Text("VIDEO YOUTUBE ${Provider.of<VideoProvider>(context).videoUrl}")
-                : Text("VIDEO BINH THƯỜNG ${Provider.of<VideoProvider>(context).videoUrl}") ,
+
           DefaultTabController(
             length: 2,
             child: Flexible(

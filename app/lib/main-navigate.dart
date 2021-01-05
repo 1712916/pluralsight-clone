@@ -95,16 +95,21 @@ class _MainNavigateState extends State<MainNavigate> {
     );
   }
   void loadAccount(BuildContext context) async {
+
     final prefs = await SharedPreferences.getInstance();
     final emailKey = 'email';
     final passwordKey = 'password';
     final isLoginKey = 'isLogin';
+
     String email = prefs.getString(emailKey);
-    List<String> password = prefs.getStringList(passwordKey);
+
+   List<String> password = prefs.getStringList(passwordKey);
+
+
     bool isLogin = prefs.getBool(isLoginKey);
 
-    if(isLogin!=null && isLogin){
-      if(email!=null && password.isNotEmpty){
+    if(isLogin!=null && isLogin ){
+      if(email!=null && password!=null && password.isNotEmpty){
         var response = await UserServices.loginService(email: email, password: decodePassword(password));
         if (response.statusCode == 200) {
           var userResponse = userResponseModelFromJson(response.body);
