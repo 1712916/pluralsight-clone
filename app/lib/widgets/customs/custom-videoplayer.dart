@@ -1,13 +1,19 @@
+import 'package:app/provider/login-provider.dart';
+import 'package:app/provider/video-provider.dart';
+import 'package:app/services/lesson-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 // ignore: must_be_immutable
 class CustomVideoPlayer extends StatefulWidget {
   String url;
+  int currentTime;
+
 
   CustomVideoPlayer(
-      {this.url}); // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4';
+      {this.url,this.currentTime}); // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'; ;
 
   @override
   _CustomVideoPlayerState createState() => _CustomVideoPlayerState();
@@ -26,14 +32,16 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     // Create and store the VideoPlayerController. The VideoPlayerController
     // offers several different constructors to play videos from assets, files,
     // or the internet.
+    this.widget.currentTime=this.widget.currentTime??0;
+
     _controller = VideoPlayerController.network(
       this.widget.url,
-    )..initialize()..setVolume(3)..addListener(() {
+    )..initialize()..addListener(() {
       setState(() {
         // _currentVideoTime=_controller.value.position.inSeconds.toDouble();
       });
     });
-
+    _controller.seekTo(Duration(seconds: this.widget.currentTime));
     _controller..setLooping(false);
     _shownControler = true;
   }
@@ -56,8 +64,17 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   void dispose() {
     super.dispose();
     // Ensure disposing of the VideoPlayerController to free up resources.
+    LessonServices.updateCurrentTimeLearnVideo(token: Provider.of<LoginProvider>(context).userResponseModel.token,lessonId:Provider.of<VideoProvider>(context).lessonId ,currentTime:_controller.value.position.inSeconds.toDouble() );
+    Provider.of<VideoProvider>(context).clear();
     _controller.dispose();
   }
+  @override
+  void deactivate() {
+    // Pauses video while navigating to next page.
+    _controller.pause();
+    super.deactivate();
+  }
+
 
   @override
   Widget build(BuildContext context) {

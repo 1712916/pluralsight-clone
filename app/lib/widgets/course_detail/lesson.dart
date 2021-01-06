@@ -69,8 +69,8 @@ class _LessonItemState extends State<LessonItem> {
     return GestureDetector(
       onTap: () {
         setState(() {
-
-          Provider.of<VideoProvider>(context).changeUrl(widget.lesson.videoUrl);
+            print("current url: ${widget.lesson.videoUrl}");
+          Provider.of<VideoProvider>(context).changeUrl(currentTime: 0,url: widget.lesson.videoUrl??"https://www.youtube.com/watch?v=D0-SB2XhtcQ",lessonId:widget.lesson.id );
         });
       },
       child: Padding(
@@ -82,8 +82,8 @@ class _LessonItemState extends State<LessonItem> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                widget.lesson.videoUrl !=
-                        Provider.of<VideoProvider>(context).videoUrl
+                widget.lesson.id !=
+                        Provider.of<VideoProvider>(context).lessonId
                     ? Icons.pause_circle_outline_outlined
                     : Icons.play_circle_filled_rounded,
                 size: 10,

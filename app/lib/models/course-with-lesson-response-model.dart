@@ -215,7 +215,7 @@ class Lesson {
     hours: json["hours"].toDouble(),
     sectionId: json["sectionId"],
     isFinish: json["isFinish"],
-    resource: List<dynamic>.from(json["resource"].map((x) => x)),
+    resource: json["resource"]==null?null:List<dynamic>.from(json["resource"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {

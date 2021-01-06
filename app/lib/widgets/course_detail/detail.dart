@@ -23,6 +23,7 @@ import 'dart:convert';
 import 'package:app/models/course-response-all-data.dart';
 import 'package:app/models/course-with-lesson-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
+import 'package:app/models/lesson-last-watch-response-model.dart';
 import 'package:app/provider/login-provider.dart';
 import 'package:app/provider/video-provider.dart';
 import 'package:app/services/course-services.dart';
@@ -59,12 +60,26 @@ class _CourseDetailState extends State<CourseDetail> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    Provider.of<VideoProvider>(context,listen: false).clear();
     token = Provider.of<LoginProvider>(context, listen: false)
         .userResponseModel
         .token;
 
-    Provider.of<VideoProvider>(context, listen: false)
-        .changeUrl(widget.course.promoVidUrl);
+    (()async{
+      Response response=await CourseServices.getLastWatchedLesson(token: token,courseId: this.widget.course.id);
+      if(response.statusCode==200){
+        var data=lessonLastWatchResponseModelFromJson(response.body);
+        print("data here: ${jsonEncode(data)}");
+        Provider.of<VideoProvider>(context, listen: false)
+            .changeUrl(url:data.payload.videoUrl,lessonId: data.payload.lessonId,currentTime: data.payload.currentTime);
+
+      }else{
+        Provider.of<VideoProvider>(context, listen: false)
+            .changeUrl(url: widget.course.promoVidUrl,currentTime: 0);
+      }
+    })();
+
 
     PaymentServices.getCourseInfo(token: token, courseId: this.widget.course.id)
         .then((value) {
@@ -75,10 +90,13 @@ class _CourseDetailState extends State<CourseDetail> {
                   token: token, courseId: this.widget.course.id)
               .then((value2) {
             if (value2.statusCode == 200) {
+
+
               List<Section> sectionsResponse =
                   courseWithLessonResponseModelFromJson(value2.body)
                       .payload
                       .section;
+
             setState(() {
               isBought = true;
               sections = sectionsResponse;
@@ -97,6 +115,12 @@ class _CourseDetailState extends State<CourseDetail> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.darkBackgroundCardCourse,
@@ -105,9 +129,11 @@ class _CourseDetailState extends State<CourseDetail> {
           checkYoutubeUrl(Provider.of<VideoProvider>(context).videoUrl)
               ? new CustomYoutubeVideoPlayer(
                   youtube_url: Provider.of<VideoProvider>(context).videoUrl,
+            currentTime: Provider.of<VideoProvider>(context).currentTime.toInt(),
                 )
               : new CustomVideoPlayer(
                   url: Provider.of<VideoProvider>(context).videoUrl,
+            currentTime: Provider.of<VideoProvider>(context).currentTime.toInt(),
                 ),
 
           DefaultTabController(

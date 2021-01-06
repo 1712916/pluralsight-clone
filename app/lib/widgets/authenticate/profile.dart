@@ -25,6 +25,8 @@ class _ProfileState extends State<Profile> {
     super.initState();
 
   }
+
+
   Future<Info> loadProfile() async {
     var response =
     await UserServices.profileService(token: this.loginProvider.userResponseModel.token);
@@ -201,8 +203,23 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    print("is dispose");
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("is didChangeDependencies");
+  }
 
+  @override
+  void deactivate() {
+    super.deactivate();
+    print("is deactivate");
+  }
 }
 
 Widget ProfileSignOut(BuildContext context) {

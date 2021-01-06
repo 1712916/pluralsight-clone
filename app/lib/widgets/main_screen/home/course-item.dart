@@ -1,16 +1,16 @@
-import 'dart:convert';
+ import 'dart:convert';
+
 import 'package:app/models/course-detail-response-model.dart';
-import 'package:app/models/courses-favorite-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
-import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/provider/login-provider.dart';
-import 'package:app/models/search-response-model.dart';
 import 'package:app/models/shown-course.dart';
 import 'package:app/provider/bookmark-provider.dart';
+import 'package:app/provider/login-provider.dart';
 import 'package:app/provider/theme-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/widgets/course_detail/detail.dart';
 import 'package:app/widgets/customs/label.dart';
 import 'package:app/widgets/customs/rating-star.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:app/models/courses-response-model.dart' as myCourse;
 import 'package:app/utils/app-color.dart';
@@ -79,10 +79,6 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
     var bookmarkProvider = Provider.of<BookmarkProvider>(context);
     return GestureDetector(
         onTap: () {
-          //Navigator.pushReplacementNamed(context, '/profile');
-          // Navigator.pushNamed(context, CourseDetail.routeName,
-          //     arguments: widget.course.title);
-
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -156,10 +152,22 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                                     )
                                   : Container(),
                               Container(
-                                  alignment: Alignment.bottomCenter,
-                                  child: LinearProgressIndicator(
-                                    value: 0.1,
-                                  )),
+                                height: 4,
+                                child: FutureBuilder<Response>(
+                                  future:CourseServices.getProcessCourse(courseId: this.widget.course.id,token: Provider.of<LoginProvider>(context).userResponseModel.token),
+                             builder:(BuildContext context, AsyncSnapshot<Response> snapshot){
+                                    if(snapshot.hasData){
+                                      print("here: ${jsonDecode(snapshot.data.body)["payload"]}");
+                                      return Container(
+                                          alignment: Alignment.bottomCenter,
+                                          child: LinearProgressIndicator(
+                                            value: jsonDecode(snapshot.data.body)["payload"]==null?0:jsonDecode(snapshot.data.body)["payload"].toDouble(),
+                                          ));
+                                    }
+                                    return Container();
+                                  },
+                                ),
+                              ),
                             ],
                           ))
                     ],

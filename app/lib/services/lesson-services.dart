@@ -65,9 +65,9 @@ class LessonServices{
     );
     return response;
   }
-  static  Future<Response> updateCurrentTimeLearnVideo({String token,String lessonId,int currentTime}) {
-    var response = doPostRequest(
-        url_api: URL_API + "lesson/update-status",
+  static  Future<Response> updateCurrentTimeLearnVideo({String token,String lessonId,double currentTime}) {
+    var response = doPutRequest(
+        url_api: URL_API + "lesson/update-current-time-learn-video",
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

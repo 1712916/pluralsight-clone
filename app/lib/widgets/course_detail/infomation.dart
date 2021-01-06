@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:app/models/course-response-all-data.dart';
 import 'package:app/models/courses-response-model.dart';
+import 'package:app/provider/bookmark-provider.dart';
 import 'package:app/provider/login-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/user-services.dart';
@@ -28,27 +29,25 @@ class Information extends StatefulWidget {
 class _InformationState extends State<Information> {
   bool likeStatus = false;
   final _formKey = GlobalKey<FormState>();
-  String token="";
+  String token = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-      token = Provider.of<LoginProvider>(context,listen: false).userResponseModel.token;
-    (() async{
+    token = Provider.of<LoginProvider>(context, listen: false)
+        .userResponseModel
+        .token;
+    (() async {
       var response = await UserServices.getCourseLikeStatus(
-          token: token,
-          courseId: widget.course.id);
+          token: token, courseId: widget.course.id);
       setState(() {
         likeStatus = jsonDecode(response.body)["likeStatus"];
       });
     })();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -160,8 +159,8 @@ class _InformationState extends State<Information> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                actionButton(
-                    likeStatus ? "Liked" : "Like", Icon(likeStatus?Icons.favorite:Icons.favorite_border),
+                actionButton(likeStatus ? "Liked" : "Like",
+                    Icon(likeStatus ? Icons.favorite : Icons.favorite_border),
                     () async {
                   var response = await UserServices.likeCourse(
                       token: token, courseId: widget.course.id);
@@ -169,50 +168,79 @@ class _InformationState extends State<Information> {
                     likeStatus = jsonDecode(response.body)["likeStatus"];
                   });
                 }),
-                actionButton('Bookmark              ', Icon(Icons.notes), () {}),
+                actionButton(
+                    ((){
+                      return Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?"Bookmarked": 'Bookmark';
+
+                    })(), Icon(((){
+                  return Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?Icons.bookmark: Icons.bookmark_border;
+                })()), () {
+                  Provider.of<BookmarkProvider>(context).add(this.widget.course.id);
+                }),
                 actionButton('Note', Icon(Icons.notes), () {}),
                 actionButton('Share', Icon(Icons.share), () {}),
-                actionButton('Comment', Icon(Icons.comment), () async{
-                    var response= await CourseServices.getCourseDetail(userId: null,courseId: widget.course.id);
-                    var listRating=courseResponseAllDataFromJson(response.body).payload.ratings.ratingList;
+                actionButton('Comment', Icon(Icons.comment), () async {
+                  var response = await CourseServices.getCourseDetail(
+                      userId: null, courseId: widget.course.id);
+                  var listRating = courseResponseAllDataFromJson(response.body)
+                      .payload
+                      .ratings
+                      .ratingList;
+
                   showModalBottomSheet<void>(
                       context: context,
                       builder: (BuildContext context) {
                         return Container(
-                          height: 400,
-                          color: Colors.black,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    buildTextHeader1("Comments"),
-                                    IconButton(icon: Icon(Icons.close), onPressed: (){
-                                      Navigator.pop(context);
-                                    })
-                                  ],
-                                ),
-                                Divider(height: 5,color: Colors.white,),
-                                SizedBox(height: 16,),
-                                Expanded(
-                                  child: ListView.builder(
-                                      itemCount: listRating.length,
-                                      itemBuilder: (context,index){
-                                        return ItemComment(content: listRating[index].content,
-                                        imgUrl: listRating[index].user.avatar,
-                                        name: listRating[index].user.name,
-                                        rating: listRating[index].averagePoint.toInt(),
-                                          userType: listRating[index].user.type.toString(),
-                                          dateUpdate: listRating[index].updatedAt,
-                                        );
-                                      })
-                                )
-                              ],
-                            ),
-                          )
-                        );
+                            height: 400,
+                            color: Colors.black,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      buildTextHeader1("Comments"),
+                                      IconButton(
+                                          icon: Icon(Icons.close),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          })
+                                    ],
+                                  ),
+                                  Divider(
+                                    height: 5,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Expanded(
+                                      child: ListView.builder(
+                                          itemCount: listRating.length,
+                                          itemBuilder: (context, index) {
+                                            return ItemComment(
+                                              content:
+                                                  listRating[index].content,
+                                              imgUrl:
+                                                  listRating[index].user.avatar,
+                                              name: listRating[index].user.name,
+                                              rating: listRating[index]
+                                                  .averagePoint
+                                                  .toInt(),
+                                              userType: listRating[index]
+                                                  .user
+                                                  .type
+                                                  .toString(),
+                                              dateUpdate:
+                                                  listRating[index].updatedAt,
+                                            );
+                                          }))
+                                ],
+                              ),
+                            ));
                       });
                 }),
                 actionButton('Rate', Icon(Icons.star_rate), () {
@@ -226,6 +254,7 @@ class _InformationState extends State<Information> {
                     'Report', Icon(Icons.report_gmailerrorred_outlined), () {
                   final subjectController = TextEditingController();
                   final contentController = TextEditingController();
+                  String message="";
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -239,33 +268,38 @@ class _InformationState extends State<Information> {
                                 child: Text("Close")),
                             FlatButton(
                                 onPressed: () async {
-                                  // var response= await CourseServices.reportCourse(token: token,courseId:widget.course.id ,content: contentController.text,subject:subjectController.text );
-                                  //
-                                  // if(response.statusCode==200){
-                                  //   print("Response: $response");
-                                  //   final snackBar = SnackBar(
-                                  //     content: Text('Reported!'),
-                                  //     action: SnackBarAction(
-                                  //       label: 'Undo',
-                                  //       onPressed: () {
-                                  //         // Some code to undo the change.
-                                  //       },
-                                  //     ),
-                                  //   );
-                                  //   Navigator.pop(context);
-                                  //   Scaffold.of(context).showSnackBar(snackBar);
-                                  // final snackBar = SnackBar(
-                                  //     content: Text('Reported!'),
-                                  //     action: SnackBarAction(
-                                  //       label: 'Undo',
-                                  //       onPressed: () {
-                                  //         // Some code to undo the change.
-                                  //       },
-                                  //     ),
-                                  //   );
-                                  // print("Hello: dataa ${contentController.text}");
-                                  //      Scaffold.of(context).showSnackBar(snackBar);
-                                  Navigator.pop(context);
+                                  var response= await CourseServices.reportCourse(token: token,courseId:widget.course.id ,content: contentController.text,subject:subjectController.text) ;
+                                  if(response.statusCode==200){
+
+                                    Navigator.pop(context);
+                                    showDialog(context: context,
+                                    builder: (BuildContext context){
+                                      return AlertDialog(
+                                        title: successText("Report submitted successfully"),
+                                        actions: [
+                                          FlatButton(onPressed: (){
+                                            Navigator.pop(context);
+                                          }, child: Text("OKE"))
+
+                                        ],
+                                      );
+                                    });
+                                  }else{
+                                    Navigator.pop(context);
+                                    showDialog(context: context,
+                                        builder: (BuildContext context){
+                                          return AlertDialog(
+                                            title: errorText("Submit failure report"),
+                                            actions: [
+                                              FlatButton(onPressed: (){
+                                                Navigator.pop(context);
+                                              }, child: Text("OKE"))
+
+                                            ],
+                                          );
+                                        });
+                                  }
+
                                 },
                                 child: Text("Send"))
                           ],
@@ -278,6 +312,7 @@ class _InformationState extends State<Information> {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
+
                                     Text("Subject"),
                                     Padding(
                                       padding:
@@ -327,6 +362,3 @@ class _InformationState extends State<Information> {
     );
   }
 }
-
-
-
