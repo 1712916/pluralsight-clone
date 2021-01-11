@@ -1,17 +1,17 @@
 import 'package:app/models/course-detail-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/services/course-services.dart';
+import 'package:app/sqlite/sql-service.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-const String database_name = "bookmarks";
 
 class BookmarkProvider extends ChangeNotifier{
   String userId;
-  List<String> courseIds=[];
-  BookmarkSQL bookmarkSQL;
+  List courseIds=[];
+  BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: BookmarkSQL.database_name);
 
   /// List of course in the bookmark.
   Future<List<Course>> get courses   async {
@@ -70,27 +70,12 @@ class Bookmark {
   }
 }
 
-class SQLSERVICE {
 
-  String databaseName;
-
-  Future<Database> database;
-
-  SQLSERVICE({this.databaseName});
-
-  Future<List<dynamic>> getData(String userId) {}
-
-  Future<dynamic> open() {}
-
-  Future<dynamic> insert(var item) {}
-
-  Future<dynamic> update(var item) {}
-
-  Future<dynamic> delete(var item) {}
-}
 
 
 class BookmarkSQL extends SQLSERVICE {
+
+  static const String database_name = "bookmarks";
   BookmarkSQL({String databaseName}):super(databaseName: databaseName);
 
   @override
@@ -122,11 +107,7 @@ class BookmarkSQL extends SQLSERVICE {
     // Convert the List<Map<String, dynamic> into a List<Dog>.
 
     return maps!=null? List.generate(maps.length, (i) {
-      return Bookmark(
-        id: maps[i]['id'],
-        userId: maps[i]['userId'],
-        courseId: maps[i]['courseId'],
-      );
+      return maps[i]['courseId'];
     }):[];
 
   }

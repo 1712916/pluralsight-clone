@@ -317,16 +317,17 @@ class _LoginState extends State<SignIn> {
 
       String userId= userResponse.userInfo.id;
       Provider.of<BookmarkProvider>(context).userId=userId;
-      BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: database_name);
+      BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: BookmarkSQL.database_name);
       await bookmarkSQL.open();
 
       List<dynamic> bookmarkFromSqlite=await bookmarkSQL.getData(userId);
+      Provider.of<BookmarkProvider>(context).courseIds=bookmarkFromSqlite;
       Provider.of<BookmarkProvider>(context).bookmarkSQL=bookmarkSQL;
-      Provider.of<BookmarkProvider>(context).courseIds=[];
-      for(int i=0;i<bookmarkFromSqlite.length;i++){
-        Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
-      }
-      // ignore: invalid_use_of_visible_for_testing_member
+      // Provider.of<BookmarkProvider>(context).courseIds=[];
+      // for(int i=0;i<bookmarkFromSqlite.length;i++){
+      //   Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
+      // }
+      // // ignore: invalid_use_of_visible_for_testing_member
       Provider.of<BookmarkProvider>(context).notifyListeners();
 
       setState(() {

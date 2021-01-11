@@ -4,6 +4,7 @@ import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/search-response-model.dart';
 import 'package:app/models/user-response-model.dart';
 import 'package:app/services/payment-services.dart';
+import 'package:app/sqlite/download-course.dart';
 
 import '../utils/constraints.dart';
 import 'package:http/http.dart';
@@ -325,41 +326,59 @@ class CourseServices{
   }
 
 }
-
 void main() async{
-  print("Hello");
+
   String courseId="5b69ea4b-ef3c-4ab5-b9fb-2ec50c03f849";
-  List<String> categories=[  "847dce36-f43b-4714-982d-e65812b40b5e","4eb0c150-8212-44ef-a90b-fcd40130ac01"];
-  //
-  //   var c=await CourseServices.getCourseDetail(courseId: courseId);
-  // print("body 0: ${c.body}");
 
-  //    // "4eb0c150-8212-44ef-a90b-fcd40130ac01"
-  // //String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
-  var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
+
+  var c=await CourseServices.getCourseDetail(courseId: courseId);
+  var d =courseDetailResponseModelFromJson(c.body);
+
+
+  var a = await UserServices.loginService(email: "kieuphong2840@gmail.com", password: "123456789");
   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
-  print("body: ${userResponseModel.token}");
-  PaymentServices.getOwnCourse(token:userResponseModel.token ).then((value) => print(value.body));
-  // print("List 1: ${userResponseModel.userInfo.favoriteCategories}");
-  // var e=await UserServices.updateFavoriteCategories(token: userResponseModel.token,categoryIds: categories);
-  // var b= await CourseServices.searchV2(token: userResponseModel.token,keyword: "data");
-  // print("data: ${b.body}");
-  // var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
-  // var res= await  CourseServices.search(categories: [],keyword: "Di động");
- //  var response = await  CourseServices.getCourseDetail(courseId: courseId ,userId: userResponseModel.userInfo.id);
- // // print("Data: ${courseDetailResponseModelFromJson(  response.body )}");
- //   Course course=Course.fromJson(jsonDecode(response.body)["payload"]);
- //  // print("Data: ${course.id}");
+  print("id: ${userResponseModel.userInfo.id}");
 
-  //var response = await CourseServices.search(keyword: "data");
+   print(CourseDownload(id:courseId,userId: userResponseModel.userInfo.id,data:d.payload).toMap());
 
-  //List<SearchItem> searchItems=searchResponseModelFromJson(response.body).payload.rows;
-  // print("lengt: ${searchItems.length}");
-  // // Course course=Course.fromJson(searchItems[0].toJson());
-  // print(searchItems[0].toJson());
-  //
-  //   var response= await UserServices.getFavoriteCourses(token: userResponseModel.token);
-  //   print("DATA : ${coursesResponseModelFromJson(response.body).courses[0].title}");
-  // print("course is : ${courseDetailResponseModelFromJson(response.body).payload.title}");
+  //  PaymentServices.getOwnCourse(token:userResponseModel.token ).then((value) => print(value.body));
 
 }
+
+// void main() async{
+//   print("Hello");
+//   String courseId="5b69ea4b-ef3c-4ab5-b9fb-2ec50c03f849";
+//   List<String> categories=[  "847dce36-f43b-4714-982d-e65812b40b5e","4eb0c150-8212-44ef-a90b-fcd40130ac01"];
+//   //
+//   //   var c=await CourseServices.getCourseDetail(courseId: courseId);
+//   // print("body 0: ${c.body}");
+//
+//   //    // "4eb0c150-8212-44ef-a90b-fcd40130ac01"
+//   // //String courseId="7844e73e-f61b-4f1b-82ce-f98f120a7c46";
+//   var a = await UserServices.loginService(email: "smile.vinhnt@gmail.com", password: "1");
+//   UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
+//   print("body: ${userResponseModel.token}");
+//   PaymentServices.getOwnCourse(token:userResponseModel.token ).then((value) => print(value.body));
+//   // print("List 1: ${userResponseModel.userInfo.favoriteCategories}");
+//   // var e=await UserServices.updateFavoriteCategories(token: userResponseModel.token,categoryIds: categories);
+//   // var b= await CourseServices.searchV2(token: userResponseModel.token,keyword: "data");
+//   // print("data: ${b.body}");
+//   // var res1= await  PaymentServices.getFreeCourses(token:userResponseModel.token ,courseId: courseId);
+//   // var res= await  CourseServices.search(categories: [],keyword: "Di động");
+//  //  var response = await  CourseServices.getCourseDetail(courseId: courseId ,userId: userResponseModel.userInfo.id);
+//  // // print("Data: ${courseDetailResponseModelFromJson(  response.body )}");
+//  //   Course course=Course.fromJson(jsonDecode(response.body)["payload"]);
+//  //  // print("Data: ${course.id}");
+//
+//   //var response = await CourseServices.search(keyword: "data");
+//
+//   //List<SearchItem> searchItems=searchResponseModelFromJson(response.body).payload.rows;
+//   // print("lengt: ${searchItems.length}");
+//   // // Course course=Course.fromJson(searchItems[0].toJson());
+//   // print(searchItems[0].toJson());
+//   //
+//   //   var response= await UserServices.getFavoriteCourses(token: userResponseModel.token);
+//   //   print("DATA : ${coursesResponseModelFromJson(response.body).courses[0].title}");
+//   // print("course is : ${courseDetailResponseModelFromJson(response.body).payload.title}");
+//
+// }

@@ -29,8 +29,8 @@ class _MainNavigateState extends State<MainNavigate> {
   var  currentBottomNavigatorProvider;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Container(),
-    // Downloads(),
+
+   Downloads(),
     Browse(),
      SupperSearch()
   ];
@@ -118,15 +118,15 @@ class _MainNavigateState extends State<MainNavigate> {
           Provider.of<LoginProvider>(context).changeState();
           String userId= userResponse.userInfo.id;
           Provider.of<BookmarkProvider>(context).userId=userId;
-          BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: database_name);
-          await bookmarkSQL.open();
+          BookmarkSQL bookmarkSQL=Provider.of<BookmarkProvider>(context).bookmarkSQL;
+
 
           List<dynamic> bookmarkFromSqlite=await bookmarkSQL.getData(userId);
-          Provider.of<BookmarkProvider>(context).bookmarkSQL=bookmarkSQL;
-          Provider.of<BookmarkProvider>(context).courseIds=[];
-          for(int i=0;i<bookmarkFromSqlite.length;i++){
-            Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
-          }
+          Provider.of<BookmarkProvider>(context).courseIds=bookmarkFromSqlite;
+          // Provider.of<BookmarkProvider>(context).courseIds=[];
+          // for(int i=0;i<bookmarkFromSqlite.length;i++){
+          //   Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
+          // }
           Provider.of<BookmarkProvider>(context).notifyListeners();
         }
       }

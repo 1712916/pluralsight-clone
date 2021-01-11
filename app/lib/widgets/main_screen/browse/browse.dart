@@ -7,7 +7,7 @@ import 'package:app/widgets/authenticate/settings.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
 
 import 'package:app/widgets/customs/text-type.dart';
-import 'package:app/widgets/main_screen/browse/paths/path-row.dart';
+
 
 import 'package:app/widgets/main_screen/browse/popular_skills/popular-skills.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-detail.dart';

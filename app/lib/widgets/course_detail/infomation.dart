@@ -5,6 +5,7 @@ import 'package:app/provider/bookmark-provider.dart';
 import 'package:app/provider/login-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/services/user-services.dart';
+import 'package:app/sqlite/download-course.dart';
 import 'package:app/widgets/course_detail/rating-page.dart';
 import 'package:app/widgets/customs/Expandable.dart';
 import 'package:app/widgets/customs/button.dart';
@@ -14,6 +15,7 @@ import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import 'comments.dart';
 import 'detail.dart';
@@ -161,181 +163,42 @@ class _InformationState extends State<Information> {
               children: [
                 actionButton(likeStatus ? "Liked" : "Like",
                     Icon(likeStatus ? Icons.favorite : Icons.favorite_border),
-                    () async {
-                  var response = await UserServices.likeCourse(
-                      token: token, courseId: widget.course.id);
-                  setState(() {
-                    likeStatus = jsonDecode(response.body)["likeStatus"];
-                  });
+                    ()   {
+                  _onLike();
                 }),
-                actionButton(
-                    ((){
-                      return Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?"Bookmarked": 'Bookmark';
-
-                    })(), Icon(((){
-                  return Provider.of<BookmarkProvider>(context).isInBookmark(this.widget.course.id)?Icons.bookmark: Icons.bookmark_border;
+                actionButton((() {
+                  return Provider.of<BookmarkProvider>(context)
+                          .isInBookmark(this.widget.course.id)
+                      ? "Bookmarked"
+                      : 'Bookmark';
+                })(), Icon((() {
+                  return Provider.of<BookmarkProvider>(context)
+                          .isInBookmark(this.widget.course.id)
+                      ? Icons.bookmark
+                      : Icons.bookmark_border;
                 })()), () {
-                  Provider.of<BookmarkProvider>(context).add(this.widget.course.id);
+                  Provider.of<BookmarkProvider>(context)
+                      .add(this.widget.course.id);
+                }),
+                actionButton('Download', Icon(Icons.file_download), () async {
+                  CourseSQL courseSQL=CourseSQL(databaseName: CourseSQL.database_name);
+                  await courseSQL.open();
+                  courseSQL.insert(CourseDownload(id: this.widget.course.id,data:  this.widget.course,userId: Provider.of<LoginProvider>(context).userResponseModel.userInfo.id));
                 }),
                 actionButton('Note', Icon(Icons.notes), () {}),
-                actionButton('Share', Icon(Icons.share), () {}),
-                actionButton('Comment', Icon(Icons.comment), () async {
-                  var response = await CourseServices.getCourseDetail(
-                      userId: null, courseId: widget.course.id);
-                  var listRating = courseResponseAllDataFromJson(response.body)
-                      .payload
-                      .ratings
-                      .ratingList;
-
-                  showModalBottomSheet<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                            height: 400,
-                            color: Colors.black,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildTextHeader1("Comments"),
-                                      IconButton(
-                                          icon: Icon(Icons.close),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          })
-                                    ],
-                                  ),
-                                  Divider(
-                                    height: 5,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Expanded(
-                                      child: ListView.builder(
-                                          itemCount: listRating.length,
-                                          itemBuilder: (context, index) {
-                                            return ItemComment(
-                                              content:
-                                                  listRating[index].content,
-                                              imgUrl:
-                                                  listRating[index].user.avatar,
-                                              name: listRating[index].user.name,
-                                              rating: listRating[index]
-                                                  .averagePoint
-                                                  .toInt(),
-                                              userType: listRating[index]
-                                                  .user
-                                                  .type
-                                                  .toString(),
-                                              dateUpdate:
-                                                  listRating[index].updatedAt,
-                                            );
-                                          }))
-                                ],
-                              ),
-                            ));
-                      });
+                actionButton('Share', Icon(Icons.share), () {
+                  _onShare(context);
+                }),
+                actionButton('Comment', Icon(Icons.comment), ()   {
+                  _onComment();
                 }),
                 actionButton('Rate', Icon(Icons.star_rate), () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UserRatingPage(
-                              token: token, courseId: widget.course.id)));
+                  _onRate(context);
+
                 }),
                 actionButton(
                     'Report', Icon(Icons.report_gmailerrorred_outlined), () {
-                  final subjectController = TextEditingController();
-                  final contentController = TextEditingController();
-                  String message="";
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Report this course"),
-                          actions: [
-                            FlatButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Close")),
-                            FlatButton(
-                                onPressed: () async {
-                                  var response= await CourseServices.reportCourse(token: token,courseId:widget.course.id ,content: contentController.text,subject:subjectController.text) ;
-                                  if(response.statusCode==200){
-
-                                    Navigator.pop(context);
-                                    showDialog(context: context,
-                                    builder: (BuildContext context){
-                                      return AlertDialog(
-                                        title: successText("Report submitted successfully"),
-                                        actions: [
-                                          FlatButton(onPressed: (){
-                                            Navigator.pop(context);
-                                          }, child: Text("OKE"))
-
-                                        ],
-                                      );
-                                    });
-                                  }else{
-                                    Navigator.pop(context);
-                                    showDialog(context: context,
-                                        builder: (BuildContext context){
-                                          return AlertDialog(
-                                            title: errorText("Submit failure report"),
-                                            actions: [
-                                              FlatButton(onPressed: (){
-                                                Navigator.pop(context);
-                                              }, child: Text("OKE"))
-
-                                            ],
-                                          );
-                                        });
-                                  }
-
-                                },
-                                child: Text("Send"))
-                          ],
-                          content: Stack(
-                            overflow: Overflow.visible,
-                            children: <Widget>[
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-
-                                    Text("Subject"),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 8),
-                                      child: TextFormField(
-                                        controller: subjectController,
-                                      ),
-                                    ),
-                                    Text("Content"),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 8),
-                                      child: TextFormField(
-                                        controller: contentController,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      });
+                    _onReport(context);
                 })
               ],
             ),
@@ -360,5 +223,184 @@ class _InformationState extends State<Information> {
         ],
       ),
     );
+  }
+_onLike() async {
+  var response = await UserServices.likeCourse(
+      token: token, courseId: widget.course.id);
+  setState(() {
+    likeStatus = jsonDecode(response.body)["likeStatus"];
+  });
+}
+  _onShare(BuildContext context) async {
+    final RenderBox box = context.findRenderObject();
+    String content="Khóa học: ${this.widget.course.title} - ${this.widget.course.instructorUserName}. Giá:  ${this.widget.course.price} VNĐ. Nội dung : ${this.widget.course.learnWhat} ";
+    await Share.share(content,
+        subject: "MeowSight",
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+  _onRate(BuildContext){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => UserRatingPage(
+                token: token, courseId: widget.course.id)));
+  }
+  _onComment() async{
+    var response = await CourseServices.getCourseDetail(
+        userId: null, courseId: widget.course.id);
+    var listRating = courseResponseAllDataFromJson(response.body)
+        .payload
+        .ratings
+        .ratingList;
+
+    showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+              height: 400,
+              color: Colors.black,
+              child: Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildTextHeader1("Comments"),
+                        IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            })
+                      ],
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(
+                        child: ListView.builder(
+                            itemCount: listRating.length,
+                            itemBuilder: (context, index) {
+                              return ItemComment(
+                                content:
+                                listRating[index].content,
+                                imgUrl:
+                                listRating[index].user.avatar,
+                                name: listRating[index].user.name,
+                                rating: listRating[index]
+                                    .averagePoint
+                                    .toInt(),
+                                userType: listRating[index]
+                                    .user
+                                    .type
+                                    .toString(),
+                                dateUpdate:
+                                listRating[index].updatedAt,
+                              );
+                            }))
+                  ],
+                ),
+              ));
+        });
+  }
+  _onReport(BuildContext context){
+    final subjectController = TextEditingController();
+    final contentController = TextEditingController();
+    String message = "";
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Report this course"),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Close")),
+              FlatButton(
+                  onPressed: () async {
+                    var response =
+                    await CourseServices.reportCourse(
+                        token: token,
+                        courseId: widget.course.id,
+                        content: contentController.text,
+                        subject: subjectController.text);
+                    if (response.statusCode == 200) {
+                      Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: successText(
+                                  "Report submitted successfully"),
+                              actions: [
+                                FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OKE"))
+                              ],
+                            );
+                          });
+                    } else {
+                      Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: errorText(
+                                  "Submit failure report"),
+                              actions: [
+                                FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OKE"))
+                              ],
+                            );
+                          });
+                    }
+                  },
+                  child: Text("Send"))
+            ],
+            content: Stack(
+              overflow: Overflow.visible,
+              children: <Widget>[
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Subject"),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(vertical: 8),
+                        child: TextFormField(
+                          controller: subjectController,
+                        ),
+                      ),
+                      Text("Content"),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(vertical: 8),
+                        child: TextFormField(
+                          controller: contentController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

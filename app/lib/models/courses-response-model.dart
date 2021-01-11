@@ -213,7 +213,7 @@ class Course implements ToShownCourse{
   ShownCourse toShownCourse() {
     // TODO: implement toShownCourse
     return ShownCourse(id: this.id,title: this.title,createdAt: this.createdAt,imageUrl: this.imageUrl,
-    instructorUserName: this.instructorUserName,totalHours: this.totalHours,ratedNumber: this.ratedNumber);
+    instructorUserName: this.instructorUserName,totalHours: this.totalHours,ratedNumber: this.ratedNumber,price: this.price);
   }
 
 

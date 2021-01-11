@@ -46,6 +46,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeProvider>(context);
+    var bookmarkProvider=BookmarkProvider();
+    (() async {
+      await bookmarkProvider.bookmarkSQL.open();
+    })();
     return MaterialApp(
       title: 'My app',
       theme: AppTheme().lightTheme,
@@ -66,7 +70,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context)=>LoginProvider()),
             ChangeNotifierProvider(create: (context)=>VideoProvider()),
             ChangeNotifierProvider(create: (context)=>CurrentBottomNavigatorProvider()),
-            ChangeNotifierProvider(create: (context)=>BookmarkProvider()),
+            ChangeNotifierProvider(create: (context)=>bookmarkProvider),
             Provider(create: (context)=>AnswerProvider())
           ],
           child: MainNavigate(),

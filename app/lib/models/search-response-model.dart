@@ -125,6 +125,6 @@ class CourseSearch implements ToShownCourse {
   ShownCourse toShownCourse() {
     // TODO: implement toShownCourse
   return ShownCourse(id: this.id,title: this.title,ratedNumber: this.ratedNumber,totalHours: this.totalHours,
-  instructorUserName: this.name,imageUrl: this.imageUrl,createdAt: null);
+  instructorUserName: this.name,imageUrl: this.imageUrl,createdAt: null,price: this.price);
   }
 }

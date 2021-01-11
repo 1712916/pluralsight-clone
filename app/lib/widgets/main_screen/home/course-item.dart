@@ -148,7 +148,7 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                                   ? Container(
                                       padding: EdgeInsets.all(16),
                                       alignment: Alignment.bottomRight,
-                                      child: Icon(Icons.bookmark_border),
+                                      child: Icon(Icons.bookmark),
                                     )
                                   : Container(),
                               Container(
@@ -326,7 +326,13 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextTitle(this.widget.course.title),
-                      SubTitle(widget.course.price.toString()),
+                      SubTitle(((){
+                        if(widget.course.price==0){
+                          return "FREE";
+                        }else{
+                          return "${widget.course.price} VND";
+                        }
+                      })()),
                       SubTitle(widget.course.instructorUserName),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
