@@ -1,6 +1,7 @@
  import 'package:app/models/current-bottom-navigator.dart';
 import 'package:app/provider/answer-provider.dart';
 import 'package:app/provider/bookmark-provider.dart';
+import 'package:app/provider/download-proivder.dart';
 import 'package:app/provider/theme-provider.dart';
 import 'package:app/provider/video-provider.dart';
  import 'package:app/utils/app-theme.dart';
@@ -46,10 +47,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeProvider>(context);
-    var bookmarkProvider=BookmarkProvider();
-    (() async {
-      await bookmarkProvider.bookmarkSQL.open();
-    })();
+    // var bookmarkProvider=BookmarkProvider();
+    // (() async {
+    //   await bookmarkProvider.bookmarkSQL.open();
+    // })();
     return MaterialApp(
       title: 'My app',
       theme: AppTheme().lightTheme,
@@ -70,7 +71,8 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context)=>LoginProvider()),
             ChangeNotifierProvider(create: (context)=>VideoProvider()),
             ChangeNotifierProvider(create: (context)=>CurrentBottomNavigatorProvider()),
-            ChangeNotifierProvider(create: (context)=>bookmarkProvider),
+            ChangeNotifierProvider(create: (context)=>BookmarkProvider()),
+            ChangeNotifierProvider(create: (context)=>DownloadProvider()),
             Provider(create: (context)=>AnswerProvider())
           ],
           child: MainNavigate(),

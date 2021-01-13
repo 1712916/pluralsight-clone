@@ -1,11 +1,6 @@
 import 'dart:convert';
-import 'package:app/models/course-detail-response-model.dart';
-import 'package:app/models/courses-response-model.dart';
-import 'package:app/models/search-response-model.dart';
 import 'package:app/models/user-response-model.dart';
-import 'package:app/services/payment-services.dart';
-import 'package:app/sqlite/download-course.dart';
-
+import 'package:app/services/lesson-services.dart';
 import '../utils/constraints.dart';
 import 'package:http/http.dart';
 import './user-services.dart';
@@ -328,18 +323,15 @@ class CourseServices{
 }
 void main() async{
 
-  String courseId="5b69ea4b-ef3c-4ab5-b9fb-2ec50c03f849";
+  // String courseId="486a0f3e-09f7-4b4d-a140-7cee4c60be41";
+  // var a = await UserServices.loginService(email: "kieuphong2840@gmail.com", password: "123456789");
+  // UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
+  // print("id: ${userResponseModel.userInfo.id}");
+  // var c=await LessonServices.getVideoProgress(courseId: courseId, token: userResponseModel.token,lessonId: "98896765-1041-4179-b404-03c78f9ff65a");
+  // print("data ${c.body}");
+  //userID="
 
-
-  var c=await CourseServices.getCourseDetail(courseId: courseId);
-  var d =courseDetailResponseModelFromJson(c.body);
-
-
-  var a = await UserServices.loginService(email: "kieuphong2840@gmail.com", password: "123456789");
-  UserResponseModel userResponseModel = userResponseModelFromJson(a.body);
-  print("id: ${userResponseModel.userInfo.id}");
-
-   print(CourseDownload(id:courseId,userId: userResponseModel.userInfo.id,data:d.payload).toMap());
+  // print(CourseDownload(id:courseId,userId: userResponseModel.userInfo.id,data:d.payload).toMap());
 
   //  PaymentServices.getOwnCourse(token:userResponseModel.token ).then((value) => print(value.body));
 

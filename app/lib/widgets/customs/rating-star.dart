@@ -10,7 +10,6 @@ class RatingStar extends StatelessWidget {
   List<Widget> renderStar() {
     int starNumber;
     List<Widget> result = [];
-    print("here: $rateNumber");
 
     if (rateNumber == null) {
       result.add(Container());

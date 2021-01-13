@@ -11,8 +11,11 @@ import 'package:sqflite/sqflite.dart';
 class BookmarkProvider extends ChangeNotifier{
   String userId;
   List courseIds=[];
-  BookmarkSQL bookmarkSQL=new BookmarkSQL(databaseName: BookmarkSQL.database_name);
-
+  BookmarkSQL bookmarkSQL;
+  BookmarkProvider(){
+    this.bookmarkSQL=new BookmarkSQL(databaseName: BookmarkSQL.database_name);
+    this.bookmarkSQL.open();
+  }
   /// List of course in the bookmark.
   Future<List<Course>> get courses   async {
     List<Course> courses=[];
@@ -44,7 +47,6 @@ class BookmarkProvider extends ChangeNotifier{
 
 Future<void> main() async {
   var bookmark=BookmarkProvider();
-  bookmark.courses.then((value) => print("data: ${value.length}"));
   print(bookmark.courseIds);
 }
 

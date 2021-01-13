@@ -206,19 +206,19 @@ class _ProfileState extends State<Profile> {
   @override
   void dispose() {
     super.dispose();
-    print("is dispose");
+
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print("is didChangeDependencies");
+
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    print("is deactivate");
+
   }
 }
 

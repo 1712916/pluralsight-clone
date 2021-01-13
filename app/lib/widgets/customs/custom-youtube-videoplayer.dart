@@ -59,9 +59,9 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
     (() async{
       Response response= await LessonServices.updateCurrentTimeLearnVideo(token: Provider.of<LoginProvider>(context,listen: false).userResponseModel.token,lessonId:Provider.of<VideoProvider>(context,listen: false).lessonId ,currentTime: _controller.value.position.inSeconds.toDouble() );
      if(response.statusCode==200){
-       print("NGOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNN");
+
      }else{
-       print("${response.statusCode}");
+
      }
 
     })();
@@ -95,19 +95,18 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
           )
         ],
       ),
-        IconButton(
-            icon: Icon(Icons.arrow_back_ios_outlined),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+        SafeArea(
+          child: IconButton(
+              icon: Icon(Icons.arrow_back_ios_outlined),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
     ]
     );
   }
 }
 
 bool checkYoutubeUrl(String url) {
-  if (url == null) {
-    url = "https://www.youtube.com/embed/bum_19loj9A";
-  }
   return url.contains("youtube.com");
 }

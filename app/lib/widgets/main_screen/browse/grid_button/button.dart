@@ -82,8 +82,7 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
       future =
           CourseServices.search(categories: [widget.categoryId], keyword: "");
     } else if (widget.type == "RECOMMEND") {
-      print(
-          "id :${Provider.of<LoginProvider>(context).userResponseModel.userInfo.id}");
+
       future = CourseServicesFactory.dictonary2[widget.title](
           limit: 20,
           offset: 1,

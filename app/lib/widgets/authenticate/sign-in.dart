@@ -57,7 +57,7 @@ class _LoginState extends State<SignIn> {
     String email = prefs.getString(emailKey);
     List<String> password = prefs.getStringList(passwordKey);
     bool isLogin= prefs.getBool(isSavePassword);
-    print('email: $email + pass: $password');
+
 
     if( isLogin!=null && isLogin){
       if (email != null && password.isNotEmpty) {

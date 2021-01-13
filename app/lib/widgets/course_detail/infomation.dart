@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:app/models/course-response-all-data.dart';
+import 'package:app/models/course-with-lesson-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/provider/bookmark-provider.dart';
+import 'package:app/provider/download-proivder.dart';
 import 'package:app/provider/login-provider.dart';
 import 'package:app/services/course-services.dart';
+import 'package:app/services/lesson-services.dart';
 import 'package:app/services/user-services.dart';
 import 'package:app/sqlite/download-course.dart';
 import 'package:app/widgets/course_detail/rating-page.dart';
@@ -12,14 +15,19 @@ import 'package:app/widgets/customs/button.dart';
 import 'package:app/widgets/customs/chip.dart';
 import 'package:app/widgets/customs/rating-star.dart';
 import 'package:app/widgets/customs/text-type.dart';
+import 'package:app/widgets/main_screen/downloads/download-controller.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-
+import 'package:path/path.dart' as path;
 import 'comments.dart';
 import 'detail.dart';
 import 'detail.dart';
+import 'package:uuid/uuid.dart';
 
 class Information extends StatefulWidget {
   Course course;
@@ -180,11 +188,28 @@ class _InformationState extends State<Information> {
                   Provider.of<BookmarkProvider>(context)
                       .add(this.widget.course.id);
                 }),
-                actionButton('Download', Icon(Icons.file_download), () async {
-                  CourseSQL courseSQL=CourseSQL(databaseName: CourseSQL.database_name);
-                  await courseSQL.open();
-                  courseSQL.insert(CourseDownload(id: this.widget.course.id,data:  this.widget.course,userId: Provider.of<LoginProvider>(context).userResponseModel.userInfo.id));
-                }),
+                FutureBuilder(
+                  future: Provider.of<DownloadProvider>(context).isDownloaded(userId: Provider.of<LoginProvider>(context).userResponseModel.userInfo.id,courseId: this.widget.course.id),
+                  builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
+                    if(snapshot.hasData){
+                      return  actionButton( snapshot.data?"Downloaded":"Download", Icon(snapshot.data?Icons.download_done_outlined:Icons.file_download), () async {
+
+                        if(snapshot.data){
+
+                        }else{
+                          _onDownload();
+                        }
+
+                      });
+                    }
+
+                    return actionButton( "Download", Icon( Icons.file_download), () async {
+                        _onDownload();
+
+                    });
+                  },
+
+                ),
                 actionButton('Note', Icon(Icons.notes), () {}),
                 actionButton('Share', Icon(Icons.share), () {
                   _onShare(context);
@@ -223,6 +248,51 @@ class _InformationState extends State<Information> {
         ],
       ),
     );
+  }
+  _onDownload() async{
+    final dir = await getDownloadDirectory();
+    final isPermissionStatusGranted = await requestPermissions();
+
+    if(isPermissionStatusGranted){
+      Provider.of<DownloadProvider>(context,listen: false).changeToLoading();
+      await Future.delayed(Duration(seconds: 5));
+      Response responseSections=await CourseServices.getDetailWithLesson(token: token, courseId: this.widget.course.id);
+      List<Section> sections=courseWithLessonResponseModelFromJson(responseSections.body).payload.section;
+      for (var i = 0; i < sections.length; i++) {
+        for (var j = 0; j < sections[i].lesson.length; j++) {
+          if (sections[i].lesson[j].videoUrl == null) {
+            var c=await LessonServices.getVideoProgress(courseId: this.widget.course.id, token: token,lessonId:sections[i].lesson[j].id);
+
+            sections[i].lesson[j].videoUrl=jsonDecode(c.body)["payload"]["videoUrl"];
+          }
+        }
+      }
+      var uuid = Uuid();
+      String name=uuid.v1();
+      final savePath = path.join(dir.path, "meowsight/${name}.mp4");
+      await startDownload(this.widget.course.promoVidUrl,savePath);
+      this.widget.course.promoVidUrl=savePath;
+      for(int i=0;i<sections.length;i++){
+        for(int j=0;j<sections[i].lesson.length;j++){
+          var uuid = Uuid();
+          String name=uuid.v1();
+          final savePath = path.join(dir.path, "meowsight/${name}.mp4");
+
+          await startDownload(sections[i].lesson[j].videoUrl,savePath);
+          sections[i].lesson[j].videoUrl=savePath;
+        }
+      }
+      Provider.of<DownloadProvider>(context,listen: false).courseSQL.
+      insert(
+          CourseDownload(id: this.widget.course.id,
+              data:  this.widget.course,
+              sections:sections,
+              userId: Provider.of<LoginProvider>(context,listen: false).userResponseModel.userInfo.id));
+
+
+      Provider.of<DownloadProvider>(context,listen: false).changeToStop();
+    }
+
   }
 _onLike() async {
   var response = await UserServices.likeCourse(

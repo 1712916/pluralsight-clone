@@ -69,8 +69,11 @@ class _LessonItemState extends State<LessonItem> {
     return GestureDetector(
       onTap: () {
         setState(() {
-            print("current url: ${widget.lesson.videoUrl}");
-          Provider.of<VideoProvider>(context).changeUrl(currentTime: 0,url: widget.lesson.videoUrl??"https://www.youtube.com/watch?v=D0-SB2XhtcQ",lessonId:widget.lesson.id );
+      print("video url: ${widget.lesson.videoUrl}");
+
+
+      //   Provider.of<VideoProvider>(context).changeUrl(currentTime: 0,url: widget.lesson.videoUrl??"https://www.youtube.com/watch?v=D0-SB2XhtcQ",lessonId:widget.lesson.id );
+          Provider.of<VideoProvider>(context).changeUrl(currentTime: 0,url: widget.lesson.videoUrl ,lessonId:widget.lesson.id );
         });
       },
       child: Padding(
@@ -235,11 +238,9 @@ class Practice extends StatelessWidget {
              })()));
 
            }
-            print("token: ${Provider.of<LoginProvider>(context).userResponseModel.token}");
-           print("id: ${this.exercises.id}");
-            print("submit: ${jsonEncode(submits)}");
+
           Response response=await ExerciseServices.submitExercise(token: Provider.of<LoginProvider>(context).userResponseModel.token,exerciseId: this.exercises.id,submits: submits );
-           print("trả lời submit: ${response.body}");
+
            await Future.delayed(Duration(seconds: 1));
           },
         ),

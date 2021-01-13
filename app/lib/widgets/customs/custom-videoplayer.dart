@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/provider/login-provider.dart';
 import 'package:app/provider/video-provider.dart';
 import 'package:app/services/lesson-services.dart';
@@ -10,6 +12,7 @@ import 'package:video_player/video_player.dart';
 class CustomVideoPlayer extends StatefulWidget {
   String url;
   int currentTime;
+  int typeLoad; //0: internet, 1 file
 
 
   CustomVideoPlayer(
@@ -22,32 +25,44 @@ class CustomVideoPlayer extends StatefulWidget {
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   bool isLoading = true;
   VideoPlayerController _controller;
-  bool _shownControler = false;
+  bool _shownController = false;
   bool _isFullscreen = false;
   double _currentVideoTime = 0;
+  String url="";
 
   @override
   void initState() {
     super.initState();
-    // Create and store the VideoPlayerController. The VideoPlayerController
-    // offers several different constructors to play videos from assets, files,
-    // or the internet.
+
     this.widget.currentTime=this.widget.currentTime??0;
 
-    _controller = VideoPlayerController.network(
-      this.widget.url,
-    )..initialize()..addListener(() {
-      setState(() {
-        // _currentVideoTime=_controller.value.position.inSeconds.toDouble();
+    url= Provider.of<VideoProvider>(context,listen: false).videoUrl;
+    print("is down load ${Provider.of<VideoProvider>(context,listen: false).isDownloaded} + ${url}");
+
+    if(Provider.of<VideoProvider>(context,listen: false).isDownloaded){
+      File file=File(url);
+      _controller= VideoPlayerController.file(file)..initialize();
+      _controller..setLooping(false);
+      _shownController = true;
+    }else{
+      _controller = VideoPlayerController.network(
+        url,
+      )..initialize()..addListener(() {
+        setState(() {
+          _currentVideoTime=_controller.value.position.inSeconds.toDouble();
+        });
       });
-    });
-    _controller.seekTo(Duration(seconds: this.widget.currentTime));
-    _controller..setLooping(false);
-    _shownControler = true;
+      //_controller.seekTo(Duration(seconds: this.widget.currentTime??0));
+      _controller..setLooping(false);
+      _shownController = true;
+    }
+
+
+
   }
 
   listenForUpdateView() async {
-    print('Hello world');
+
     Future(() {
       while (true) {
         Future.delayed(Duration(seconds: 1));
@@ -64,7 +79,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   void dispose() {
     super.dispose();
     // Ensure disposing of the VideoPlayerController to free up resources.
-    LessonServices.updateCurrentTimeLearnVideo(token: Provider.of<LoginProvider>(context).userResponseModel.token,lessonId:Provider.of<VideoProvider>(context).lessonId ,currentTime:_controller.value.position.inSeconds.toDouble() );
+    LessonServices.updateCurrentTimeLearnVideo(token: Provider.of<LoginProvider>(context,listen: false).userResponseModel.token,lessonId:Provider.of<VideoProvider>(context).lessonId ,currentTime:_controller.value.position.inSeconds.toDouble() );
     Provider.of<VideoProvider>(context).clear();
     _controller.dispose();
   }
@@ -72,12 +87,45 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   void deactivate() {
     // Pauses video while navigating to next page.
     _controller.pause();
+
     super.deactivate();
   }
 
 
   @override
   Widget build(BuildContext context) {
+    print("Tiếp tục dô đây");
+    if(url!=Provider.of<VideoProvider>(context,listen: false).videoUrl){
+      setState(() {
+        url=Provider.of<VideoProvider>(context,listen: false).videoUrl;
+        _controller.removeListener((){});
+        _controller.pause();
+
+        if(Provider.of<VideoProvider>(context,listen: false).isDownloaded){
+          File file=File( url);
+          _controller= VideoPlayerController.file(file)..initialize()..addListener(() {
+            setState(() {
+              _currentVideoTime=_controller.value.position.inSeconds.toDouble();
+            });
+          });
+          _controller..setLooping(false);
+          _shownController = true;
+        }else{
+          _controller = VideoPlayerController.network(
+            url,
+          )..initialize()..addListener(() {
+            setState(() {
+              _currentVideoTime=_controller.value.position.inSeconds.toDouble();
+            });
+          });
+          //_controller.seekTo(Duration(seconds: this.widget.currentTime??0));
+          _controller..setLooping(false);
+          _shownController = true;
+        }
+      });
+    }
+
+
     return Stack(
       children: [
         _controller.value.initialized
@@ -105,10 +153,10 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _shownControler = !_shownControler;
+          _shownController = !_shownController;
         });
       },
-      child: _shownControler
+      child: _shownController
           ? Container(
               color: Colors.transparent,
               child: Column(

@@ -24,9 +24,11 @@ import 'package:app/models/course-response-all-data.dart';
 import 'package:app/models/course-with-lesson-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/lesson-last-watch-response-model.dart';
+
 import 'package:app/provider/login-provider.dart';
 import 'package:app/provider/video-provider.dart';
 import 'package:app/services/course-services.dart';
+import 'package:app/services/lesson-services.dart';
 import 'package:app/services/payment-services.dart';
 import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/course_detail/infomation.dart';
@@ -43,7 +45,9 @@ class CourseDetail extends StatefulWidget {
   static const routeName = '/course-detail';
   //Data here
   final Course course;
-  CourseDetail({this.course});
+  List<Section> sections = [];
+  CourseDetail({this.course, this.sections});
+  bool isDownloaded;
 
   @override
   _CourseDetailState createState() => _CourseDetailState();
@@ -55,87 +59,105 @@ class _CourseDetailState extends State<CourseDetail> {
   int buyStatus = -1;
   List<Section> sections = [];
   String token = "";
-  String currentVideo = "";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Provider.of<VideoProvider>(context,listen: false).clear();
+    Provider.of<VideoProvider>(context, listen: false).clear();
     token = Provider.of<LoginProvider>(context, listen: false)
         .userResponseModel
         .token;
 
-    (()async{
-      Response response=await CourseServices.getLastWatchedLesson(token: token,courseId: this.widget.course.id);
-      if(response.statusCode==200){
-        var data=lessonLastWatchResponseModelFromJson(response.body);
-        print("data here: ${jsonEncode(data)}");
-        Provider.of<VideoProvider>(context, listen: false)
-            .changeUrl(url:data.payload.videoUrl,lessonId: data.payload.lessonId,currentTime: data.payload.currentTime);
-
-      }else{
-        Provider.of<VideoProvider>(context, listen: false)
-            .changeUrl(url: widget.course.promoVidUrl,currentTime: 0);
-      }
-    })();
+    if (this.widget.sections != null) {
+      Provider.of<VideoProvider>(context, listen: false)
+          .changeUrl(url: widget.course.promoVidUrl, currentTime: 0);
+      sections = this.widget.sections;
+      isBought = true;
 
 
-    PaymentServices.getCourseInfo(token: token, courseId: this.widget.course.id)
-        .then((value) {
-      if (value.statusCode == 200) {
-        bool isBoughtStatus = jsonDecode(value.body)["didUserBuyCourse"];
-        if (isBoughtStatus) {
-          CourseServices.getDetailWithLesson(
-                  token: token, courseId: this.widget.course.id)
-              .then((value2) {
-            if (value2.statusCode == 200) {
+    } else {
+      (()async{
+        Response response=await CourseServices.getLastWatchedLesson(token: token,courseId: this.widget.course.id);
+        if(response.statusCode==200){
+          var data=lessonLastWatchResponseModelFromJson(response.body);
+          Provider.of<VideoProvider>(context, listen: false)
+              .changeUrl(url:data.payload.videoUrl,lessonId: data.payload.lessonId,currentTime: data.payload.currentTime);
 
-
-              List<Section> sectionsResponse =
-                  courseWithLessonResponseModelFromJson(value2.body)
-                      .payload
-                      .section;
-
-            setState(() {
-              isBought = true;
-              sections = sectionsResponse;
-            });
-
-            } else {
-              setState(() {
-                isBought = true;
-
-              });
-            }
-          });
+        }else{
+          Provider.of<VideoProvider>(context, listen: false)
+              .changeUrl(url: widget.course.promoVidUrl,currentTime: 0);
         }
-      }
-    });
+      })();
+
+      PaymentServices.getCourseInfo(
+              token: token, courseId: this.widget.course.id)
+          .then((value) {
+        if (value.statusCode == 200) {
+          bool isBoughtStatus = jsonDecode(value.body)["didUserBuyCourse"];
+          if (isBoughtStatus) {
+            CourseServices.getDetailWithLesson(
+                    token: token, courseId: this.widget.course.id)
+                .then((value2) async {
+              if (value2.statusCode == 200) {
+                List<Section> sectionsResponse =
+                    courseWithLessonResponseModelFromJson(value2.body)
+                        .payload
+                        .section;
+                for (var i = 0; i < sectionsResponse.length; i++) {
+                  for (var j = 0; j < sectionsResponse[i].lesson.length; j++) {
+                    if (sectionsResponse[i].lesson[j].videoUrl == null) {
+                      var c = await LessonServices.getVideoProgress(
+                          courseId: this.widget.course.id,
+                          token: token,
+                          lessonId: sectionsResponse[i].lesson[j].id);
+
+                      sectionsResponse[i].lesson[j].videoUrl =
+                          jsonDecode(c.body)["payload"]["videoUrl"];
+                    }
+                  }
+                }
+
+                setState(() {
+                  isBought = true;
+                  sections = sectionsResponse;
+                });
+              } else {
+                setState(() {
+                  isBought = true;
+                });
+              }
+            });
+          }
+        }
+      });
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColors.darkBackgroundCardCourse,
       body: Column(
         children: [
           checkYoutubeUrl(Provider.of<VideoProvider>(context).videoUrl)
-              ? new CustomYoutubeVideoPlayer(
+              ? CustomYoutubeVideoPlayer(
                   youtube_url: Provider.of<VideoProvider>(context).videoUrl,
-            currentTime: Provider.of<VideoProvider>(context).currentTime.toInt(),
+                  currentTime:
+                      Provider.of<VideoProvider>(context).currentTime.toInt(),
                 )
-              : new CustomVideoPlayer(
+              : CustomVideoPlayer(
                   url: Provider.of<VideoProvider>(context).videoUrl,
-            currentTime: Provider.of<VideoProvider>(context).currentTime.toInt(),
+                  currentTime:
+                      Provider.of<VideoProvider>(context).currentTime.toInt(),
                 ),
-
           DefaultTabController(
             length: 2,
             child: Flexible(
@@ -199,11 +221,6 @@ class _CourseDetailState extends State<CourseDetail> {
                                           token: token,
                                           courseId: this.widget.course.id);
                                   if (res.statusCode == 200) {
-                                    //  if(res.statusCode==200){
-                                    //   setState(() {
-                                    //     isBought=true;
-                                    //   });
-                                    // }
                                     setState(() {
                                       isBought = true;
                                     });

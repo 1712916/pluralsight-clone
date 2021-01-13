@@ -1,6 +1,9 @@
 
+import 'dart:convert';
+
 import 'package:app/models/course-detail-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
+import 'package:app/provider/download-proivder.dart';
 import 'package:app/provider/login-provider.dart';
 import 'package:app/services/course-services.dart';
 import 'package:app/sqlite/download-course.dart';
@@ -54,7 +57,7 @@ class DownloadsPage extends StatefulWidget {
 }
 
 class _DownloadsPageState extends State<DownloadsPage> {
-  List _downloads=[];
+
 
   @override
   void initState() {
@@ -70,9 +73,7 @@ class _DownloadsPageState extends State<DownloadsPage> {
     await courseSQL.open();
    var data=await courseSQL.getData( Provider.of<LoginProvider>(context).userResponseModel.userInfo.id);
    print("${data}");
-    setState(()   {
-      _downloads= data;
-    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -93,25 +94,39 @@ class _DownloadsPageState extends State<DownloadsPage> {
                   //   style: TextStyle(color: Colors.white),
                   // ),
                   TextButton(onPressed: () {
-                    load();
+
+                   Provider.of<DownloadProvider>(context).removeAllData();
                   }, child: Text('REMOVE ALL'))
                 ],
               ),
             ),
-            Column(
-              children: _downloads
-                  .map((course) => Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          children: [
-                            HorizontalCourseItem(course: course.toShownCourse()),
-                            Divider(
-                              color: Colors.grey,
-                            )
-                          ],
-                        ),
-                      ))
-                  .toList(),
+            Provider.of<DownloadProvider>(context).isDownloading?Container(
+              child: Text("Đang tải một khóa học"),
+            ):Container(),
+            FutureBuilder(
+              future: Provider.of<DownloadProvider>(context).getAllData(userId:Provider.of<LoginProvider>(context).userResponseModel.userInfo.id ),
+              builder: (BuildContext context, AsyncSnapshot<List> snapshot){
+                if(snapshot.hasData){
+                  print("downloads: ${ jsonEncode(snapshot.data[0].sections)}");
+                  return Column(
+                    children: snapshot.data
+                        .map((e) => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: [
+                          HorizontalCourseItemDownload(course: e.data.toShownCourse(),courseDownload: e,),
+                          Divider(
+                            color: Colors.grey,
+                          )
+                        ],
+                      ),
+                    ))
+                        .toList(),
+                  );
+                }
+                return Container();
+              },
+
             )
           ],
         ));

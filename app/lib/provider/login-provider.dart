@@ -1,3 +1,4 @@
+import 'package:app/models/courses-response-model.dart';
 import 'package:app/models/user-response-model.dart';
 import 'package:flutter/foundation.dart';
 class LoginProvider with ChangeNotifier {
@@ -20,4 +21,6 @@ class LoginProvider with ChangeNotifier {
     }
 
   }
+
+
 }
