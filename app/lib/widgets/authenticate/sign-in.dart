@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:app/models/current-bottom-navigator.dart';
 
 import 'package:app/models/user-response-model.dart';
@@ -226,10 +228,14 @@ class _LoginState extends State<SignIn> {
                               GoogleSignInAccount _currentUser;
                               try {
                                 await _googleSignIn.signIn();
+                               print("email: ${_googleSignIn.currentUser.email}");
+                                print("gg id: ${_googleSignIn.currentUser.id}");
+                                loginGGProcess(email: _googleSignIn.currentUser.email,googleId:_googleSignIn.currentUser.id );
+                                await _googleSignIn.signOut();
                               } catch (error) {
                                 print(error);
                               }
-
+                          //UserServices.loginGoogleService(email: ,googleId: );
 
                             },
                             child: Center(
@@ -300,14 +306,7 @@ class _LoginState extends State<SignIn> {
     var response = await UserServices.loginService(email: email, password: password);
 
     if (response.statusCode == 200) {
-      // if(isSavePassword){
-      //   saveAccount();
-      // }else{
-      //   setState(() {
-      //     _passwordController.text="";
-      //   });
-      //   saveAccount();
-      // }
+
       saveAccount();
       var userResponse = userResponseModelFromJson(response.body);
       Provider.of<LoginProvider>(context).setUserResponse(userResponse);
@@ -341,7 +340,33 @@ class _LoginState extends State<SignIn> {
       });
     }
   }
+  void loginGGProcess({String email,String googleId}) async {
+    setState(() {
+      isLoading = true;
+      loginState = -1;
+    });
+
+
+
+    var response = await UserServices.loginGoogleService(googleId:googleId ,email: email);
+    String token=jsonDecode(response.body)["token"];
+    var response2 = await UserServices.profileService(token: token);
+    UserProfileResponse data=userProfileResponseFromJson(response2.body);
+
+    Provider.of<LoginProvider>(context).setUserResponse(UserResponseModel(token: token,message: "",userInfo: data.userInfo));
+    Provider.of<LoginProvider>(context).changeState();
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    Provider.of<CurrentBottomNavigatorProvider>(context).currentIndex = 0;
+
+    setState(() {
+      isLoading = false;
+      loginState = -1;
+    });
+
+  }
 }
+
+
 
 String decodePassword(List<String> texts) {
   String rs = "";

@@ -109,8 +109,6 @@ Future<void> _showNotification(Map<String, dynamic> downloadStatus) async {
     priority: Priority.High,
     importance: Importance.Max,
 
-
-
   );
 
   final iOS = IOSNotificationDetails();

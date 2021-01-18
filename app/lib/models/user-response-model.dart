@@ -91,3 +91,29 @@ class UserInfo {
     "updatedAt": updatedAt.toIso8601String(),
   };
 }
+
+
+
+UserProfileResponse userProfileResponseFromJson(String str) => UserProfileResponse.fromJson(json.decode(str));
+
+String userProfileResponseToJson(UserProfileResponse data) => json.encode(data.toJson());
+
+class UserProfileResponse {
+  UserProfileResponse({
+    this.message,
+    this.userInfo,
+  });
+
+  String message;
+  UserInfo userInfo;
+
+  factory UserProfileResponse.fromJson(Map<String, dynamic> json) => UserProfileResponse(
+    message: json["message"],
+    userInfo: UserInfo.fromJson(json["payload"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "message": message,
+    "payload": userInfo.toJson(),
+  };
+}

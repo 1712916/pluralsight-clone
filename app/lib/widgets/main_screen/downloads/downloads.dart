@@ -105,7 +105,7 @@ class _DownloadsPageState extends State<DownloadsPage> {
               future: Provider.of<DownloadProvider>(context).getAllData(userId:Provider.of<LoginProvider>(context).userResponseModel.userInfo.id ),
               builder: (BuildContext context, AsyncSnapshot<List> snapshot){
                 if(snapshot.hasData){
-                  print("downloads: ${ jsonEncode(snapshot.data[0].sections)}");
+                //  print("downloads: ${ jsonEncode(snapshot.data[0].sections)}");
                   return Column(
                     children: snapshot.data
                         .map((e) => Padding(
@@ -121,6 +121,8 @@ class _DownloadsPageState extends State<DownloadsPage> {
                     ))
                         .toList(),
                   );
+                }else if(snapshot.hasError){
+                  return Container();
                 }
                 return Container();
               },

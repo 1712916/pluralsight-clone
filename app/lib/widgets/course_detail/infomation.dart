@@ -17,6 +17,7 @@ import 'package:app/widgets/customs/rating-star.dart';
 import 'package:app/widgets/customs/text-type.dart';
 import 'package:app/widgets/main_screen/downloads/download-controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -284,6 +285,29 @@ class _InformationState extends State<Information> {
 
       Provider.of<DownloadProvider>(context,listen: false).changeToStop();
     }
+
+    final android = AndroidNotificationDetails(
+      'channel id',
+      'channel name',
+      'channel description',
+      priority: Priority.High,
+      importance: Importance.Max,
+
+    );
+
+    final iOS = IOSNotificationDetails();
+    final platform = NotificationDetails(android, iOS);
+    final json = jsonEncode("Down load thành công");
+    final isSuccess = true;
+
+    await flutterLocalNotificationsPlugin.show(
+      0, // notification id
+      isSuccess ? 'Success' : 'Failure',
+      isSuccess ? 'File has been downloaded successfully!' : 'There was an error while downloading the file.',
+      platform,
+      payload: json,
+
+    );
 
   }
 _onLike() async {
