@@ -3,10 +3,13 @@ import 'package:app/models/data.dart';
 import 'package:app/provider/login-provider.dart';
  import 'package:app/services/category-services.dart';
 import 'package:app/services/user-services.dart';
+import 'package:app/widgets/customs/text-type.dart';
 import 'package:provider/provider.dart';
 
 import 'about-skill.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
+
 
 class PopularSkills extends StatefulWidget {
   @override
@@ -50,13 +53,7 @@ class _PopularSkillsState extends State<PopularSkills> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Container(
-            child: Text(
-              'Favorite category',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
+          child: TextTitle(  AppLocalizations.of(context).favoriteCategory.toUpperCase()),
           ),
         ),
         SizedBox(height: 8,),

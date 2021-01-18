@@ -9,6 +9,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final Dio _dio = Dio();
 final String _fileUrl = "http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4";

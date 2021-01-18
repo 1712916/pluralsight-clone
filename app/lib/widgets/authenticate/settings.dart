@@ -28,7 +28,7 @@ class Settings extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(AppLocalizations.of(context).setting),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -78,14 +78,19 @@ class Settings extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
+
               GestureDetector(
-                child: buildTextHeader('Captions'),
+                child: buildTextHeader(AppLocalizations.of(context).notification),
               ),
               SizedBox(
                 height: 8,
               ),
               GestureDetector(
-                child: buildTextHeader('Notifications'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DownloadDirectionSetting()));
+                },
+                child: buildTextHeader(AppLocalizations.of(context).downloadDirection),
               ),
               SizedBox(
                 height: 8,
@@ -95,7 +100,7 @@ class Settings extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ThemeSetting()));
                 },
-                child: buildTextHeader('Themes'),
+                child: buildTextHeader(AppLocalizations.of(context).themes),
               ),
               SizedBox(
                 height: 8,
@@ -105,7 +110,7 @@ class Settings extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildTextHeader('App version'),
+                    buildTextHeader(AppLocalizations.of(context).appVersion),
                     SizedBox(
                       height: 8,
                     ),
@@ -165,6 +170,26 @@ class Settings extends StatelessWidget {
     );
   }
 }
+
+class DownloadDirectionSetting extends StatefulWidget {
+  @override
+  _DownloadDirectionSettingState createState() => _DownloadDirectionSettingState();
+}
+
+class _DownloadDirectionSettingState extends State<DownloadDirectionSetting> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        child: Center(
+          child: Text("Các video được lưu trữ tại: /download/meowsight"),
+        ),
+      ),
+    );
+  }
+}
+
 
 class ChangePassword extends StatefulWidget {
   String id;

@@ -28,6 +28,7 @@ class _CustomYoutubeVideoPlayerState extends State<CustomYoutubeVideoPlayer> {
     this.widget.currentTime=this.widget.currentTime??0;
     _videoId = YoutubePlayer.convertUrlToId(this.widget.youtube_url);
     _controller = YoutubePlayerController(initialVideoId: _videoId);
+    _controller.seekTo(Duration(seconds: this.widget.currentTime??0));
 
     // _controller.load(this.widget.youtube_url);
     // _controller = YoutubePlayerController(

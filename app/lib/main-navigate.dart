@@ -10,10 +10,11 @@ import 'package:app/widgets/main_screen/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'models/user-response-model.dart';
 import 'widgets/authenticate/sign-in.dart';
 
+ import 'package:flutter_localizations/flutter_localizations.dart';
+ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class MainNavigate extends StatefulWidget {
@@ -51,6 +52,7 @@ class _MainNavigateState extends State<MainNavigate> {
     currentBottomNavigatorProvider= Provider.of<CurrentBottomNavigatorProvider>(context );
     _selectedIndex=currentBottomNavigatorProvider.currentIndex;
     return isLoading?Scaffold(
+
       body: Center(
         child: circleLoading(),
       ),
@@ -59,25 +61,25 @@ class _MainNavigateState extends State<MainNavigate> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+      bottomNavigationBar:currentBottomNavigatorProvider.isHidden?null:BottomNavigationBar(
+        items:   <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
             ),
-            label: 'Home',
+            label:  AppLocalizations.of(context).home ,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.download_sharp),
-            label: 'Downloads',
+            label:  AppLocalizations.of(context).download,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.apps_sharp),
-            label: 'Browse',
+            label:  AppLocalizations.of(context).browse,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Search',
+            label: AppLocalizations.of(context).search,
           ),
         ],
         currentIndex: _selectedIndex,

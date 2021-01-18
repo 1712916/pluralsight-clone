@@ -1,4 +1,4 @@
- import 'dart:convert';
+import 'dart:convert';
 
 import 'package:app/models/course-detail-response-model.dart';
 import 'package:app/models/courses-response-model.dart';
@@ -21,7 +21,7 @@ import 'package:app/utils/constraints.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../customs/text-type.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 class VerticalCourseItem extends StatefulWidget {
   final myCourse.Course course;
 
@@ -34,22 +34,38 @@ class VerticalCourseItem extends StatefulWidget {
 class _VerticalCourseItemState extends State<VerticalCourseItem> {
   List<String> _choices = <String>[
     "Bookmark",
-    "Add to channel",
     "Download",
     "Share"
   ];
 
+
+  @override
+  void initState() {
+  //  setChoiceSetting();
+    super.initState();
+  }
+  setChoiceSetting ()async{
+
+    setState(() {
+      _choices[0] = Provider.of<BookmarkProvider>(context, listen: false)
+          .isInBookmark(this.widget.course.id)
+          ? AppLocalizations.of(context).unBookmark
+          : AppLocalizations.of(context).bookmark;
+      _choices[1] = AppLocalizations.of(context).download;
+      _choices[2] = AppLocalizations.of(context).share;
+    });
+  }
   void _select(int choiceIndex, BuildContext context, myCourse.Course course) {
     switch (choiceIndex) {
       case 0:
         {
           var bookmarkProvider = Provider.of<BookmarkProvider>(context);
           bookmarkProvider.add(course.id);
-
           setState(() {
-            _choices[0] = bookmarkProvider.isInBookmark(this.widget.course.id)
-                ? "Unbookmark"
-                : "Bookmark";
+            _choices[0] = Provider.of<BookmarkProvider>(context, listen: false)
+                .isInBookmark(this.widget.course.id)
+                ? AppLocalizations.of(context).unBookmark
+                : AppLocalizations.of(context).bookmark;
           });
         }
         break;
@@ -63,18 +79,6 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
         {}
         break;
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      _choices[0] = Provider.of<BookmarkProvider>(context, listen: false)
-              .isInBookmark(this.widget.course.id)
-          ? "Unbookmark"
-          : "Bookmark";
-    });
   }
 
   @override
@@ -98,7 +102,7 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                   ),
                 ],
                 color: Provider.of<ThemeProvider>(context).getThemeMode() ==
-                        ThemeMode.dark
+                    ThemeMode.dark
                     ? AppColors.darkBackgroundCardCourse
                     : AppColors.lightBackgroundCardCourse),
             // margin: EdgeInsets.only(
@@ -130,10 +134,10 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                       Container(
                         alignment: Alignment.topRight,
                         child: PopupMenuButton(
-                            offset: Offset(200, 100),
+                            offset: Offset(0, 36),
                             tooltip: 'Setting More',
                             onSelected: (index) =>
-                                {_select(index, context, widget.course)},
+                            {_select(index, context, widget.course)},
                             itemBuilder: (BuildContext context) {
                               return _choices.map((String choice) {
                                 return PopupMenuItem<int>(
@@ -150,16 +154,16 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                             children: [
                               bookmarkProvider.isInBookmark(widget.course.id)
                                   ? Container(
-                                      padding: EdgeInsets.all(16),
-                                      alignment: Alignment.bottomRight,
-                                      child: Icon(Icons.bookmark),
-                                    )
+                                padding: EdgeInsets.all(16),
+                                alignment: Alignment.bottomRight,
+                                child: Icon(Icons.bookmark),
+                              )
                                   : Container(),
                               Container(
                                 height: 4,
                                 child: FutureBuilder<Response>(
                                   future:CourseServices.getProcessCourse(courseId: this.widget.course.id,token: Provider.of<LoginProvider>(context).userResponseModel.token),
-                             builder:(BuildContext context, AsyncSnapshot<Response> snapshot){
+                                  builder:(BuildContext context, AsyncSnapshot<Response> snapshot){
                                     if(snapshot.hasData){
 
                                       return Container(
@@ -197,8 +201,8 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
                             SubTitle(DateFormat('yyyy-MM-dd')
                                 .format(widget.course.createdAt)),
                             SubTitle(double.parse((widget.course.totalHours)
-                                        .toStringAsFixed(3))
-                                    .toString() +
+                                .toStringAsFixed(3))
+                                .toString() +
                                 " h"),
                           ],
                         ),
@@ -273,7 +277,7 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
     super.initState();
     setState(() {
       _choices[0] = Provider.of<BookmarkProvider>(context, listen: false)
-              .isInBookmark(this.widget.course.id)
+          .isInBookmark(this.widget.course.id)
           ? "Unbookmark"
           : "Bookmark";
     });
@@ -349,14 +353,14 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                           // buildSubTextTitle(this.widget.course.hourLearning),
                           widget.course.createdAt != null
                               ? SubTitle(DateFormat('yyyy-MM-dd')
-                                      .format(widget.course.createdAt) +
-                                  "")
+                              .format(widget.course.createdAt) +
+                              "")
                               : Container(),
                           widget.course.totalHours != null
                               ? SubTitle(double.parse((widget.course.totalHours)
-                                          .toStringAsFixed(3))
-                                      .toString() +
-                                  " h")
+                              .toStringAsFixed(3))
+                              .toString() +
+                              " h")
                               : Container(),
                         ],
                       ),
@@ -380,7 +384,7 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
                   offset: Offset(200, 100),
                   tooltip: 'Setting More',
                   onSelected: (index) =>
-                      {_select(index, context, widget.course)},
+                  {_select(index, context, widget.course)},
                   itemBuilder: (BuildContext context) {
                     return _choices.map((String choice) {
                       return PopupMenuItem<int>(
@@ -397,167 +401,167 @@ class _HorizontalCourseItemState extends State<HorizontalCourseItem> {
 
 
 
- class HorizontalCourseItemDownload extends StatefulWidget {
-   final ShownCourse course;
-   final CourseDownload courseDownload;
+class HorizontalCourseItemDownload extends StatefulWidget {
+  final ShownCourse course;
+  final CourseDownload courseDownload;
 
-   HorizontalCourseItemDownload({this.course,this.courseDownload});
+  HorizontalCourseItemDownload({this.course,this.courseDownload});
 
-   @override
-   _HorizontalCourseItemDownloadState createState() => _HorizontalCourseItemDownloadState();
- }
+  @override
+  _HorizontalCourseItemDownloadState createState() => _HorizontalCourseItemDownloadState();
+}
 
- class _HorizontalCourseItemDownloadState extends State<HorizontalCourseItemDownload> {
-   List<String> _choices = <String>[
-     "Bookmark",
-     "Add to channel",
-     "Download",
-     "Share"
-   ];
-   void _select(int choiceIndex, BuildContext context, ShownCourse course) {
-     switch (choiceIndex) {
-       case 0:
-         {
-           var bookmarkProvider = Provider.of<BookmarkProvider>(context);
-           bookmarkProvider.add(course.id);
+class _HorizontalCourseItemDownloadState extends State<HorizontalCourseItemDownload> {
+  List<String> _choices = <String>[
+    "Bookmark",
+    "Add to channel",
+    "Download",
+    "Share"
+  ];
+  void _select(int choiceIndex, BuildContext context, ShownCourse course) {
+    switch (choiceIndex) {
+      case 0:
+        {
+          var bookmarkProvider = Provider.of<BookmarkProvider>(context);
+          bookmarkProvider.add(course.id);
 
-           setState(() {
-             _choices[0] = bookmarkProvider.isInBookmark(this.widget.course.id)
-                 ? "Unbookmark"
-                 : "Bookmark";
-           });
-         }
-         break;
-       case 1:
-         {}
-         break;
-       case 2:
-         {}
-         break;
-       default:
-         {}
-         break;
-     }
-   }
+          setState(() {
+            _choices[0] = bookmarkProvider.isInBookmark(this.widget.course.id)
+                ? "Unbookmark"
+                : "Bookmark";
+          });
+        }
+        break;
+      case 1:
+        {}
+        break;
+      case 2:
+        {}
+        break;
+      default:
+        {}
+        break;
+    }
+  }
 
-   @override
-   void initState() {
-     // TODO: implement initState
-     super.initState();
-     setState(() {
-       _choices[0] = Provider.of<BookmarkProvider>(context, listen: false)
-           .isInBookmark(this.widget.course.id)
-           ? "Unbookmark"
-           : "Bookmark";
-     });
-   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _choices[0] = Provider.of<BookmarkProvider>(context, listen: false)
+          .isInBookmark(this.widget.course.id)
+          ? "Unbookmark"
+          : "Bookmark";
+    });
+  }
 
-   @override
-   Widget build(BuildContext context) {
-     return GestureDetector(
-         onTap: () async {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () async {
 
           Provider.of<VideoProvider>(context).changeToIsDownload();
 
-           Navigator.push(
-             context,
-             MaterialPageRoute(
-                 builder: (context) => CourseDetail(course: this.widget.courseDownload.data,sections: this.widget.courseDownload.sections,)),
-           );
-         },
-         child: Container(
-           padding: EdgeInsets.only(top: 8),
-           decoration: BoxDecoration(),
-           height: heightItem,
-           child: Row(
-             children: [
-               Container(
-                 alignment: Alignment.topCenter,
-                 child: Stack(
-                   children: [
-                     Container(
-                       height: heightItem * 2 / 3,
-                       width: 100,
-                       decoration: BoxDecoration(
-                         image: DecorationImage(
-                             image: this.widget.course.imageUrl != null
-                                 ? NetworkImage(this.widget.course.imageUrl)
-                                 : AssetImage('assets/imgPlaceHolder.png'),
-                             fit: BoxFit.fitWidth),
-                       ),
-                     )
-                   ],
-                 ),
-               ),
-               SizedBox(
-                 width: 8,
-               ),
-               Expanded(
-                 flex: 1,
-                 child: Padding(
-                   padding: EdgeInsets.all(4),
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       TextTitle(this.widget.course.title),
-                       SubTitle(((){
-                         if(widget.course.price==0){
-                           return "FREE";
-                         }else{
-                           return "${widget.course.price} VND";
-                         }
-                       })()),
-                       SubTitle(widget.course.instructorUserName),
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           // buildSubTextTitle(this.widget.course.level),
-                           // buildSubTextTitle(this.widget.course.dateRelease),
-                           // buildSubTextTitle(this.widget.course.hourLearning),
-                           widget.course.createdAt != null
-                               ? SubTitle(DateFormat('yyyy-MM-dd')
-                               .format(widget.course.createdAt) +
-                               "")
-                               : Container(),
-                           widget.course.totalHours != null
-                               ? SubTitle(double.parse((widget.course.totalHours)
-                               .toStringAsFixed(3))
-                               .toString() +
-                               " h")
-                               : Container(),
-                         ],
-                       ),
-                       Row(
-                         mainAxisSize: MainAxisSize.min,
-                         children: [
-                           RatingStar(
-                             rateNumber: widget.course.ratedNumber,
-                           ),
-                           SizedBox(
-                             width: 20,
-                           ),
-                           //   buildSubTextTitle('(SL Đánh giá: ${this.widget.course.ratedNumber})')
-                         ],
-                       ),
-                     ],
-                   ),
-                 ),
-               ),
-               PopupMenuButton(
-                   offset: Offset(200, 100),
-                   tooltip: 'Setting More',
-                   onSelected: (index) =>
-                   {_select(index, context, widget.course)},
-                   itemBuilder: (BuildContext context) {
-                     return _choices.map((String choice) {
-                       return PopupMenuItem<int>(
-                         value: _choices.indexOf(choice),
-                         child: Text(choice),
-                       );
-                     }).toList();
-                   }),
-             ],
-           ),
-         ));
-   }
- }
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CourseDetail(course: this.widget.courseDownload.data,sections: this.widget.courseDownload.sections,)),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.only(top: 8),
+          decoration: BoxDecoration(),
+          height: heightItem,
+          child: Row(
+            children: [
+              Container(
+                alignment: Alignment.topCenter,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: heightItem * 2 / 3,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: this.widget.course.imageUrl != null
+                                ? NetworkImage(this.widget.course.imageUrl)
+                                : AssetImage('assets/imgPlaceHolder.png'),
+                            fit: BoxFit.fitWidth),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextTitle(this.widget.course.title),
+                      SubTitle(((){
+                        if(widget.course.price==0){
+                          return "FREE";
+                        }else{
+                          return "${widget.course.price} VND";
+                        }
+                      })()),
+                      SubTitle(widget.course.instructorUserName),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // buildSubTextTitle(this.widget.course.level),
+                          // buildSubTextTitle(this.widget.course.dateRelease),
+                          // buildSubTextTitle(this.widget.course.hourLearning),
+                          widget.course.createdAt != null
+                              ? SubTitle(DateFormat('yyyy-MM-dd')
+                              .format(widget.course.createdAt) +
+                              "")
+                              : Container(),
+                          widget.course.totalHours != null
+                              ? SubTitle(double.parse((widget.course.totalHours)
+                              .toStringAsFixed(3))
+                              .toString() +
+                              " h")
+                              : Container(),
+                        ],
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          RatingStar(
+                            rateNumber: widget.course.ratedNumber,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          //   buildSubTextTitle('(SL Đánh giá: ${this.widget.course.ratedNumber})')
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              PopupMenuButton(
+                  offset: Offset(200, 100),
+                  tooltip: 'Setting More',
+                  onSelected: (index) =>
+                  {_select(index, context, widget.course)},
+                  itemBuilder: (BuildContext context) {
+                    return _choices.map((String choice) {
+                      return PopupMenuItem<int>(
+                        value: _choices.indexOf(choice),
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  }),
+            ],
+          ),
+        ));
+  }
+}

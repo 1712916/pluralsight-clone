@@ -4,10 +4,10 @@ import 'package:app/models/courses-response-model.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/main_screen/home/seeall.dart';
 import 'package:flutter/material.dart';
-
-
 import '../../customs/text-type.dart';
 import 'course-item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
+
 
 class BuilderListHorizontal extends StatelessWidget {
   @required
@@ -20,8 +20,8 @@ class BuilderListHorizontal extends StatelessWidget {
 
 
   Widget buildList(BuildContext context) {
-
-    return courses.isNotEmpty?Column(children: [
+    return courses.isNotEmpty?Column(
+        children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
@@ -30,10 +30,6 @@ class BuilderListHorizontal extends StatelessWidget {
             buildTextHeader(this.title),
             canSeAll?GestureDetector(
                 onTap: () {
-                  //truyen data vao navigte
-                  //goi navigate here
-                  // Navigator.pushNamed(context, CourseDetail.routeName,
-                  //     arguments: widget.course.title);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -42,7 +38,7 @@ class BuilderListHorizontal extends StatelessWidget {
                               )));
                 },
                 child: Text(
-                  'See all >',
+                  AppLocalizations.of(context).seeAll.toUpperCase(),
 
                 )):TextButton(),
           ],
@@ -56,7 +52,8 @@ class BuilderListHorizontal extends StatelessWidget {
           children: courses
               .map((course) => Padding(
                     padding: const EdgeInsets.only(left: 16),
-                    child: VerticalCourseItem(course: course),
+                 child: VerticalCourseItem(course: course),
+
                   ))
               .toList(),
         ),
@@ -76,9 +73,10 @@ class BuilderListHorizontal extends StatelessWidget {
 }
 
 class BuilderListBookmark extends BuilderListHorizontal {
+
   @override
-  BuilderListBookmark(List<Course> data)
-      : super(title:'BOOKMARKS', courses: data,canSeAll: false);
+  BuilderListBookmark(List<Course> data,String title)
+      : super(title: title, courses: data,canSeAll: false);
 
 }
 

@@ -182,5 +182,177 @@
    "errorChangePassword":"*Password change failed",
    "@errorChangePassword":{
       "description":" "
-   }
+   },
+   "home":"Home",
+   "@home":{
+      "description":" "
+   },
+   "download":"Download",
+   "@download":{
+      "description":" "
+   },
+   "browse":"Browse",
+   "@browse":{
+      "description":" "
+   },
+   "search":"Search",
+   "@search":{
+      "description":" "
+   },
+   "profile":"Profile",
+   "@profile":{
+      "description":" "
+   },
+   "setting":"Setting",
+   "@setting":{
+      "description":" "
+   },
+   "removeAll":"Remove All",
+   "@removeAll":{
+      "description":" "
+   },
+   "changeProfile":"Change profile",
+   "@changeProfile":{
+      "description":" "
+   },
+   "themes":"Themes",
+   "@themes":{
+      "description":" "
+   },
+   "appVersion":"App Version",
+   "@appVersion":{
+      "description":" "
+   },
+   "downloadDirection":"Download Direction",
+   "@downloadDirection":{
+      "description":" "
+   },
+    "notification":"Notification",
+      "@notification":{
+         "description":" "
+      },
+       "sendFeedback":"Send Feedback",
+            "@sendFeedback":{
+               "description":" "
+            },
+              "contactSupport":"Contact support",
+                        "@contactSupport":{
+                           "description":" "
+                        },
+"topNew":"Top New",
+"@topNew":{
+   "description":" "
+},
+"topSell":"Top Sell",
+"@topSell":{
+   "description":" "
+},
+"topRate":"Top Rate",
+"@topRate":{
+   "description":" "
+},
+"bookmark":"Bookmark",
+"@bookmark":{
+   "description":" "
+},
+"seeAll":"See more >",
+"@seeAll":{
+   "description":" "
+},
+"yourCourse":"Your course",
+"@yourCourse":{
+   "description":" "
+},
+"like":"Like",
+"@like":{
+   "description":" "
+},
+"liked":"Liked",
+"@liked":{
+   "description":" "
+},
+"recommend":"Recommend",
+"@recommend":{
+   "description":" "
+},
+"favoriteCategory":"Favorite Category",
+"@favoriteCategory":{
+   "description":" "
+},
+"topAuthor":"Top Authors",
+"@topAuthor":{
+   "description":" "
+},
+"all":"all",
+"@all":{
+   "description":" "
+},
+"course":"course",
+"@course":{
+   "description":" "
+},
+"courses":"courses",
+"@courses":{
+   "description":" "
+},
+"author":"author",
+"@author":{
+   "description":" "
+},
+"results":"results",
+"@results":{
+   "description":" "
+},
+"unBookmark":"Unbookmark",
+"@unBookmark":{
+   "description":" "
+},
+"share":"Share",
+"@share":{
+   "description":" "
+},
+"downloaded":"Downloaded",
+"@downloaded":{
+   "description":" "
+},
+"requirement":"Requirement",
+"@requirement":{
+   "description":" "
+},
+"haveNotRequirement":"Have no requirement",
+"@haveNotRequirement":{
+   "description":" "
+},
+"learnWhat":"Learn what?",
+"@learnWhat":{
+   "description":" "
+},
+"comment":"Comment",
+"@comment":{
+   "description":" "
+},
+"rate":"Rate",
+"@rate":{
+   "description":" "
+},
+"report":"Report",
+"@report":{
+   "description":" "
+},
+"note":"Note",
+"@note":{
+   "description":" "
+},
+"description":"Note",
+"@description":{
+   "description":" "
+},
+"content":"Content",
+"@content":{
+   "description":" "
+},
+"transcript":"Transcript",
+"@transcript":{
+   "description":" "
+}
 }

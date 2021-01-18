@@ -13,6 +13,7 @@ class CourseServicesFactory{
   static Map dictonary2={
     "FAVORITE":CourseServices.getByFavoriteCategories,
     "RECOMMEND": UserServices.recommendCourse,
+
   };
 
 

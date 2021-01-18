@@ -1,11 +1,9 @@
 
 import 'dart:convert';
 
-import 'package:app/models/course-detail-response-model.dart';
-import 'package:app/models/courses-response-model.dart';
 import 'package:app/provider/download-proivder.dart';
 import 'package:app/provider/login-provider.dart';
-import 'package:app/services/course-services.dart';
+
 import 'package:app/sqlite/download-course.dart';
 import 'package:app/widgets/authenticate/settings.dart';
 import 'package:app/widgets/course_detail/detail.dart';
@@ -14,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../customs/custom-appbar.dart';
 import '../../authenticate/profile.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Downloads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,7 @@ class MyDownloads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar('Downloads'),
+      appBar: CustomAppBar(AppLocalizations.of(context).download),
       body: DownloadsPage(),
     );
   }
@@ -96,7 +94,7 @@ class _DownloadsPageState extends State<DownloadsPage> {
                   TextButton(onPressed: () {
 
                    Provider.of<DownloadProvider>(context).removeAllData();
-                  }, child: Text('REMOVE ALL'))
+                  }, child: Text(AppLocalizations.of(context).removeAll))
                 ],
               ),
             ),

@@ -4,9 +4,11 @@ import 'package:app/models/shown-instructor.dart';
 import 'package:app/services/instructor-services.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/customs/loading-process.dart';
+import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'author-item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 
 class AuthorList extends StatelessWidget {
 
@@ -24,14 +26,7 @@ class AuthorList extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
-                    child: Text(
-                      'Top authors',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-
+                    child: TextTitle(  AppLocalizations.of(context).topAuthor.toUpperCase())
                   ),
                 ),
                 SizedBox(height: 8,),

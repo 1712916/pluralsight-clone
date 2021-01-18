@@ -23,6 +23,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    loginProvider = Provider.of<LoginProvider>(context,listen: false);
 
   }
 
@@ -36,13 +37,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    setState(() {
-      loginProvider = Provider.of<LoginProvider>(context);
-    });
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
-
+        title: Text(AppLocalizations.of(context).profile),
         elevation: 0.0,
       ),
       body: this.loginProvider.isLogin
@@ -88,7 +86,7 @@ class _ProfileState extends State<Profile> {
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfile()));
                             },
-                            child: Text("Chỉnh sửa trang cá nhân".toUpperCase()),
+                            child: Text(AppLocalizations.of(context).changeProfile.toUpperCase()),
                           ),
                         ),
                         SizedBox(

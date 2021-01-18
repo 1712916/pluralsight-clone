@@ -8,6 +8,7 @@ import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-item.dart';
 import 'package:app/widgets/main_screen/home/course-item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 
 
 class SearchResult extends StatefulWidget {
@@ -30,7 +31,7 @@ class _SearchResultState extends State<SearchResult>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: 4, initialIndex: 0);
+    _tabController = new TabController(vsync: this, length: 3, initialIndex: 0);
   }
 
   @override
@@ -48,14 +49,9 @@ class _SearchResultState extends State<SearchResult>
           children: <Widget>[
             Container(
               child: TabBar(controller: _tabController, tabs: [
-                Tab(
-                  child: Text(
-                    'ALL',
-                  ),
-                ),
-                Tab(text: "COURSES"),
-                Tab(text: "PATHS"),
-                Tab(text: "AUTHORS"),
+                Tab( text:AppLocalizations.of(context).all.toUpperCase() ),
+                Tab(text: AppLocalizations.of(context).course.toUpperCase()),
+                Tab(text: AppLocalizations.of(context).author.toUpperCase()),
               ]),
             ),
             Expanded(
@@ -73,37 +69,18 @@ class _SearchResultState extends State<SearchResult>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Courses'),
+                                  Text('${AppLocalizations.of(context).course.toUpperCase()}'),
                                   TextButton(
                                       onPressed: () {
                                         _tabController.animateTo(1);
                                       },
                                       child:
-                                          Text('${this.widget.courses.length} Results')),
+                                          Text('${this.widget.courses.length} ${AppLocalizations.of(context).results.toUpperCase()}')),
                                 ],
                               ),
                               buildCourseItem(this.widget.courses, 4),
                             ])),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            children: [
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Text('Paths'),
-                              //     TextButton(
-                              //         onPressed: () {
-                              //           _tabController.animateTo(2);
-                              //         },
-                              //         child: Text('${this.widget.paths.length} Results')),
-                              //   ],
-                              // ),
-                              // buildPathItem(this.widget.paths, 4),
-                            ],
-                          ),
-                        ),
+
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
@@ -112,13 +89,13 @@ class _SearchResultState extends State<SearchResult>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Authors'),
+                                  Text(AppLocalizations.of(context).author.toUpperCase()),
                                   TextButton(
                                       onPressed: () {
                                         _tabController.animateTo(3);
                                       },
                                       child:
-                                          Text('${this.widget.authors.length} Results')),
+                                          Text('${this.widget.authors.length} ${AppLocalizations.of(context).results.toUpperCase()}')),
                                 ],
                               ),
                               buildAuthorItem(this.widget.authors, 4),
@@ -192,7 +169,7 @@ class _SearchResultState extends State<SearchResult>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('${this.widget.courses.length} Results'),
+                            Text('${this.widget.courses.length} ${AppLocalizations.of(context).results.toUpperCase()}'),
                             DropdownButton(
                               value: dropdownValue,
                               items: <String>[
@@ -225,29 +202,7 @@ class _SearchResultState extends State<SearchResult>
                     ),
                   ),
                 ),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 16,
-                        ),
-                        // Text('${this.widget.paths.length} Results'),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Expanded(
-                            child: ListView(
-                          children: [
-                            // buildPathItem(this.widget.paths, this.widget.paths.length),
-                          ],
-                        ))
-                      ],
-                    ),
-                  ),
-                ),
+
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),

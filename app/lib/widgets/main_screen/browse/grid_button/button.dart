@@ -83,7 +83,7 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
           CourseServices.search(categories: [widget.categoryId], keyword: "");
     } else if (widget.type == "RECOMMEND") {
 
-      future = CourseServicesFactory.dictonary2[widget.title](
+      future = CourseServicesFactory.dictonary2["RECOMMEND"](
           limit: 20,
           offset: 1,
           id: Provider.of<LoginProvider>(context)
@@ -91,6 +91,7 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
               .userInfo
               .id);
     } else if (widget.type == "LIKED") {
+
       future = UserServices.getFavoriteCourses(
           token: Provider.of<LoginProvider>(context).userResponseModel.token);
     } else if (widget.type == "YOUR COURSE") {
@@ -131,6 +132,7 @@ class _SuggestionCourseState extends State<SuggestionCourse> {
                     child: Column(
                       children: (() {
                         if (widget.type == "RECOMMEND") {
+                          print("RECOMMEND ${ snapshot.data.body}");
                           return coursesResponseModelFromJson(
                                   snapshot.data.body)
                               .courses

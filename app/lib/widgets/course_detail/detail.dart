@@ -40,7 +40,7 @@ import 'package:app/widgets/customs/text-type.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 class CourseDetail extends StatefulWidget {
   static const routeName = '/course-detail';
   //Data here
@@ -181,8 +181,8 @@ class _CourseDetailState extends State<CourseDetail> {
                               toolbarHeight: 0,
                               bottom: TabBar(
                                 tabs: [
-                                  Tab(text: "CONTENTS"),
-                                  Tab(text: "TRANSCRIPTS"),
+                                  Tab(text:  AppLocalizations.of(context).content),
+                                  Tab(text:  AppLocalizations.of(context).transcript),
                                 ],
                               ),
                             ),

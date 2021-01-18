@@ -65,10 +65,10 @@ class CourseFavorite implements ToShownCourse{
     instructorId: json["instructorId"],
     instructorName: json["instructorName"],
     courseSoldNumber: json["courseSoldNumber"],
-    courseContentPoint: json["courseContentPoint"].toDouble(),
-    courseFormalityPoint: json["courseFormalityPoint"].toDouble(),
-    coursePresentationPoint: json["coursePresentationPoint"].toDouble(),
-    courseAveragePoint: json["courseAveragePoint"].toDouble(),
+    courseContentPoint: json["courseContentPoint"]==null?null:json["courseContentPoint"].toDouble(),
+    courseFormalityPoint: json["courseFormalityPoint"]==null?null:json["courseFormalityPoint"].toDouble(),
+    coursePresentationPoint: json["coursePresentationPoint"]==null?null:json["coursePresentationPoint"].toDouble(),
+    courseAveragePoint:json["courseAveragePoint"]==null?null: json["courseAveragePoint"].toDouble(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -88,6 +88,6 @@ class CourseFavorite implements ToShownCourse{
   @override
   ShownCourse toShownCourse() {
     return ShownCourse(id: this.id,title: this.courseTitle,createdAt: null,imageUrl: this.courseImage,
-        instructorUserName: this.instructorName,totalHours: null,ratedNumber: this.courseAveragePoint.toInt());
+        instructorUserName: this.instructorName,totalHours: null,ratedNumber:  this.courseAveragePoint==null?0:this.courseAveragePoint.toInt());
   }
 }

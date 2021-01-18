@@ -38,9 +38,6 @@ class Home extends StatelessWidget {
                   return ListCourse();
                 case Settings.routeName:
                   return Settings();
-                // setting
-                //  send feedback
-                // contact support
                 default:
                   return MyHome();
               }
@@ -57,7 +54,7 @@ class MyHome extends StatelessWidget {
 
 
     return Scaffold(
-      appBar: CustomAppBar("Home"),
+      appBar: CustomAppBar( AppLocalizations.of(context).home),
       body: loginState
           ? RefreshIndicator(
               onRefresh: () async {
@@ -84,22 +81,22 @@ class MyHome extends StatelessWidget {
                   ),
 
                   buildRowOfCourses(
-                      "TOP NEW",
+                      AppLocalizations.of(context).topNew.toUpperCase(),
                       CourseServicesFactory.dictonary["TOP NEW"](
                           limit: 10, page: 1)),
                   SizedBox(
                     height: 16,
                   ),
                   buildRowOfCourses(
-                      "TOP SELL",
+                      AppLocalizations.of(context).topSell.toUpperCase(),
                       CourseServicesFactory.dictonary["TOP SELL"](
                           limit: 10, page: 1)),
                   SizedBox(
                     height: 16,
                   ),
                   buildRowOfCourses(
-                      "TOP RATE",
-                      CourseServicesFactory.dictonary["TOP SELL"](
+                      AppLocalizations.of(context).topRate.toUpperCase(),
+                      CourseServicesFactory.dictonary["TOP RATE"](
                           limit: 10, page: 1)),
                   SizedBox(
                     height: 16,
@@ -109,20 +106,12 @@ class MyHome extends StatelessWidget {
                       builder: (BuildContext context,
                           AsyncSnapshot<List<Course>> snapshot) {
                         if (snapshot.hasData) {
-                          return BuilderListBookmark(snapshot.data);
+                          return BuilderListBookmark(snapshot.data,AppLocalizations.of(context).bookmark.toUpperCase());
                         }
                         return Container();
                       })
 
-                  //add here
-                  //     Column(
-                  //       children: courseProvider.categories.map((c) => BuilderList(
-                  //             category: c,
-                  //             courses: courseProvider.findCourseByCategoryId(c.id, -1),
-                  //           )).toList(),
-                  //     ),
-                  // //    BuilderListMyPath(bookmarkProvider.courses),
-                  //     BuilderListBookmark(bookmarkProvider.courses),
+
                 ],
               ),
             )

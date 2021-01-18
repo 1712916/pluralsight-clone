@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
     //   await bookmarkProvider.bookmarkSQL.open();
     // })();
     return MaterialApp(
-      title: 'My app',
+      title: 'Meow sight',
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,
       themeMode: themeNotifier.getThemeMode(), //Change theme here

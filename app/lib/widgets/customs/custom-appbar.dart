@@ -1,18 +1,20 @@
-import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/authenticate/profile.dart';
+ import 'package:app/widgets/authenticate/profile.dart';
 import 'package:app/widgets/authenticate/settings.dart';
 import 'package:flutter/material.dart';
-
-const List<String> choices = <String>[
-  "Settings",
-  "Send feedback",
-  "Contact support",
-];
+ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String _title;
   CustomAppBar(this._title);
+
+
   @override
   Widget build(BuildContext context) {
+    List<String> choices = <String>[
+      AppLocalizations.of(context).setting,
+      AppLocalizations.of(context).sendFeedback,
+      AppLocalizations.of(context).contactSupport,
+    ];
     return AppBar(
       title: Text(_title),
       actions: [

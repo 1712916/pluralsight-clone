@@ -61,7 +61,7 @@ class MyBrowse extends StatelessWidget {
     var loginState=Provider.of<LoginProvider>(context);
     return Scaffold(
 
-      appBar: CustomAppBar('Browse'),
+      appBar: CustomAppBar(AppLocalizations.of(context).browse),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -71,8 +71,7 @@ class MyBrowse extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: MyButton(
-                  title: 'YOUR COURSE',
-                  route: 'hello',
+                  title: AppLocalizations.of(context).yourCourse.toUpperCase(),
                   type: "YOUR COURSE",
                   img: 'assets/like.jpg',
                 ),
@@ -83,8 +82,7 @@ class MyBrowse extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: MyButton(
-                  title: 'LIKED',
-                  route: 'hello',
+                  title:  AppLocalizations.of(context).like.toUpperCase(),
                   type: "LIKED",
                   img: 'assets/like.jpg',
                 ),
@@ -95,7 +93,7 @@ class MyBrowse extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: MyButton(
-                  title: 'RECOMMEND',
+                  title:  AppLocalizations.of(context).recommend.toUpperCase(),
                   route: 'hello',
                   type: "RECOMMEND",
                 ),

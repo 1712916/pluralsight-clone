@@ -20,15 +20,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:path/path.dart' as path;
 import 'comments.dart';
-import 'detail.dart';
-import 'detail.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 class Information extends StatefulWidget {
   Course course;
   Information({this.course});
@@ -85,12 +81,6 @@ class _InformationState extends State<Information> {
                 authorChip(
                     authorId: widget.course.instructorId, context: context),
               ],
-              //suawr lai thanh buidler
-              // children: widget.course
-              //     .map((e) => Padding(
-              //         padding: EdgeInsets.only(left: 8),
-              //         child: authorChip(findAuthorById(e), context)))
-              //     .toList(),
             ),
           ),
           SizedBox(
@@ -134,7 +124,7 @@ class _InformationState extends State<Information> {
           SizedBox(
             height: 16,
           ),
-          SubTitle("Requirement"),
+          SubTitle(AppLocalizations.of(context).requirement),
           SizedBox(
             height: 8,
           ),
@@ -145,12 +135,12 @@ class _InformationState extends State<Information> {
                 content += "$i. ${widget.course.requirement[i - 1]} \n";
               }
             } else {
-              content = "Không yêu cầu";
+              content = AppLocalizations.of(context).haveNotRequirement;
             }
 
             return content;
           })()),
-          SubTitle("Learn what?"),
+          SubTitle(AppLocalizations.of(context).learnWhat),
           SizedBox(
             height: 8,
           ),
@@ -169,7 +159,7 @@ class _InformationState extends State<Information> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                actionButton(likeStatus ? "Liked" : "Like",
+                actionButton(likeStatus ? AppLocalizations.of(context).liked : AppLocalizations.of(context).like,
                     Icon(likeStatus ? Icons.favorite : Icons.favorite_border),
                     ()   {
                   _onLike();
@@ -177,8 +167,8 @@ class _InformationState extends State<Information> {
                 actionButton((() {
                   return Provider.of<BookmarkProvider>(context)
                           .isInBookmark(this.widget.course.id)
-                      ? "Bookmarked"
-                      : 'Bookmark';
+                      ? AppLocalizations.of(context).unBookmark
+                      :  AppLocalizations.of(context).bookmark;
                 })(), Icon((() {
                   return Provider.of<BookmarkProvider>(context)
                           .isInBookmark(this.widget.course.id)
@@ -192,7 +182,7 @@ class _InformationState extends State<Information> {
                   future: Provider.of<DownloadProvider>(context).isDownloaded(userId: Provider.of<LoginProvider>(context).userResponseModel.userInfo.id,courseId: this.widget.course.id),
                   builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
                     if(snapshot.hasData){
-                      return  actionButton( snapshot.data?"Downloaded":"Download", Icon(snapshot.data?Icons.download_done_outlined:Icons.file_download), () async {
+                      return  actionButton( snapshot.data? AppLocalizations.of(context).downloaded: AppLocalizations.of(context).download, Icon(snapshot.data?Icons.download_done_outlined:Icons.file_download), () async {
 
                         if(snapshot.data){
 
@@ -203,35 +193,37 @@ class _InformationState extends State<Information> {
                       });
                     }
 
-                    return actionButton( "Download", Icon( Icons.file_download), () async {
+                    return actionButton(  AppLocalizations.of(context).download, Icon( Icons.file_download), () async {
                         _onDownload();
 
                     });
                   },
 
                 ),
-                actionButton('Note', Icon(Icons.notes), () {}),
-                actionButton('Share', Icon(Icons.share), () {
+
+                actionButton( AppLocalizations.of(context).share, Icon(Icons.share), () {
                   _onShare(context);
                 }),
-                actionButton('Comment', Icon(Icons.comment), ()   {
+                actionButton( AppLocalizations.of(context).comment, Icon(Icons.comment), ()   {
                   _onComment();
                 }),
-                actionButton('Rate', Icon(Icons.star_rate), () {
+                actionButton(AppLocalizations.of(context).rate, Icon(Icons.star_rate), () {
                   _onRate(context);
 
                 }),
                 actionButton(
-                    'Report', Icon(Icons.report_gmailerrorred_outlined), () {
+                    AppLocalizations.of(context).report, Icon(Icons.report_gmailerrorred_outlined), () {
                     _onReport(context);
-                })
+                }),
+                actionButton(AppLocalizations.of(context).note, Icon(Icons.notes), () {}),
+
               ],
             ),
           ),
           SizedBox(
             height: 16,
           ),
-          SubTitle("Description"),
+          SubTitle(AppLocalizations.of(context).description),
           SizedBox(
             height: 8,
           ),

@@ -6,7 +6,7 @@ import 'package:app/widgets/main_screen/home/course-item.dart';
 
 import '../../../customs/text-type.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AuthorDetail extends StatelessWidget {
   static const String routeName = '/author';
   final Instructor author;
@@ -15,7 +15,7 @@ class AuthorDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Author')),
+      appBar: AppBar(title: Text( AppLocalizations.of(context).author)),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -36,7 +36,7 @@ class AuthorDetail extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              Text('Pluralsight Author'),
+              Text('MeowSight Author'),
               SizedBox(
                 height: 8,
               ),
@@ -64,31 +64,31 @@ class AuthorDetail extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: Icon(Icons.tag_faces_sharp),
-                      onTap: () {},
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    GestureDetector(
-                      child: Icon(Icons.tag_faces_sharp),
-                      onTap: () {},
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    GestureDetector(
-                      child: Icon(Icons.tag_faces_sharp),
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Row(
+              //     children: [
+              //       GestureDetector(
+              //         child: Icon(Icons.tag_faces_sharp),
+              //         onTap: () {},
+              //       ),
+              //       SizedBox(
+              //         width: 16,
+              //       ),
+              //       GestureDetector(
+              //         child: Icon(Icons.tag_faces_sharp),
+              //         onTap: () {},
+              //       ),
+              //       SizedBox(
+              //         width: 16,
+              //       ),
+              //       GestureDetector(
+              //         child: Icon(Icons.tag_faces_sharp),
+              //         onTap: () {},
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 32,
               ),
