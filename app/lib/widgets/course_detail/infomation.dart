@@ -285,7 +285,12 @@ class _InformationState extends State<Information> {
 
       Provider.of<DownloadProvider>(context,listen: false).changeToStop();
     }
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
+    final androidInit = AndroidInitializationSettings('@mipmap/launch_image');
+    final iOSInit = IOSInitializationSettings();
+    final initSettings = InitializationSettings(androidInit, iOSInit);
 
+    flutterLocalNotificationsPlugin.initialize(initSettings, );
     final android = AndroidNotificationDetails(
       'channel id',
       'channel name',
@@ -294,16 +299,16 @@ class _InformationState extends State<Information> {
       importance: Importance.Max,
 
     );
-
     final iOS = IOSNotificationDetails();
     final platform = NotificationDetails(android, iOS);
     final json = jsonEncode("Down load thành công");
     final isSuccess = true;
 
+
     await flutterLocalNotificationsPlugin.show(
       0, // notification id
-      isSuccess ? 'Success' : 'Failure',
-      isSuccess ? 'File has been downloaded successfully!' : 'There was an error while downloading the file.',
+      isSuccess ? 'Thành công' : 'Thất bại',
+      isSuccess ? 'Đã tải thành công khóa học ${this.widget.course.title}!' : 'Đã có lỗi khi tải khóa học',
       platform,
       payload: json,
 

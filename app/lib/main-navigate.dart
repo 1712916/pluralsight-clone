@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'models/user-response-model.dart';
 import 'widgets/authenticate/sign-in.dart';
 
- import 'package:flutter_localizations/flutter_localizations.dart';
+
  import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
@@ -125,11 +125,11 @@ class _MainNavigateState extends State<MainNavigate> {
 
           List<dynamic> bookmarkFromSqlite=await bookmarkSQL.getData(userId);
           Provider.of<BookmarkProvider>(context).courseIds=bookmarkFromSqlite;
-          // Provider.of<BookmarkProvider>(context).courseIds=[];
-          // for(int i=0;i<bookmarkFromSqlite.length;i++){
-          //   Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
-          // }
-          Provider.of<BookmarkProvider>(context).notifyListeners();
+          // // Provider.of<BookmarkProvider>(context).courseIds=[];
+          // // for(int i=0;i<bookmarkFromSqlite.length;i++){
+          // //   Provider.of<BookmarkProvider>(context).courseIds.add(bookmarkFromSqlite[i].courseId);
+          // // }
+          // Provider.of<BookmarkProvider>(context).notifyListeners();
         }
       }
     }

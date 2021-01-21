@@ -13,7 +13,7 @@ class LoginProvider with ChangeNotifier {
   void setUserResponse(UserResponseModel userResponseModel){
     this.userResponseModel=userResponseModel;
     notifyListeners();
-    print("Token: ${userResponseModel.token}");
+
   }
   void addNewFavoriteCategory(String id){
     if(this.userResponseModel.userInfo.favoriteCategories.contains(id)){

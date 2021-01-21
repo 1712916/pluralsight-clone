@@ -180,7 +180,7 @@ class _ProfileState extends State<Profile> {
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    child: Text("Lỗi rồi man"),
+                    child: Text("Có lỗi"),
                   );
                 }
 
@@ -249,6 +249,9 @@ class UpdateProfile extends StatefulWidget {
   String phone;
   String imgUrl;
   String email;
+
+  UpdateProfile({this.token, this.userName, this.phone, this.imgUrl, this.email});
+
   @override
   _UpdateProfileState createState() => _UpdateProfileState();
 }
@@ -256,12 +259,15 @@ class UpdateProfile extends StatefulWidget {
 class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController nameController;
   TextEditingController phoneController;
+  TextEditingController avtController;
+  Widget message=Container();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     nameController=TextEditingController();
     phoneController=TextEditingController();
+    avtController=TextEditingController();
   }
   @override
   Widget build(BuildContext context) {
@@ -289,7 +295,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("Email@gmail.com"),
+
                       TextButton(onPressed: (){}, child: Text("Thay ảnh đại diện")),
                     ],
                   ),
@@ -297,20 +303,36 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 ],
               ),
               SizedBox(height: 16,),
-              myTextField(labelname: "Name", controller: nameController),
+              myTextField(labelname: "Link Ảnh đại diện", controller: avtController),
               SizedBox(height: 16,),
-              myTextField(labelname: "Phone", controller: phoneController),
+              myTextField(labelname: "Tên", controller: nameController),
               SizedBox(height: 16,),
-              OutlineButton(onPressed: () async {
-                var response=await UserServices.updateProfile(token: widget.token,phone: phoneController.text,name: nameController.text,avatar: "???");
-                if(response.statusCode==200){
-                  //Thông báo đã cập nhật thành công
-                } else{
-                  //Thông báo cn ko thành công
-                }
+              myTextField(labelname: "Số điện thoại", controller: phoneController),
+              SizedBox(height: 16,),
+              Container(
+                width: double.infinity,
+                child:      RaisedButton(
+                    color: AppColors.secondaryColor,
+                    onPressed: ()  async {
+                  print("dô");
+                  var response=await UserServices.updateProfile(token: widget.token,phone: phoneController.text,name: nameController.text);
+                  if(response.statusCode==200){
+                    //Thông báo đã cập nhật thành công
+                    print("thành công");
+                    setState(() {
+                      message=successText("Thay đổi thành công");
+                    });
+                  } else{
+                    //Thông báo cn ko thành công
 
-              }, child: Text("Save")),
+                    setState(() {
+                      message=errorText("Thay đổi thất bại");
+                    });
+                  }
 
+                }, child: Text("Lưu")),
+              ),
+              message
             ],
           ),
         ),

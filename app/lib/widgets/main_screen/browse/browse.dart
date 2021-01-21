@@ -3,7 +3,7 @@ import 'package:app/models/data.dart';
 import 'package:app/provider/login-provider.dart';
 
 import 'package:app/utils/app-color.dart';
-import 'package:app/widgets/authenticate/settings.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/settings/settings.dart';
 import 'package:app/widgets/authenticate/sign-in.dart';
 
 import 'package:app/widgets/customs/text-type.dart';
@@ -14,7 +14,7 @@ import 'package:app/widgets/main_screen/browse/top_authors/author-detail.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-list.dart';
 import 'package:provider/provider.dart';
 import '../../customs/custom-appbar.dart';
-import '../../authenticate/profile.dart';
+import '../../settings/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'grid_button/button.dart';

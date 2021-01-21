@@ -1,5 +1,5 @@
- import 'package:app/widgets/authenticate/profile.dart';
-import 'package:app/widgets/authenticate/settings.dart';
+ import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/settings/profile.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/settings/settings.dart';
 import 'package:flutter/material.dart';
  import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

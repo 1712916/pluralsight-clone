@@ -5,7 +5,7 @@ import 'package:app/utils/constraints.dart';
 import 'package:app/widgets/main_screen/home/seeall.dart';
 import 'package:flutter/material.dart';
 import '../../customs/text-type.dart';
-import 'course-item.dart';
+import '../../cards/course-item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 
 

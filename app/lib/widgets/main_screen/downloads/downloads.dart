@@ -5,13 +5,13 @@ import 'package:app/provider/download-proivder.dart';
 import 'package:app/provider/login-provider.dart';
 
 import 'package:app/sqlite/download-course.dart';
-import 'package:app/widgets/authenticate/settings.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/settings/settings.dart';
 import 'package:app/widgets/course_detail/detail.dart';
-import 'package:app/widgets/main_screen/home/course-item.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/cards/course-item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../customs/custom-appbar.dart';
-import '../../authenticate/profile.dart';
+import '../../settings/profile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Downloads extends StatelessWidget {
   @override

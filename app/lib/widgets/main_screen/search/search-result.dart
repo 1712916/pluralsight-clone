@@ -6,7 +6,7 @@ import 'package:app/models/search-v2-response-model.dart';
 import 'package:app/models/shown-instructor.dart';
 import 'package:app/utils/app-color.dart';
 import 'package:app/widgets/main_screen/browse/top_authors/author-item.dart';
-import 'package:app/widgets/main_screen/home/course-item.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/cards/course-item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 

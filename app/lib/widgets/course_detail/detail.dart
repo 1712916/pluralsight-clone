@@ -1,23 +1,3 @@
-// class CourseDetail extends StatefulWidget {
-//   static const routeName = '/course-detail';
-//   final Course course;
-//   CourseDetail({this.course});
-//   @override
-//   _CourseDetailState createState() => _CourseDetailState();
-// }
-//
-// class _CourseDetailState extends State<CourseDetail> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: Container(
-//         child: Text("Hello"),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:convert';
 
 import 'package:app/models/course-response-all-data.dart';

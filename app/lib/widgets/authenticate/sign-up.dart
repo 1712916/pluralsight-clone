@@ -40,7 +40,7 @@ class _LoginState extends State<SignUp> {
     //
 
     var response = await UserServices.registerService(username: _nameController.text,email: _emailController.text, phone: _phoneController.text, password: _passwordController.text);
-
+    UserServices.sendActiveEmail(email:_emailController.text );
     setState(() {
       _statusRegister=response.statusCode;
     });

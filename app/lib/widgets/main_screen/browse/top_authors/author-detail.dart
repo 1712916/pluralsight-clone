@@ -2,7 +2,7 @@ import 'package:app/models/instructor-detail-response-model.dart';
 
 import 'package:app/widgets/customs/expandable.dart';
 
-import 'package:app/widgets/main_screen/home/course-item.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/cards/course-item.dart';
 
 import '../../../customs/text-type.dart';
 import 'package:flutter/material.dart';

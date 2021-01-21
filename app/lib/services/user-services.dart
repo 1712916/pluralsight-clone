@@ -69,7 +69,13 @@ class UserServices {
           }
         }));
   }
-
+  static Future<Response> sendActiveEmail({String email}) {
+    return doPostRequest(
+        url_api: URL_API + "user/send-active-email",
+        body: jsonEncode({
+          "email": email,
+        }));
+  }
   static Future<Response> forgotPasswordService({String email}) {
     return doPostRequest(
         url_api: URL_API + "user/forget-pass/send-email",

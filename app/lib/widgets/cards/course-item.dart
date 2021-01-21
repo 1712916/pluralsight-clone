@@ -20,7 +20,7 @@ import 'package:app/utils/app-color.dart';
 import 'package:app/utils/constraints.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../customs/text-type.dart';
+import '../customs/text-type.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Add this line
 class VerticalCourseItem extends StatefulWidget {
   final myCourse.Course course;
@@ -32,11 +32,7 @@ class VerticalCourseItem extends StatefulWidget {
 }
 
 class _VerticalCourseItemState extends State<VerticalCourseItem> {
-  List<String> _choices = <String>[
-    "Bookmark",
-    "Download",
-    "Share"
-  ];
+  List<String> _choices = ["","",""];
 
 
   @override
@@ -83,6 +79,14 @@ class _VerticalCourseItemState extends State<VerticalCourseItem> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _choices[0] = Provider.of<BookmarkProvider>(context)
+          .isInBookmark(this.widget.course.id)
+          ? AppLocalizations.of(context).unBookmark
+          : AppLocalizations.of(context).bookmark;
+      _choices[1] = AppLocalizations.of(context).download;
+      _choices[2] = AppLocalizations.of(context).share;
+    });
     var bookmarkProvider = Provider.of<BookmarkProvider>(context);
     return GestureDetector(
         onTap: () {

@@ -9,7 +9,7 @@ import 'package:app/services/payment-services.dart';
 import 'package:app/services/user-services.dart';
 import 'package:app/widgets/customs/loading-process.dart';
 import 'package:app/widgets/customs/text-type.dart';
-import 'package:app/widgets/main_screen/home/course-item.dart';
+import 'file:///C:/Users/DELL/Desktop/2020/mobile%20nang%20cao/pluralsight-clone/app/lib/widgets/cards/course-item.dart';
 import 'package:app/widgets/main_screen/home/seeall.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
